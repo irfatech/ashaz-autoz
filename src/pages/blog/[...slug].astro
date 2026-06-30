@@ -47,7 +47,7 @@ const { Content } = await render(post);
 
           {data.image && (
             <div class="aspect-[16/9] rounded-2xl overflow-hidden mb-10">
-              <img src={data.image} alt={data.title} class="h-full w-full object-cover" />
+              <img src={data.image} alt={data.title} class="h-full w-full object-cover" loading="lazy" />
             </div>
           )}
 

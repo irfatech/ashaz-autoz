@@ -151,6 +151,7 @@ collections:
       - { label: "Title", name: "title", widget: "string", required: false }
       - { label: "Image", name: "image", widget: "image" }
       - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Href", name: "href", widget: "string" }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
       - { label: "Date", name: "date", widget: "datetime", required: false }
 
@@ -167,8 +168,6 @@ collections:
 
   - name: "site-settings"
     label: "Site Settings"
-    folder: "src/content/site-settings"
-    create: false
     files:
       - label: "Settings"
         name: "settings"
@@ -199,8 +198,6 @@ collections:
 
   - name: "navigation"
     label: "Navigation"
-    folder: "src/content/navigation"
-    create: false
     files:
       - label: "Main Navigation"
         name: "nav"
@@ -222,8 +219,6 @@ collections:
 
   - name: "footer"
     label: "Footer"
-    folder: "src/content/footer"
-    create: false
     files:
       - label: "Footer Content"
         name: "footer"

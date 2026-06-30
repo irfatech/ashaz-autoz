@@ -41,6 +41,7 @@ const statusColors: Record<string, string> = {
                 src={data.images?.[0] || "/images/vehicle-placeholder.svg"}
                 alt={`${data.brand} ${data.model}`}
                 class="h-full w-full object-cover"
+                loading="lazy"
               />
             </div>
             {data.images && data.images.length > 1 && (

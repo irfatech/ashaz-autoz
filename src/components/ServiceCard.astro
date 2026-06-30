@@ -39,6 +39,7 @@ const { title, description, icon, href, features } = Astro.props;
     <a
       href={href}
       class="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent-hover transition-colors"
+      aria-label={`Learn more about ${title}`}
     >
       Learn More
       <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

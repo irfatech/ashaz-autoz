@@ -134,7 +134,7 @@ const stats = [
         {stats.map((stat) => (
           <div class="text-center">
             <div class="text-4xl sm:text-5xl font-black text-accent mb-2">{stat.value}</div>
-            <div class="text-white/60 text-sm uppercase tracking-wider">{stat.label}</div>
+            <div class="text-inverted/60 text-sm uppercase tracking-wider">{stat.label}</div>
           </div>
         ))}
       </div>
@@ -289,17 +289,25 @@ const stats = [
         <p class="text-muted text-lg max-w-2xl mx-auto">Stay connected on social media for the latest updates.</p>
       </div>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-          <a
-            href="#"
+        {[
+          { i: 1, alt: "Showroom display" },
+          { i: 2, alt: "Luxury vehicle showcase" },
+          { i: 3, alt: "Service center" },
+          { i: 4, alt: "Garage workspace" },
+          { i: 5, alt: "Team at work" },
+          { i: 6, alt: "Customer testimonial" },
+          { i: 7, alt: "New arrivals" },
+          { i: 8, alt: "Behind the scenes" },
+        ].map(({ i, alt }) => (
+          <div
             class="aspect-square rounded-xl overflow-hidden bg-muted/10 group relative"
             key={i}
           >
             <div class="absolute inset-0 bg-accent/0 group-hover:bg-accent/20 transition-all duration-300 flex items-center justify-center z-10">
               <svg class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 19.4 19.4 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zM7.6 4C5.6 4 4 5.6 4 7.6V16.4C4 18.4 5.6 20 7.6 20H16.4C18.4 20 20 18.4 20 16.4V7.6C20 5.6 18.4 4 16.4 4H7.6zM17.25 7.5a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
             </div>
-            <img src={`/images/instagram-${i}.jpg`} alt="Instagram post" class="h-full w-full object-cover" loading="lazy" />
-          </a>
+            <img src={`/images/instagram-${i}.jpg`} alt={alt} class="h-full w-full object-cover" loading="lazy" />
+          </div>
         ))}
       </div>
     </div>
@@ -307,19 +315,19 @@ const stats = [
 
   {/* CTA Section */}
   <section class="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-inverse">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.1),transparent_60%)]" />
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(220,38,38,0.1),transparent_60%)]" />
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-inverted mb-4">
         Ready to Get Started?
       </h2>
-      <p class="text-white/60 text-lg max-w-2xl mx-auto mb-8">
+      <p class="text-inverted/60 text-lg max-w-2xl mx-auto mb-8">
         Visit our yard in Ponte Foun, Comoro, Dili, or contact us today to discuss your automotive needs.
       </p>
       <div class="flex flex-wrap justify-center gap-4">
         <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-8 py-4 text-lg font-medium hover:bg-accent-hover transition-all duration-200">
           Contact Us Today
         </a>
-        <a href="tel:+67077154379" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 text-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-all duration-200">
+        <a href="tel:+67077154379" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-inverted/30 text-inverted px-8 py-4 text-lg font-medium hover:bg-inverted hover:text-inverse transition-all duration-200">
           Call 7715 4379
         </a>
       </div>
@@ -329,8 +337,9 @@ const stats = [
   {/* Google Map */}
   <section>
     <div class="h-[400px] w-full bg-muted/10">
+      
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.123456789!2d125.5!3d-8.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMzMnMDAuMCJTIDEyNcKwMzAnMDAuMCJF!5e0!3m2!1sen!2stl!4v1"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.3585290081387!2d125.52886647513672!3d-8.56148098683303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d01dd623160b801%3A0xe02d75cddc8c3237!2sAshaz%20Autos%20car%20sale!5e0!3m2!1sen!2sus!4v1782826726806!5m2!1sen!2sus"
         width="100%"
         height="100%"
         style="border: 0"

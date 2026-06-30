@@ -5,17 +5,17 @@
    ========================================================================== */
 
 @theme {
-  /* ---- 🌈 Brand Colors ---- */
-  --color-brand-50: #fdf6e9;
-  --color-brand-100: #f9eac8;
-  --color-brand-200: #f0d48a;
-  --color-brand-300: #e0c06a;
-  --color-brand-400: #c9a84c;
-  --color-brand-500: #a88a2e;
-  --color-brand-600: #8a6e20;
-  --color-brand-700: #6b5416;
-  --color-brand-800: #4d3d0e;
-  --color-brand-900: #2e2508;
+  /* ---- 🌈 Brand Colors (Timor-Leste flag inspired) ---- */
+  --color-brand-50: #fef2f2;
+  --color-brand-100: #fee2e2;
+  --color-brand-200: #fecaca;
+  --color-brand-300: #fca5a5;
+  --color-brand-400: #f87171;
+  --color-brand-500: #ef4444;
+  --color-brand-600: #dc2626;
+  --color-brand-700: #b91c1c;
+  --color-brand-800: #991b1b;
+  --color-brand-900: #7f1d1d;
 
   /* ---- ⚪️ Neutral Palette ---- */
   --color-neutral-50: #fafafa;
@@ -38,7 +38,9 @@
 
   /* ---- 🔤 Typography ---- */
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-heading: "Inter", system-ui, -apple-system, sans-serif;
+  --font-heading: "Bruno Ace", system-ui, sans-serif;
+  --font-display: "Bruno Ace", system-ui, sans-serif;
+  --font-alt: "Lato", system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, monospace;
 
   /* ---- 📐 Border Radius ---- */
@@ -59,13 +61,13 @@
   --color-section: #f5f5f5;
   --color-inverse: #1a1a1a;
   --color-body: #2d2d2d;
-  --color-muted: #8a8a8a;
+  --color-muted: #666666;
   --color-inverted: #ffffff;
-  --color-accent: #c9a84c;
-  --color-accent-hover: #e0c06a;
-  --color-accent-text: #1a1a1a;
+  --color-accent: #dc2626;
+  --color-accent-hover: #b91c1c;
+  --color-accent-text: #ffffff;
   --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  --color-accent-border: #f0d48a;
+  --color-accent-border: #fca5a5;
   --color-border: color-mix(in srgb, var(--color-muted) 10%, transparent);
   --color-border-strong: #d4d4d4;
   --color-hero: #1a1a1a;
@@ -76,7 +78,7 @@
   --color-btn-secondary-hover-bg: #2d2d2d;
   --color-btn-secondary-hover-text: #ffffff;
   --color-input-border: #d4d4d4;
-  --color-selection-mix: #c9a84c;
+  --color-selection-mix: #dc2626;
 
   /* ---- 🎬 Animations ---- */
   --animate-fade-in: fade-in 0.6s ease-out;
