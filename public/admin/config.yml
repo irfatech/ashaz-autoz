@@ -1,0 +1,244 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: your-org/ashaz-autoz
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    folder: "src/content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string", required: false }
+          - { label: "Description", name: "description", widget: "text", required: false }
+          - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "No Index", name: "noIndex", widget: "boolean", required: false, default: false }
+
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Author", name: "author", widget: "string", default: "Ashaz Autoz" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, field: { label: "Tag", name: "tag", widget: "string" } }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "vehicles"
+    label: "Vehicles"
+    folder: "src/content/vehicles"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Brand", name: "brand", widget: "string" }
+      - { label: "Model", name: "model", widget: "string" }
+      - { label: "Year", name: "year", widget: "number", value_type: "int", min: 2000, max: 2030 }
+      - { label: "Mileage", name: "mileage", widget: "number", value_type: "int", min: 0 }
+      - label: "Transmission"
+        name: "transmission"
+        widget: "select"
+        options: ["Automatic", "Manual", "CVT", "DCT"]
+      - label: "Fuel Type"
+        name: "fuelType"
+        widget: "select"
+        options: ["Petrol", "Diesel", "Hybrid", "Electric", "LPG"]
+      - { label: "Engine", name: "engine", widget: "string", required: false }
+      - label: "Drive Type"
+        name: "driveType"
+        widget: "select"
+        options: ["FWD", "RWD", "AWD", "4WD"]
+      - { label: "Price", name: "price", widget: "number", value_type: "int", min: 0 }
+      - { label: "Currency", name: "currency", widget: "string", default: "USD" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["Available", "Reserved", "Sold"]
+        default: "Available"
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Images", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
+      - { label: "Doors", name: "doors", widget: "number", required: false, value_type: "int" }
+      - { label: "Seats", name: "seats", widget: "number", required: false, value_type: "int" }
+      - { label: "Color", name: "color", widget: "string", required: false }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "services"
+    label: "Services"
+    folder: "src/content/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Excerpt", name: "excerpt", widget: "string", required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
+      - { label: "CTA Text", name: "ctaText", widget: "string", default: "Learn More" }
+      - { label: "CTA Link", name: "ctaLink", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Company", name: "company", widget: "string", required: false }
+      - { label: "Avatar", name: "avatar", widget: "image", required: false }
+      - { label: "Rating", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+      - { label: "Content", name: "content", widget: "text" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+
+  - name: "team"
+    label: "Team Members"
+    folder: "src/content/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+
+  - name: "faq"
+    label: "FAQs"
+    folder: "src/content/faq"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text" }
+      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+
+  - name: "gallery"
+    label: "Gallery"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: false }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Date", name: "date", widget: "datetime", required: false }
+
+  - name: "partners"
+    label: "Partners"
+    folder: "src/content/partners"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Logo", name: "logo", widget: "image" }
+      - { label: "URL", name: "url", widget: "string", required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+
+  - name: "site-settings"
+    label: "Site Settings"
+    folder: "src/content/site-settings"
+    create: false
+    files:
+      - label: "Settings"
+        name: "settings"
+        file: "src/content/site-settings/settings.yaml"
+        fields:
+          - { label: "Site Name", name: "siteName", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Logo", name: "logo", widget: "image", required: false }
+          - { label: "Favicon", name: "favicon", widget: "string", required: false }
+          - label: "Phone"
+            name: "phone"
+            widget: "list"
+            field: { label: "Number", name: "number", widget: "string" }
+          - { label: "Email", name: "email", widget: "string", required: false }
+          - { label: "Address", name: "address", widget: "text", required: false }
+          - { label: "Working Hours", name: "workingHours", widget: "string", required: false }
+          - label: "Social"
+            name: "social"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Facebook", name: "facebook", widget: "string", required: false }
+              - { label: "Instagram", name: "instagram", widget: "string", required: false }
+              - { label: "YouTube", name: "youtube", widget: "string", required: false }
+              - { label: "WhatsApp", name: "whatsapp", widget: "string", required: false }
+
+  - name: "navigation"
+    label: "Navigation"
+    folder: "src/content/navigation"
+    create: false
+    files:
+      - label: "Main Navigation"
+        name: "nav"
+        file: "src/content/navigation/nav.yaml"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Href", name: "href", widget: "string" }
+              - label: "Children"
+                name: "children"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Href", name: "href", widget: "string" }
+
+  - name: "footer"
+    label: "Footer"
+    folder: "src/content/footer"
+    create: false
+    files:
+      - label: "Footer Content"
+        name: "footer"
+        file: "src/content/footer/footer.yaml"
+        fields:
+          - { label: "Description", name: "description", widget: "text", required: false }
+          - label: "Columns"
+            name: "columns"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - label: "Links"
+                name: "links"
+                widget: "list"
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Href", name: "href", widget: "string" }
+          - { label: "Bottom Text", name: "bottomText", widget: "string", required: false }

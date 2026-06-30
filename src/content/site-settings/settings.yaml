@@ -1,0 +1,23 @@
+siteName: "Ashaz Autoz"
+tagline: "Premium Automotive Services"
+description: "Your trusted automotive partner in Timor-Leste. Vehicle sales, imports, rentals, workshop, and premium automotive services."
+url: "https://ashazautoz.com"
+favicon: "/favicon.svg"
+phone:
+  - "+670 7715 4379"
+  - "+670 7524 9000"
+  - "+670 7379 7973"
+email: "info@ashazautoz.com"
+address: "Ponte Foun, Comoro, Dili, Timor-Leste"
+workingHours: "Mon–Sat, 8:00–17:30"
+social:
+  facebook: "https://facebook.com/ashazautoz"
+  instagram: "https://instagram.com/ashazautoz"
+  youtube: "https://youtube.com/@ashazautoz"
+  whatsapp: "+67077154379"
+googleMapsUrl: "https://goo.gl/maps/example"
+currency: "USD"
+languages:
+  - en
+  - tet
+  - id

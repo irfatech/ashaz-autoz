@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page Not Found" seo={{ noIndex: true }}>
+  <div class="min-h-screen flex items-center justify-center">
+    <div class="text-center px-4">
+      <div class="text-[150px] sm:text-[200px] font-black text-accent/10 leading-none mb-4">404</div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-4">Page Not Found</h1>
+      <p class="text-muted text-lg max-w-md mx-auto mb-8">
+        The page you're looking for doesn't exist or has been moved.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200 text-lg px-8 py-4">Back to Home</a>
+        <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl border-btn-secondary-border text-body font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200 text-lg px-8 py-4">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

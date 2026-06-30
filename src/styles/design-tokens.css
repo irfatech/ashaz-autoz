@@ -1,0 +1,94 @@
+/* ==========================================================================
+   🎨 DESIGN TOKENS
+   The ONE file to edit when re-theming your entire site.
+   Change the values below to transform the visual identity.
+   ========================================================================== */
+
+@theme {
+  /* ---- 🌈 Brand Colors ---- */
+  --color-brand-50: #fdf6e9;
+  --color-brand-100: #f9eac8;
+  --color-brand-200: #f0d48a;
+  --color-brand-300: #e0c06a;
+  --color-brand-400: #c9a84c;
+  --color-brand-500: #a88a2e;
+  --color-brand-600: #8a6e20;
+  --color-brand-700: #6b5416;
+  --color-brand-800: #4d3d0e;
+  --color-brand-900: #2e2508;
+
+  /* ---- ⚪️ Neutral Palette ---- */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #8a8a8a;
+  --color-neutral-600: #737373;
+  --color-neutral-700: #4a4a4a;
+  --color-neutral-800: #2d2d2d;
+  --color-neutral-900: #1a1a1a;
+  --color-neutral-950: #0d0d0d;
+
+  /* ---- ✅ Status Colors ---- */
+  --color-success: #22c55e;
+  --color-warning: #eab308;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* ---- 🔤 Typography ---- */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-heading: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+
+  /* ---- 📐 Border Radius ---- */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ---- 🔦 Shadows ---- */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* ---- 🎯 Semantic Tokens (overridden per theme in themes.css) ---- */
+  --color-page: #fafafa;
+  --color-card: #ffffff;
+  --color-section: #f5f5f5;
+  --color-inverse: #1a1a1a;
+  --color-body: #2d2d2d;
+  --color-muted: #8a8a8a;
+  --color-inverted: #ffffff;
+  --color-accent: #c9a84c;
+  --color-accent-hover: #e0c06a;
+  --color-accent-text: #1a1a1a;
+  --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  --color-accent-border: #f0d48a;
+  --color-border: color-mix(in srgb, var(--color-muted) 10%, transparent);
+  --color-border-strong: #d4d4d4;
+  --color-hero: #1a1a1a;
+  --color-nav-bg: color-mix(in srgb, #ffffff 70%, transparent);
+  --color-nav-border: color-mix(in srgb, var(--color-muted) 10%, transparent);
+  --color-btn-secondary-border: #2d2d2d;
+  --color-btn-secondary-text: #2d2d2d;
+  --color-btn-secondary-hover-bg: #2d2d2d;
+  --color-btn-secondary-hover-text: #ffffff;
+  --color-input-border: #d4d4d4;
+  --color-selection-mix: #c9a84c;
+
+  /* ---- 🎬 Animations ---- */
+  --animate-fade-in: fade-in 0.6s ease-out;
+  --animate-slide-up: slide-up 0.6s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(1.5rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

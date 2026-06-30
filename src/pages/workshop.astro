@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+
+const services = [
+  { title: "Oil & Filter Change", description: "Regular oil changes to keep your engine running smoothly." },
+  { title: "Brake Service", description: "Complete brake inspection, repair, and replacement." },
+  { title: "Engine Diagnostics", description: "Advanced computer diagnostics for all makes and models." },
+  { title: "Transmission Service", description: "Automatic and manual transmission maintenance and repair." },
+  { title: "Tire Service", description: "Tire rotation, balancing, and replacement." },
+  { title: "Air Conditioning", description: "A/C diagnosis, repair, and recharging services." },
+  { title: "Electrical Systems", description: "Battery, alternator, starter, and electrical repairs." },
+  { title: "Scheduled Maintenance", description: "Comprehensive service based on manufacturer recommendations." },
+];
+---
+
+<BaseLayout
+  title="Workshop"
+  description="Professional workshop and maintenance services in Dili, Timor-Leste."
+>
+  <div class="pt-24">
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Breadcrumb path="/workshop/" class="mb-8" />
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div>
+            <span class="text-accent font-semibold text-sm uppercase tracking-widest">Workshop</span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mt-3 mb-6">
+              Professional<br />
+              <span class="gradient-text">Workshop Services</span>
+            </h1>
+            <p class="text-muted text-lg leading-relaxed mb-8">
+              Our fully equipped workshop in Comoro, Dili, staffed by experienced technicians, handles everything from routine maintenance to major repairs. We use modern diagnostic equipment and genuine parts to ensure quality service every time.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200 text-lg px-8 py-4">Book a Service</a>
+              <a href="tel:+67077154379" class="inline-flex items-center justify-center gap-2 rounded-xl border-btn-secondary-border text-body font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200 text-lg px-8 py-4">Call 7715 4379</a>
+            </div>
+          </div>
+          <div class="aspect-[4/3] rounded-2xl overflow-hidden">
+            <img src="/images/workshop.jpg" alt="Workshop" class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-20 lg:py-24 bg-section">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="section-title">
+          <h2>Workshop <span class="gradient-text">Services</span></h2>
+          <p>Everything your vehicle needs, all in one place.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {services.map((s) => (
+            <div class="card p-5 flex items-start gap-4">
+              <div class="shrink-0 mt-1 h-8 w-8 rounded-lg bg-accent-soft flex items-center justify-center">
+                <svg class="h-4 w-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+              </div>
+              <div>
+                <h3 class="font-medium text-sm">{s.title}</h3>
+                <p class="text-muted text-xs mt-1">{s.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-6">Why Choose Our <span class="gradient-text">Workshop</span></h2>
+            <ul class="space-y-4">
+              <li class="flex gap-4">
+                <span class="shrink-0 h-6 w-6 rounded-full bg-accent-soft flex items-center justify-center mt-0.5">
+                  <svg class="h-3.5 w-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <div><strong class="font-semibold">Experienced Technicians</strong><p class="text-muted text-sm mt-1">Skilled mechanics with years of experience across all vehicle makes.</p></div>
+              </li>
+              <li class="flex gap-4">
+                <span class="shrink-0 h-6 w-6 rounded-full bg-accent-soft flex items-center justify-center mt-0.5">
+                  <svg class="h-3.5 w-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <div><strong class="font-semibold">Modern Equipment</strong><p class="text-muted text-sm mt-1">State-of-the-art diagnostic tools and workshop equipment.</p></div>
+              </li>
+              <li class="flex gap-4">
+                <span class="shrink-0 h-6 w-6 rounded-full bg-accent-soft flex items-center justify-center mt-0.5">
+                  <svg class="h-3.5 w-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <div><strong class="font-semibold">Genuine Parts</strong><p class="text-muted text-sm mt-1">We use quality parts to ensure lasting repairs.</p></div>
+              </li>
+              <li class="flex gap-4">
+                <span class="shrink-0 h-6 w-6 rounded-full bg-accent-soft flex items-center justify-center mt-0.5">
+                  <svg class="h-3.5 w-3.5 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <div><strong class="font-semibold">Fair Pricing</strong><p class="text-muted text-sm mt-1">Transparent quotes with no hidden charges.</p></div>
+              </li>
+            </ul>
+          </div>
+          <div class="aspect-[4/3] rounded-2xl overflow-hidden">
+            <img src="/images/workshop-2.jpg" alt="Workshop equipment" class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

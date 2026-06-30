@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@import "./design-tokens.css";
+@import "./themes.css";
+@import "./utilities.css";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-selection-mix) 20%, transparent);
+    color: var(--color-body);
+  }
+
+  .dark ::selection {
+    background-color: color-mix(in srgb, var(--color-selection-mix) 30%, transparent);
+    color: var(--color-inverted);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

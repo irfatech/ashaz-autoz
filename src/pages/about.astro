@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+
+const team = [
+  { name: "Ashaz", role: "Founder & CEO", bio: "Over 20 years of experience in the automotive industry.", initials: "A" },
+  { name: "Maria", role: "Operations Manager", bio: "Ensuring smooth day-to-day operations and customer satisfaction.", initials: "M" },
+  { name: "João", role: "Head Mechanic", bio: "Master technician with 15 years of workshop experience.", initials: "J" },
+  { name: "Ana", role: "Customer Relations", bio: "Dedicated to providing exceptional customer service.", initials: "A" },
+];
+
+const values = [
+  { title: "Integrity", description: "Honest, transparent dealings with every customer." },
+  { title: "Quality", description: "Only the best vehicles and services for our clients." },
+  { title: "Reliability", description: "We deliver on our promises, every time." },
+  { title: "Community", description: "Committed to serving Timor-Leste with pride." },
+];
+---
+
+<BaseLayout
+  title="About Us"
+  description="Learn about Ashaz Autoz — your trusted automotive partner in Timor-Leste since 2010."
+>
+  <div class="pt-24">
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Breadcrumb path="/about/" class="mb-8" />
+        <div class="max-w-3xl">
+          <span class="text-accent font-semibold text-sm uppercase tracking-widest">About Us</span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mt-3 mb-6">
+            Timor-Leste's Trusted<br />
+            <span class="gradient-text">Automotive Partner</span>
+          </h1>
+          <p class="text-muted text-lg leading-relaxed">
+            Ashaz Autoz has been serving the automotive needs of Timor-Leste from our yard in Ponte Foun, 
+            Comoro, Dili. With a deep understanding of the local market and strong international networks, 
+            we provide quality vehicles and professional services that our community can rely on.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-20 lg:py-24 bg-section">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="aspect-[4/3] rounded-2xl overflow-hidden">
+            <img src="/images/about-1.jpg" alt="Ashaz Autoz team" class="h-full w-full object-cover" loading="lazy" />
+          </div>
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-semibold mb-6">Our <span class="gradient-text">Story</span></h2>
+            <div class="space-y-4 text-muted leading-relaxed">
+              <p>Founded with a vision to bring quality automotive services to Timor-Leste, Ashaz Autoz started as a small workshop and has grown into a comprehensive automotive service provider.</p>
+              <p>Over the years, we've built strong relationships with suppliers in Japan, Singapore, and Australia, allowing us to offer a wide selection of quality vehicles at competitive prices.</p>
+              <p>Today, we are proud to serve hundreds of satisfied customers across Dili and throughout Timor-Leste, providing everything from vehicle sales to professional workshop services.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="section-title">
+          <h2>Our <span class="gradient-text">Values</span></h2>
+          <p>The principles that guide everything we do.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {values.map((v) => (
+            <div class="card p-6 text-center">
+              <h3 class="font-semibold text-lg mb-3">{v.title}</h3>
+              <p class="text-muted text-sm">{v.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-20 lg:py-24 bg-section">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="section-title">
+          <h2>Meet Our <span class="gradient-text">Team</span></h2>
+          <p>Dedicated professionals committed to your satisfaction.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {team.map((member) => (
+            <div class="card p-6 text-center group">
+              <div class="mx-auto mb-4 h-24 w-24 rounded-full bg-accent-soft flex items-center justify-center text-accent text-3xl font-bold group-hover:bg-accent group-hover:text-accent-text transition-all duration-300">
+                {member.initials}
+              </div>
+              <h3 class="font-semibold text-lg">{member.name}</h3>
+              <p class="text-accent text-sm font-medium mb-2">{member.role}</p>
+              <p class="text-muted text-sm">{member.bio}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

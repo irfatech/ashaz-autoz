@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { getCollection } from "astro:content";
+
+const images = (await getCollection("gallery")).sort(() => Math.random() - 0.5);
+
+const categories = ["All", "Vehicles", "Workshop", "Events", "Team", "Yard"];
+---
+
+<BaseLayout
+  title="Gallery"
+  description="Browse our gallery showcasing vehicles, workshop, and team at Ashaz Autoz."
+>
+  <div class="pt-24">
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Breadcrumb path="/gallery/" class="mb-8" />
+        <div class="section-title text-left max-w-2xl">
+          <span class="text-accent font-semibold text-sm uppercase tracking-widest">Gallery</span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mt-3 mb-6">
+            Our <span class="gradient-text">Gallery</span>
+          </h1>
+          <p class="text-muted text-lg">
+            A visual look at our vehicles, workshop, team, and facilities.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-10" id="gallery-filters">
+          {categories.map((cat) => (
+            <button
+              class="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 data-[active=true]:bg-accent data-[active=true]:text-accent-text bg-muted/10 text-muted hover:bg-muted/20"
+              data-active={cat === "All" ? "true" : "false"}
+              data-filter={cat.toLowerCase()}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {images.length > 0 ? (
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery-grid">
+            {images.map((item) => (
+              <a
+                href={item.data.image}
+                class="group aspect-square rounded-xl overflow-hidden bg-muted/10 relative"
+                data-category={item.data.category.toLowerCase()}
+                target="_blank"
+              >
+                <img
+                  src={item.data.image}
+                  alt={item.data.title || "Gallery image"}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <svg class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+                </div>
+                {item.data.title && (
+                  <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/60 to-transparent">
+                    <p class="text-white text-sm font-medium">{item.data.title}</p>
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-20">
+            <h3 class="text-xl font-semibold mb-2">Gallery Coming Soon</h3>
+            <p class="text-muted">Check back soon for photos.</p>
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const filters = document.querySelectorAll("[data-filter]");
+  const items = document.querySelectorAll("[data-category]");
+
+  filters.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+
+      filters.forEach((b) => (b.dataset.active = "false"));
+      btn.dataset.active = "true";
+
+      items.forEach((item) => {
+        if (filter === "all" || item.dataset.category === filter) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  });
+</script>

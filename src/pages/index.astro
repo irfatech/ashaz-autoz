@@ -1,0 +1,344 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import VehicleCard from "../components/VehicleCard.astro";
+import BlogCard from "../components/BlogCard.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import { getCollection } from "astro:content";
+
+const featuredVehicles = (await getCollection("vehicles"))
+  .filter((v) => v.data.featured && v.data.status === "Available")
+  .slice(0, 4);
+
+const latestPosts = (await getCollection("blog"))
+  .filter((p) => p.data.published)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const testimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.featured)
+  .slice(0, 3);
+
+const services = [
+  {
+    title: "Vehicle Sales",
+    description: "Premium pre-owned and new vehicles sourced from Japan, Singapore, and Australia.",
+    features: ["Quality inspected", "Competitive pricing", "Financing assistance"],
+    icon: "M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776",
+    href: "/services/vehicle-sales/",
+  },
+  {
+    title: "Vehicle Import",
+    description: "Hassle-free vehicle importation from international markets with full documentation.",
+    features: ["Customs clearance", "Documentation handling", "Door-to-door delivery"],
+    icon: "M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418",
+    href: "/services/vehicle-import/",
+  },
+  {
+    title: "Car Rental",
+    description: "Modern, well-maintained vehicles for short and long-term rental needs.",
+    features: ["Daily & monthly rates", "Airport pickup", "Insurance included"],
+    icon: "M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12",
+    href: "/rentals/",
+  },
+  {
+    title: "Workshop & Maintenance",
+    description: "Full-service workshop with skilled technicians and modern diagnostic equipment.",
+    features: ["Scheduled maintenance", "Major & minor repairs", "Genuine parts"],
+    icon: "M11.42 15.17l-2.01 2.01m0 0l-2.01 2.01m2.01-2.01l-2.01-2.01m2.01 2.01l2.01-2.01m-6.02 0l-2.01-2.01m2.01 2.01l2.01-2.01M12 19.5a7.5 7.5 0 10-7.5-7.5m7.5 7.5H6m6 0h6M6 12a6 6 0 1112 0",
+    href: "/workshop/",
+  },
+];
+
+const whyChooseUs = [
+  {
+    title: "Trusted Since 2010",
+    description: "Over a decade of serving the people of Timor-Leste with quality automotive services.",
+    icon: "M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z",
+  },
+  {
+    title: "Quality Guaranteed",
+    description: "Every vehicle is thoroughly inspected and every service is backed by our quality promise.",
+    icon: "M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z",
+  },
+  {
+    title: "Competitive Pricing",
+    description: "Fair and transparent pricing with no hidden fees. Best value in Timor-Leste.",
+    icon: "M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+  },
+  {
+    title: "Comprehensive Services",
+    description: "From purchase to maintenance, we cover every aspect of your automotive needs.",
+    icon: "M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z",
+  },
+];
+
+const categories = [
+  { name: "Sedans", count: "12", icon: "M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" },
+  { name: "SUVs", count: "8", icon: "M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" },
+  { name: "4x4", count: "6", icon: "M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" },
+  { name: "Trucks", count: "5", icon: "M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" },
+  { name: "Minibuses", count: "4", icon: "M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" },
+  { name: "Luxury", count: "3", icon: "M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" },
+];
+
+const stats = [
+  { label: "Vehicles Sold", value: "500+" },
+  { label: "Happy Clients", value: "1,000+" },
+  { label: "Years Experience", value: "15+" },
+  { label: "Services Offered", value: "8" },
+];
+---
+
+<BaseLayout>
+  <Hero />
+
+  {/* Company Introduction */}
+  <section class="py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div>
+          <span class="text-accent font-semibold text-sm uppercase tracking-widest">Welcome to Ashaz Autoz</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-3 mb-6">
+            Timor-Leste's Premier<br />
+            <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Automotive Destination</span>
+          </h2>
+          <p class="text-muted leading-relaxed text-lg mb-6">
+            At Ashaz Autoz, we're passionate about providing exceptional automotive services to the people of Timor-Leste. From our yard in Ponte Foun, Comoro, Dili, we offer a comprehensive range of services including vehicle sales, imports, rentals, and professional workshop maintenance.
+          </p>
+          <p class="text-muted leading-relaxed mb-8">
+            With over 15 years of experience, we've built a reputation for trust, quality, and reliability. Whether you're looking for your next vehicle, need expert maintenance, or require a rental, our team is here to help.
+          </p>
+          <a href="/about/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200">
+            Learn Our Story
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden">
+            <img src="/images/about-1.jpg" alt="Ashaz Autoz yard" class="h-full w-full object-cover" loading="lazy" />
+          </div>
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden mt-8">
+            <img src="/images/about-2.jpg" alt="Vehicles at Ashaz Autoz" class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Stats */}
+  <section class="bg-inverse py-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {stats.map((stat) => (
+          <div class="text-center">
+            <div class="text-4xl sm:text-5xl font-black text-accent mb-2">{stat.value}</div>
+            <div class="text-white/60 text-sm uppercase tracking-wider">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Featured Vehicles */}
+  {featuredVehicles.length > 0 && (
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            Featured <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Vehicles</span>
+          </h2>
+          <p class="text-muted text-lg max-w-2xl mx-auto">Explore our handpicked selection of premium vehicles available now.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {featuredVehicles.map((vehicle) => (
+            <VehicleCard vehicle={vehicle} />
+          ))}
+        </div>
+        <div class="text-center mt-10">
+          <a href="/vehicles/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-8 py-4 text-lg font-medium hover:bg-accent-hover transition-all duration-200">
+            View All Vehicles
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* Services Overview */}
+  <section class="py-16 sm:py-20 lg:py-24 bg-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+          Our <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Services</span>
+        </h2>
+        <p class="text-muted text-lg max-w-2xl mx-auto">Comprehensive automotive solutions under one roof.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {services.map((service) => (
+          <ServiceCard {...service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Why Choose Us */}
+  <section class="py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+          Why Choose <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Ashaz Autoz</span>
+        </h2>
+        <p class="text-muted text-lg max-w-2xl mx-auto">What sets us apart from the rest.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {whyChooseUs.map((item) => (
+          <div class="text-center group">
+            <div class="mx-auto mb-5 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-soft text-accent transition-all duration-300 group-hover:bg-accent group-hover:text-accent-text">
+              <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d={item.icon} /></svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-3">{item.title}</h3>
+            <p class="text-muted text-sm leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Vehicle Categories */}
+  <section class="py-16 sm:py-20 lg:py-24 bg-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+          Vehicle <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Categories</span>
+        </h2>
+        <p class="text-muted text-lg max-w-2xl mx-auto">Find the perfect vehicle for your needs.</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {categories.map((cat) => (
+          <a href={`/vehicles/?category=${cat.name.toLowerCase()}`} class="rounded-2xl bg-card border border-border shadow-sm hover:shadow-lg hover:border-accent-border hover:-translate-y-1 transition-all duration-300 p-6 text-center group">
+            <div class="mx-auto mb-3 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-soft text-accent group-hover:bg-accent group-hover:text-accent-text transition-all duration-300">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d={cat.icon} /></svg>
+            </div>
+            <h3 class="font-semibold text-sm">{cat.name}</h3>
+            <p class="text-muted text-xs mt-1">{cat.count} vehicles</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Testimonials */}
+  {testimonials.length > 0 && (
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            What Our <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Clients Say</span>
+          </h2>
+          <p class="text-muted text-lg max-w-2xl mx-auto">Trusted by hundreds of customers across Timor-Leste.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          {testimonials.map((t) => (
+            <TestimonialCard
+              name={t.data.name}
+              content={t.data.content}
+              role={t.data.role}
+              company={t.data.company}
+              avatar={t.data.avatar}
+              rating={t.data.rating}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* Recent Blog Posts */}
+  {latestPosts.length > 0 && (
+    <section class="py-16 sm:py-20 lg:py-24 bg-section">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            Latest <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Articles</span>
+          </h2>
+          <p class="text-muted text-lg max-w-2xl mx-auto">Stay informed with automotive tips, news, and insights.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          {latestPosts.map((post) => (
+            <BlogCard post={post} />
+          ))}
+        </div>
+        <div class="text-center mt-10">
+          <a href="/blog/" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-btn-secondary-border text-body px-6 py-3 font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200">
+            View All Articles
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* Instagram / Social Feed */}
+  <section class="py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+          Follow <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Us</span>
+        </h2>
+        <p class="text-muted text-lg max-w-2xl mx-auto">Stay connected on social media for the latest updates.</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+          <a
+            href="#"
+            class="aspect-square rounded-xl overflow-hidden bg-muted/10 group relative"
+            key={i}
+          >
+            <div class="absolute inset-0 bg-accent/0 group-hover:bg-accent/20 transition-all duration-300 flex items-center justify-center z-10">
+              <svg class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 19.4 19.4 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zM7.6 4C5.6 4 4 5.6 4 7.6V16.4C4 18.4 5.6 20 7.6 20H16.4C18.4 20 20 18.4 20 16.4V7.6C20 5.6 18.4 4 16.4 4H7.6zM17.25 7.5a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+            </div>
+            <img src={`/images/instagram-${i}.jpg`} alt="Instagram post" class="h-full w-full object-cover" loading="lazy" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <section class="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-inverse">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.1),transparent_60%)]" />
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-inverted mb-4">
+        Ready to Get Started?
+      </h2>
+      <p class="text-white/60 text-lg max-w-2xl mx-auto mb-8">
+        Visit our yard in Ponte Foun, Comoro, Dili, or contact us today to discuss your automotive needs.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-8 py-4 text-lg font-medium hover:bg-accent-hover transition-all duration-200">
+          Contact Us Today
+        </a>
+        <a href="tel:+67077154379" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 text-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-all duration-200">
+          Call 7715 4379
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* Google Map */}
+  <section>
+    <div class="h-[400px] w-full bg-muted/10">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3941.123456789!2d125.5!3d-8.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMzMnMDAuMCJTIDEyNcKwMzAnMDAuMCJF!5e0!3m2!1sen!2stl!4v1"
+        width="100%"
+        height="100%"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ashaz Autoz Location"
+      ></iframe>
+    </div>
+  </section>
+</BaseLayout>

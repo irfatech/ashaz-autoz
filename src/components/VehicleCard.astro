@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatPrice, formatMileage, getWhatsAppUrl } from "../lib/site";
+
+interface Props {
+  vehicle: CollectionEntry<"vehicles">;
+}
+
+const { vehicle } = Astro.props;
+const { data } = vehicle;
+const phone = "+67077154379";
+const enquiryMessage = `Hello! I'm interested in the ${data.brand} ${data.model} (${data.year}) - $${data.price.toLocaleString()}. Is it still available?`;
+
+const statusColors: Record<string, string> = {
+  Available: "bg-green-500",
+  Reserved: "bg-yellow-500",
+  Sold: "bg-red-500",
+};
+---
+
+<article class="rounded-2xl bg-card border-border shadow-sm hover:shadow-lg hover:border-accent-border hover:-translate-y-1 transition-all duration-300 overflow-hidden group">
+  <div class="relative aspect-[4/3] overflow-hidden bg-muted/5">
+    <img
+      src={data.images?.[0] || "/images/vehicle-placeholder.svg"}
+      alt={`${data.brand} ${data.model}`}
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      loading="lazy"
+    />
+    <div class={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold text-white ${statusColors[data.status]}`}>
+      {data.status}
+    </div>
+    {data.featured && (
+      <div class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold bg-accent text-accent-text">
+        Featured
+      </div>
+    )}
+  </div>
+
+  <div class="p-5">
+    <h3 class="text-lg font-semibold mb-1">
+      {data.brand} {data.model}
+    </h3>
+    <p class="text-muted text-sm mb-3">{data.year}</p>
+
+    <div class="flex items-baseline gap-1 mb-4">
+      <span class="text-2xl font-bold text-accent">{formatPrice(data.price, data.currency)}</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 text-sm text-muted border-t border-border pt-4 mb-4">
+      <div class="flex items-center gap-2">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/></svg>
+        <span>{formatMileage(data.mileage)}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.712 4.33A9.027 9.027 0 0112 3a9.027 9.027 0 00-4.712 1.33M16.712 4.33A8.986 8.986 0 0112 9a8.986 8.986 0 01-4.712-4.67m8.424 0A8.984 8.984 0 0118.75 9M5.288 4.33A8.984 8.984 0 005.25 9m11.462 0A9 9 0 0112 18.75 9 9 0 015.288 9m11.462 0H5.288"/></svg>
+        <span>{data.fuelType}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 016.82-2.854 60.327 60.327 0 016.82 2.854m-13.64 0A9.75 9.75 0 0112 3.75a9.75 9.75 0 018.74 6.397m-13.64 0A9.75 9.75 0 0112 5.25a9.75 9.75 0 018.74 6.397M20.74 12.75A9.75 9.75 0 0112 19.5a9.75 9.75 0 01-8.74-6.747m13.64 0A.75.75 0 0012 12.75a9.75 9.75 0 016.116 4.498m-13.64 0A.75.75 0 0012 12.75"/></svg>
+        <span>{data.transmission}</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+        <span>{data.driveType}</span>
+      </div>
+    </div>
+
+    <div class="flex gap-2">
+      <a href={`/vehicles/${vehicle.id}/`} class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-btn-secondary-border text-btn-secondary-text px-4 py-2.5 text-sm font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200">
+        View Details
+      </a>
+      <a
+        href={getWhatsAppUrl(phone, enquiryMessage)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-4 py-2.5 text-sm font-medium hover:bg-accent-hover transition-all duration-200"
+      >
+        Enquire
+      </a>
+    </div>
+  </div>
+</article>

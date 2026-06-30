@@ -1,0 +1,79 @@
+/* ==========================================================================
+   🌗 THEME MAPPINGS
+   Dark mode overrides for semantic tokens defined in @theme (design-tokens.css).
+   To add a new theme, add another selector (e.g. [data-theme="blue"]).
+   ========================================================================== */
+
+.dark {
+  --color-page: var(--color-neutral-950);
+  --color-card: var(--color-neutral-900);
+  --color-section: var(--color-neutral-900);
+  --color-inverse: #ffffff;
+
+  --color-body: #ffffff;
+  --color-muted: var(--color-neutral-500);
+  --color-inverted: var(--color-neutral-950);
+
+  --color-accent: var(--color-brand-300);
+  --color-accent-hover: var(--color-brand-400);
+  --color-accent-text: var(--color-neutral-950);
+  --color-accent-border: var(--color-brand-600);
+
+  --color-border: color-mix(in srgb, #ffffff 10%, transparent);
+  --color-border-strong: var(--color-neutral-700);
+
+  --color-hero: var(--color-neutral-950);
+
+  --color-nav-bg: color-mix(in srgb, var(--color-neutral-950) 60%, transparent);
+  --color-nav-border: color-mix(in srgb, #ffffff 10%, transparent);
+
+  --color-btn-secondary-border: #ffffff;
+  --color-btn-secondary-text: #ffffff;
+  --color-btn-secondary-hover-bg: #ffffff;
+  --color-btn-secondary-hover-text: var(--color-neutral-900);
+
+  --color-input-border: var(--color-neutral-700);
+
+  --color-selection-mix: var(--color-brand-400);
+}
+
+/* ==========================================================================
+   🌊 OCEAN THEME
+   Example alternate color scheme — swap gold for blue/teal.
+   Try it: <html data-theme="ocean">
+   ========================================================================== */
+
+[data-theme="ocean"] {
+  /* ---- Brand Colors (overrides design-tokens.css) ---- */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+
+  /* ---- Accent mapped from brand ---- */
+  --color-accent: var(--color-brand-500);
+  --color-accent-hover: var(--color-brand-400);
+  --color-accent-text: #ffffff;
+  --color-accent-soft: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+  --color-accent-border: var(--color-brand-300);
+  --color-selection-mix: var(--color-brand-500);
+
+  /* Invert surfaces */
+  --color-hero: var(--color-brand-900);
+}
+
+[data-theme="ocean"].dark {
+  --color-accent: var(--color-brand-400);
+  --color-accent-hover: var(--color-brand-500);
+  --color-accent-text: #ffffff;
+  --color-accent-soft: color-mix(in srgb, var(--color-brand-500) 20%, transparent);
+  --color-accent-border: var(--color-brand-700);
+  --color-selection-mix: var(--color-brand-400);
+  --color-hero: var(--color-brand-900);
+}

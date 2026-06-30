@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import VehicleCard from "../components/VehicleCard.astro";
+import { getCollection } from "astro:content";
+
+const allVehicles = (await getCollection("vehicles"))
+  .filter((v) => v.data.status !== "Sold")
+  .sort((a, b) => b.data.year - a.data.year);
+---
+
+<BaseLayout
+  title="Vehicle Inventory"
+  description="Browse our selection of quality vehicles for sale in Timor-Leste."
+>
+  <div class="pt-24">
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Breadcrumb path="/vehicles/" class="mb-8" />
+        <div class="section-title text-left max-w-2xl">
+          <span class="text-accent font-semibold text-sm uppercase tracking-widest">Our Inventory</span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mt-3 mb-6">
+            Vehicle <span class="gradient-text">Inventory</span>
+          </h1>
+          <p class="text-muted text-lg">
+            Browse our handpicked selection of quality vehicles. Each vehicle is thoroughly inspected and ready for its new owner.
+          </p>
+        </div>
+
+        {allVehicles.length > 0 ? (
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
+            {allVehicles.map((vehicle) => (
+              <VehicleCard vehicle={vehicle} />
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-20">
+            <div class="text-6xl mb-4 opacity-20">🚗</div>
+            <h3 class="text-xl font-semibold mb-2">No Vehicles Currently Listed</h3>
+            <p class="text-muted">Check back soon for new arrivals or contact us directly.</p>
+            <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200 mt-6 inline-flex">Contact Us</a>
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

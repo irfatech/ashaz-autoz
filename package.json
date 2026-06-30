@@ -1,0 +1,29 @@
+{
+  "name": "ashaz-autoz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ashaz Autoz - Premium Automotive Services in Timor-Leste",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "eslint src/",
+    "format": "prettier --write src/",
+    "astro": "astro"
+  },
+  "keywords": ["automotive", "timor-leste", "astro", "tailwindcss"],
+  "author": "Ashaz Autoz",
+  "license": "MIT",
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.0",
+    "@astrojs/sitemap": "^3.3.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^7.0.3",
+    "astro-icon": "^1.1.0",
+    "sharp": "^0.35.2",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f0f0f0"/>
+  <g transform="translate(400,280)">
+    <rect x="-40" y="-30" width="80" height="60" rx="5" fill="#c9a84c" opacity="0.4"/>
+    <line x1="-30" y1="-10" x2="30" y2="-10" stroke="#c9a84c" stroke-width="3" opacity="0.3"/>
+    <line x1="-30" y1="5" x2="20" y2="5" stroke="#c9a84c" stroke-width="2" opacity="0.2"/>
+    <line x1="-30" y1="15" x2="15" y2="15" stroke="#c9a84c" stroke-width="2" opacity="0.2"/>
+  </g>
+  <text x="400" y="380" font-family="Arial, sans-serif" font-size="14" fill="#8a8a8a" text-anchor="middle">Article Image</text>
+</svg>

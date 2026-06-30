@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ashazautoz.com/sitemap-index.xml

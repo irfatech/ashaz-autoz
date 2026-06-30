@@ -1,0 +1,37 @@
+description: "Your trusted automotive partner in Timor-Leste. Premium vehicle sales, imports, rentals, and workshop services since 2010."
+columns:
+  - title: "Quick Links"
+    links:
+      - label: Home
+        href: /
+      - label: About Us
+        href: /about/
+      - label: Services
+        href: /services/
+      - label: Vehicles
+        href: /vehicles/
+      - label: Blog
+        href: /blog/
+      - label: Contact
+        href: /contact/
+  - title: "Services"
+    links:
+      - label: Vehicle Sales
+        href: /services/vehicle-sales/
+      - label: Vehicle Import
+        href: /services/vehicle-import/
+      - label: Car Rental
+        href: /rentals/
+      - label: Workshop
+        href: /workshop/
+      - label: Fleet Services
+        href: /services/fleet-services/
+  - title: "Support"
+    links:
+      - label: FAQ
+        href: /faq/
+      - label: Privacy Policy
+        href: /privacy/
+      - label: Terms & Conditions
+        href: /terms/
+bottomText: "© 2024 Ashaz Autoz. All rights reserved."

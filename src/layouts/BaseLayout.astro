@@ -1,0 +1,60 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import ThemePicker from "../components/ThemePicker.astro";
+import SEO from "../components/SEO.astro";
+import type { SEOProps } from "../lib/seo";
+
+export interface Props {
+  seo?: SEOProps;
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const { seo, title, description, image } = Astro.props;
+const seoProps = { ...seo, title, description, image };
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <SEO {...seoProps} />
+    <script is:inline>
+      (function () {
+        // Restore dark mode
+        const theme = localStorage.getItem("theme");
+        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        }
+        // Restore color palette theme
+        const palette = localStorage.getItem("theme-palette");
+        if (palette && palette !== "brand") {
+          document.documentElement.setAttribute("data-theme", palette);
+        }
+      })();
+    </script>
+  </head>
+  <body class="flex flex-col min-h-screen bg-page text-body font-sans antialiased">
+    <Navbar />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <ThemePicker />
+    <WhatsAppButton />
+  </body>
+</html>

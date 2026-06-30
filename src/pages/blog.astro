@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import BlogCard from "../components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((p) => p.data.published)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const categories = [...new Set(posts.map((p) => p.data.category))];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Automotive tips, news, and insights from Ashaz Autoz."
+>
+  <div class="pt-24">
+    <section class="py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Breadcrumb path="/blog/" class="mb-8" />
+        <div class="section-title text-left max-w-2xl">
+          <span class="text-accent font-semibold text-sm uppercase tracking-widest">Blog</span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mt-3 mb-6">
+            Latest <span class="gradient-text">Articles</span>
+          </h1>
+          <p class="text-muted text-lg">
+            Automotive tips, industry news, and insights from the Ashaz Autoz team.
+          </p>
+        </div>
+
+        {categories.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-10">
+            <a href="/blog/" class="px-5 py-2 rounded-full text-sm font-medium bg-accent text-accent-text">All</a>
+            {categories.map((cat) => (
+              <a
+                href={`/blog/?category=${cat.toLowerCase()}`}
+                class="px-5 py-2 rounded-full text-sm font-medium bg-muted/10 text-muted hover:bg-muted/20 transition-colors"
+              >
+                {cat}
+              </a>
+            ))}
+          </div>
+        )}
+
+        {posts.length > 0 ? (
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {posts.map((post) => (
+              <BlogCard post={post} />
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-20">
+            <h3 class="text-xl font-semibold mb-2">No Articles Yet</h3>
+            <p class="text-muted">Check back soon for new content.</p>
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

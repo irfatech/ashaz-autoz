@@ -1,0 +1,61 @@
+---
+import { buildSEO } from "../lib/seo";
+import type { SEOProps } from "../lib/seo";
+
+const {
+  title,
+  description,
+  image,
+  canonical,
+  noIndex,
+  type,
+  publishedTime,
+  author,
+  breadcrumbs,
+} = buildSEO(Astro.props as SEOProps);
+
+const schemaOrg = breadcrumbs
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbs.map((crumb, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: crumb.label,
+        item: `${Astro.site}${crumb.href}`,
+      })),
+    }
+  : null;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical || Astro.url.href} />
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical || Astro.url.href} />
+<meta property="og:image" content={new URL(image, Astro.site).href} />
+<meta property="og:site_name" content="Ashaz Autoz" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image, Astro.site).href} />
+
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{author && <meta name="author" content={author} />}
+{noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+<script type="application/ld+json" set:html={schemaOrg && JSON.stringify(schemaOrg)} />
+
+{breadcrumbs && (
+  <nav aria-label="Breadcrumb" class="sr-only">
+    <ol>
+      {breadcrumbs.map((crumb) => (
+        <li><a href={crumb.href}>{crumb.label}</a></li>
+      ))}
+    </ol>
+  </nav>
+)}

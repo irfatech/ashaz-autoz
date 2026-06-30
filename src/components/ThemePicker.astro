@@ -1,0 +1,92 @@
+---
+const themes = [
+  { id: "brand", label: "Brand", color: "#c9a84c" },
+  { id: "ocean", label: "Ocean", color: "#3b82f6" },
+];
+---
+
+<div class="theme-picker" id="theme-picker">
+  {themes.map((t) => (
+    <button
+      class="theme-dot"
+      data-theme-id={t.id}
+      style={`background:${t.color}`}
+      title={t.label}
+      aria-label={`Switch to ${t.label} theme`}
+    />
+  ))}
+</div>
+
+<style>
+  .theme-picker {
+    position: fixed;
+    bottom: 8rem;
+    right: 1.5rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (min-width: 640px) {
+    .theme-picker {
+      bottom: 9rem;
+      right: 2rem;
+    }
+  }
+
+  .theme-dot {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .theme-dot:hover {
+    transform: scale(1.2);
+  }
+
+  .theme-dot.active {
+    border-color: var(--color-body);
+    box-shadow: 0 0 0 2px var(--color-card);
+  }
+</style>
+
+<script>
+  const picker = document.getElementById("theme-picker");
+  const dots = picker?.querySelectorAll(".theme-dot");
+
+  function getActiveTheme() {
+    return document.documentElement.getAttribute("data-theme") || "brand";
+  }
+
+  function setTheme(themeId) {
+    const html = document.documentElement;
+    if (themeId === "brand") {
+      html.removeAttribute("data-theme");
+    } else {
+      html.setAttribute("data-theme", themeId);
+    }
+    localStorage.setItem("theme-palette", themeId);
+    dots?.forEach((dot) => {
+      dot.classList.toggle("active", dot.dataset.themeId === themeId);
+    });
+  }
+
+  // Init from localStorage
+  const saved = localStorage.getItem("theme-palette") || "brand";
+  setTheme(saved);
+
+  dots?.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      setTheme(dot.dataset.themeId);
+    });
+  });
+</script>

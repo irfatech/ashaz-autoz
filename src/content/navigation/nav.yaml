@@ -1,0 +1,19 @@
+items:
+  - label: Home
+    href: /
+  - label: About
+    href: /about/
+  - label: Services
+    href: /services/
+  - label: Vehicles
+    href: /vehicles/
+  - label: Rentals
+    href: /rentals/
+  - label: Workshop
+    href: /workshop/
+  - label: Gallery
+    href: /gallery/
+  - label: Blog
+    href: /blog/
+  - label: Contact
+    href: /contact/
