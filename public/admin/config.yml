@@ -2,7 +2,7 @@
 
 backend:
   name: github
-  repo: your-org/ashaz-autoz
+  repo: irfatech/ashaz-autoz
   branch: main
 
 media_folder: "public/images"

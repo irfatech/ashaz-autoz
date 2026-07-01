@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://irfatech.github.io/ashaz-autoz/sitemap-index.xml
+Sitemap: https://ashazautoz.com/sitemap-index.xml

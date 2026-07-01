@@ -1,25 +1,24 @@
 const CACHE_NAME = "ashaz-autoz-v1";
-const BASE = self.location.pathname.replace(/\/sw\.js$/, "");
 
 const PRECACHE_URLS = [
-  `${BASE}/`,
-  `${BASE}/about/`,
-  `${BASE}/services/`,
-  `${BASE}/vehicles/`,
-  `${BASE}/contact/`,
-  `${BASE}/install/`,
-  `${BASE}/fonts/inter-latin.woff2`,
-  `${BASE}/fonts/bruno-ace-latin.woff2`,
-  `${BASE}/fonts/lato-latin-300.woff2`,
-  `${BASE}/fonts/lato-latin-400.woff2`,
-  `${BASE}/fonts/lato-latin-700.woff2`,
-  `${BASE}/manifest.json`,
-  `${BASE}/favicon.svg`,
-  `${BASE}/apple-touch-icon.png`,
-  `${BASE}/pwa-192x192.png`,
-  `${BASE}/pwa-512x512.png`,
-  `${BASE}/ashaz-logo.png`,
-  `${BASE}/icon.png`,
+  "/",
+  "/about/",
+  "/services/",
+  "/vehicles/",
+  "/contact/",
+  "/install/",
+  "/fonts/inter-latin.woff2",
+  "/fonts/bruno-ace-latin.woff2",
+  "/fonts/lato-latin-300.woff2",
+  "/fonts/lato-latin-400.woff2",
+  "/fonts/lato-latin-700.woff2",
+  "/manifest.json",
+  "/favicon.svg",
+  "/apple-touch-icon.png",
+  "/pwa-192x192.png",
+  "/pwa-512x512.png",
+  "/ashaz-logo.png",
+  "/icon.png",
 ];
 
 self.addEventListener("install", (event) => {
@@ -68,7 +67,7 @@ async function networkFirst(request) {
   } catch {
     const cached = await caches.match(request);
     if (cached) return cached;
-    return caches.match(`${BASE}/`);
+    return caches.match("/");
   }
 }
 

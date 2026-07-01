@@ -5,8 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 
 export default defineConfig({
-  site: "https://irfatech.github.io",
-  base: "/ashaz-autoz",
+  site: "https://ashazautoz.com",
   output: "static",
   trailingSlash: "always",
   build: {
