@@ -166,3 +166,30 @@ const phoneDisplay = (p: string) => phoneClean(p).replace(/(\d{4})(\d{4})(\d+)?/
     </section>
   </div>
 </BaseLayout>
+
+<script define:vars={{ whatsappNumber: phoneClean(settings.social?.whatsapp ?? settings.phone[0]) }}>
+  document.getElementById("contact-form")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const name = form.querySelector("#name").value.trim();
+    const email = form.querySelector("#email").value.trim();
+    const phone = form.querySelector("#phone").value.trim();
+    const subject = form.querySelector("#subject").value;
+    const message = form.querySelector("#message").value.trim();
+
+    const text = [
+      `*New enquiry from ashazautoz.com*`,
+      ``,
+      `*Name:* ${name}`,
+      `*Email:* ${email}`,
+      `*Phone:* ${phone}`,
+      `*Subject:* ${subject || "General"}`,
+      ``,
+      `*Message:*`,
+      `${message}`,
+    ].join("\n");
+
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  });
+</script>

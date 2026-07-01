@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  video: CollectionEntry<"tiktok">;
+  featured?: boolean;
+}
+
+const { video, featured } = Astro.props;
+const { title, tiktokUrl, thumbnail, caption, category } = video.data;
+const placeholder = "/images/vehicle-placeholder.svg";
+---
+
+<div class="tiktok-card group relative overflow-hidden rounded-xl bg-card shadow-md border border-border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 {featured ? 'sm:col-span-2 sm:row-span-2' : ''}">
+  <div class="relative aspect-[9/16] overflow-hidden bg-muted/10 cursor-pointer" data-tiktok-url={tiktokUrl}>
+    {
+      thumbnail ? (
+        <img src={thumbnail} alt={title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+      ) : (
+        <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/5">
+          <svg class="w-12 h-12 text-accent/40" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.9 2.89 2.89 0 0 1-2.88-2.89 2.89 2.89 0 0 1 2.88-2.89c.39 0 .76.08 1.1.22V8.68a6.37 6.37 0 0 0-1.1-.12 6.34 6.34 0 0 0-6.33 6.34 6.34 6.34 0 0 0 6.33 6.34 6.34 6.34 0 0 0 6.33-6.34V7.05a8.24 8.24 0 0 0 4.78 1.64v-2a4.84 4.84 0 0 1-1.1.02z"/></svg>
+        </div>
+      )
+    }
+    <div class="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+      <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white/90 shadow-lg transition-transform duration-300 group-hover:scale-110">
+        <svg class="w-6 h-6 text-accent ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
+      <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent text-accent-text mb-2">{category}</span>
+      <h3 class="text-white font-semibold text-sm leading-snug">{title}</h3>
+    </div>
+  </div>
+  {
+    caption && (
+      <div class="p-3">
+        <p class="text-muted text-xs leading-relaxed line-clamp-2">{caption}</p>
+      </div>
+    )
+  }
+</div>
+
+<script>
+  document.querySelectorAll("[data-tiktok-url]").forEach((el) => {
+    el.addEventListener("click", function () {
+      const url = this.dataset.tiktokUrl;
+      const match = url.match(/\/video\/(\d+)/);
+      if (!match) return;
+      const videoId = match[1];
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.tiktok.com/embed/v2/${videoId}`;
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.style.border = "0";
+      iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
+      iframe.loading = "lazy";
+      iframe.title = this.querySelector("h3")?.textContent || "TikTok Video";
+      this.innerHTML = "";
+      this.appendChild(iframe);
+    });
+  });
+</script>
+
+<style>
+  .tik-tok-card {
+    break-inside: avoid;
+  }
+</style>

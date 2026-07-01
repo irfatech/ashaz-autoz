@@ -218,6 +218,23 @@ collections:
                   - { label: "Label", name: "label", widget: "string" }
                   - { label: "Href", name: "href", widget: "string" }
 
+  - name: "tiktok"
+    label: "TikTok Videos"
+    folder: "src/content/tiktok"
+    create: true
+    slug: "{{slug}}"
+    extension: yaml
+    format: yaml
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "TikTok URL", name: "tiktokUrl", widget: "string" }
+      - { label: "Thumbnail", name: "thumbnail", widget: "image", required: false, hint: "Upload a preview image. If empty, a placeholder will show." }
+      - { label: "Caption", name: "caption", widget: "text", required: false }
+      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, required: false }
+      - { label: "Date", name: "date", widget: "datetime", required: false }
+
   - name: "footer"
     label: "Footer"
     files:

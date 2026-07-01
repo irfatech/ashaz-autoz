@@ -12,9 +12,10 @@ export interface Props {
   title?: string;
   description?: string;
   image?: string;
+  preloadHero?: boolean;
 }
 
-const { seo, title, description, image } = Astro.props;
+const { seo, title, description, image, preloadHero } = Astro.props;
 const seoProps = { ...seo, title, description, image };
 ---
 
@@ -26,7 +27,7 @@ const seoProps = { ...seo, title, description, image };
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="preload" as="image" href="/images/hero-bg.jpg" />
+    {preloadHero && <link rel="preload" as="image" href="/images/hero-bg.jpg" />}
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-latin.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bruno-ace-latin.woff2" />
     <SEO {...seoProps} />
@@ -54,7 +55,7 @@ const seoProps = { ...seo, title, description, image };
       <slot />
     </main>
     <Footer />
-    <ThemePicker />
+    <!-- <ThemePicker /> -->
     <WhatsAppButton />
   </body>
 </html>

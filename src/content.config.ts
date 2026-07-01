@@ -178,6 +178,20 @@ const siteSettings = defineCollection({
   }),
 });
 
+const tiktok = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/tiktok" }),
+  schema: z.object({
+    title: z.string(),
+    tiktokUrl: z.string(),
+    thumbnail: z.string().optional(),
+    caption: z.string().optional(),
+    category: z.string().default("General"),
+    featured: z.boolean().default(false),
+    order: z.number({ coerce: true }).int().default(0),
+    date: z.date({ coerce: true }).optional(),
+  }),
+});
+
 const navigation = defineCollection({
   loader: glob({ pattern: "nav.yaml", base: "./src/content/navigation" }),
   schema: z.object({
@@ -220,4 +234,5 @@ export const collections = {
   "site-settings": siteSettings,
   navigation,
   footer,
+  tiktok,
 };
