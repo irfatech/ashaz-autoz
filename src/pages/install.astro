@@ -1,0 +1,195 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Install App - Ashaz Autoz"
+  description="Install Ashaz Autoz as a standalone app for the best experience on your device."
+>
+  <section class="py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mx-auto mb-6 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+        <svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+        </svg>
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold tracking-tight mb-4">
+        Install <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">App</span>
+      </h1>
+      <p class="text-muted text-lg max-w-xl mx-auto mb-10">
+        Get the full Ashaz Autoz experience with offline access, faster loading, and a dedicated app window.
+      </p>
+
+      <div id="pwa-install-section">
+        <div id="pwa-install-ready" class="hidden">
+          <button
+            id="pwa-page-install-btn"
+            class="inline-flex items-center gap-3 rounded-xl bg-accent text-accent-text px-8 py-4 text-lg font-medium hover:bg-accent-hover transition-all duration-200 shadow-lg hover:shadow-xl"
+            aria-label="Install Ashaz Autoz"
+          >
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+            </svg>
+            Install App
+          </button>
+          <p class="text-muted text-sm mt-4">This will add Ashaz Autoz to your device.</p>
+        </div>
+
+        <div id="pwa-install-already" class="hidden">
+          <div class="inline-flex items-center gap-3 rounded-2xl bg-accent-soft text-accent px-6 py-4">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="font-medium">App is already installed on this device!</span>
+          </div>
+        </div>
+
+        <div id="pwa-install-unsupported" class="hidden">
+          <div class="rounded-2xl bg-card border border-border shadow-sm p-8 text-center">
+            <svg class="mx-auto h-12 w-12 text-muted mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+            </svg>
+            <p class="text-muted">
+              Your browser does not support app installation.<br />
+              Please open this page in Chrome, Edge, or Safari.
+            </p>
+          </div>
+        </div>
+
+        <div id="pwa-platform-instructions" class="hidden mt-8">
+          <div class="rounded-2xl bg-card border border-border shadow-sm p-8 lg:p-10 text-left">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
+                <svg id="pwa-instruction-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                </svg>
+              </div>
+              <h2 id="pwa-instruction-title" class="text-xl font-bold">Installation Instructions</h2>
+            </div>
+            <ol id="pwa-instruction-steps" class="space-y-4">
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  (() => {
+    const readySection = document.getElementById("pwa-install-ready");
+    const alreadySection = document.getElementById("pwa-install-already");
+    const unsupportedSection = document.getElementById("pwa-install-unsupported");
+    const instructionsSection = document.getElementById("pwa-platform-instructions");
+    const installBtn = document.getElementById("pwa-page-install-btn");
+    const iconEl = document.getElementById("pwa-instruction-icon");
+    const titleEl = document.getElementById("pwa-instruction-title");
+    const stepsEl = document.getElementById("pwa-instruction-steps");
+
+    let deferredPrompt = null;
+
+    const platformInfo = {
+      android: {
+        icon: "M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z",
+        title: "Install on Android",
+        steps: [
+          'Tap the <strong class="text-accent">⋮</strong> menu button in Chrome',
+          'Select <strong class="text-accent">Install app</strong> or <strong class="text-accent">Add to Home Screen</strong>',
+          'Tap <strong class="text-accent">Install</strong> in the popup',
+          "The app icon will appear on your home screen",
+        ],
+      },
+      ios: {
+        icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z",
+        title: "Install on iPhone / iPad",
+        steps: [
+          'Tap the <strong class="text-accent">Share</strong> button (square with arrow) at the bottom of Safari',
+          'Scroll down and tap <strong class="text-accent">Add to Home Screen</strong>',
+          'Tap <strong class="text-accent">Add</strong> in the top-right corner',
+          "The app icon will appear on your home screen",
+        ],
+      },
+      desktop: {
+        icon: "M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8h2v8H9zm4 0h2v8h-2z",
+        title: "Install on Desktop",
+        steps: [
+          "Click the install icon <strong class=\"text-accent\">⊕</strong> in the address bar",
+          'Alternatively, click <strong class="text-accent">Install Ashaz Autoz</strong> in the browser menu',
+          'Click <strong class="text-accent">Install</strong> in the popup',
+          "The app will open in its own window",
+        ],
+      },
+    };
+
+    function isInstalled() {
+      return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        navigator.standalone === true
+      );
+    }
+
+    function getPlatform() {
+      const ua = navigator.userAgent;
+      if (/android/i.test(ua)) return "android";
+      if (/iphone|ipad|ipod/i.test(ua)) return "ios";
+      return "desktop";
+    }
+
+    function showInstructions(platform) {
+      const info = platformInfo[platform];
+      if (!info) return;
+      iconEl.setAttribute("d", info.icon);
+      titleEl.textContent = info.title;
+      stepsEl.innerHTML = info.steps
+        .map((s, i) => `<li class="flex items-start gap-3"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent text-sm font-bold">${i + 1}</span><span class="pt-0.5 text-body/80">${s}</span></li>`)
+        .join("");
+      instructionsSection.classList.remove("hidden");
+    }
+
+    if (isInstalled()) {
+      alreadySection.classList.remove("hidden");
+    } else {
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        readySection.classList.remove("hidden");
+      });
+
+      installBtn?.addEventListener("click", async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const result = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (result.outcome === "accepted") {
+          readySection.classList.add("hidden");
+          alreadySection.classList.remove("hidden");
+        }
+      });
+
+      const platform = getPlatform();
+      if (platform === "ios") {
+        showInstructions("ios");
+      } else {
+        showInstructions(platform);
+        const checkFallback = () => {
+          if (!deferredPrompt && navigator.userActivation?.hasBeenActive !== undefined) {
+            const pa = navigator.userActivation.hasBeenActive;
+            if (pa) {
+              setTimeout(() => {
+                if (!deferredPrompt) {
+                  showInstructions(platform);
+                }
+              }, 3000);
+            }
+          }
+        };
+        checkFallback();
+        setTimeout(() => {
+          if (!deferredPrompt) {
+            showInstructions(platform);
+          }
+        }, 5000);
+      }
+    }
+  })();
+</script>

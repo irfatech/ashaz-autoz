@@ -1,0 +1,91 @@
+---
+---
+
+<div id="pwa-install-btn" class="fixed bottom-6 right-6 z-50 hidden" role="complementary" aria-label="App installation">
+  <button
+    id="pwa-install-trigger"
+    class="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-text shadow-lg transition-all duration-300 hover:bg-accent-hover hover:scale-110 hover:shadow-xl"
+    aria-label="Install Ashaz Autoz app"
+  >
+    <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+    </svg>
+  </button>
+</div>
+
+<style>
+  #pwa-install-btn.show {
+    display: block;
+    animation: pwa-slide-up 0.4s ease-out;
+  }
+  #pwa-install-btn.hiding {
+    animation: pwa-slide-down 0.3s ease-in forwards;
+  }
+  @keyframes pwa-slide-up {
+    from { opacity: 0; transform: translateY(1.5rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pwa-slide-down {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(1.5rem); }
+  }
+</style>
+
+<script>
+  (() => {
+    const btn = document.getElementById("pwa-install-btn");
+    const trigger = document.getElementById("pwa-install-trigger");
+    if (!btn || !trigger) return;
+
+    let deferredPrompt = null;
+
+    function isInstalled() {
+      return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        (navigator.standalone === true)
+      );
+    }
+
+    function showButton() {
+      if (isInstalled()) return;
+      btn.classList.remove("hiding");
+      btn.classList.add("show");
+    }
+
+    function hideButton() {
+      btn.classList.add("hiding");
+      btn.addEventListener(
+        "animationend",
+        () => {
+          btn.classList.remove("show", "hiding");
+        },
+        { once: true },
+      );
+    }
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      showButton();
+    });
+
+    trigger.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const result = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (result.outcome === "accepted") {
+        hideButton();
+      } else {
+        hideButton();
+      }
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredPrompt = null;
+      hideButton();
+    });
+
+    if (isInstalled()) return;
+  })();
+</script>

@@ -1,0 +1,58 @@
+---
+---
+
+<div id="pwa-toast" class="fixed top-4 left-1/2 -translate-x-1/2 z-[60] hidden" role="alert" aria-live="polite">
+  <div class="flex items-center gap-3 rounded-xl bg-accent px-5 py-3 text-accent-text shadow-lg">
+    <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span class="text-sm font-medium">App installed successfully!</span>
+  </div>
+</div>
+
+<style>
+  #pwa-toast.show {
+    display: block;
+    animation: pwa-toast-in 0.35s ease-out;
+  }
+  #pwa-toast.hiding {
+    animation: pwa-toast-out 0.3s ease-in forwards;
+  }
+  @keyframes pwa-toast-in {
+    from { opacity: 0; transform: translate(-50%, -1rem); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+  @keyframes pwa-toast-out {
+    from { opacity: 1; transform: translate(-50%, 0); }
+    to { opacity: 0; transform: translate(-50%, -1rem); }
+  }
+</style>
+
+<script>
+  (() => {
+    const toast = document.getElementById("pwa-toast");
+    if (!toast) return;
+
+    function showToast() {
+      toast.classList.remove("hiding");
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.add("hiding");
+        toast.addEventListener(
+          "animationend",
+          () => {
+            toast.classList.remove("show", "hiding");
+          },
+          { once: true },
+        );
+      }, 4000);
+    }
+
+    window.addEventListener("appinstalled", showToast);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("installed") === "true") {
+      showToast();
+    }
+  })();
+</script>

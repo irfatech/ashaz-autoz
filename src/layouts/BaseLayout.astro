@@ -3,6 +3,8 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
+import PwaToast from "../components/PwaToast.astro";
+import PwaInstallButton from "../components/PwaInstallButton.astro";
 import ThemePicker from "../components/ThemePicker.astro";
 import SEO from "../components/SEO.astro";
 import type { SEOProps } from "../lib/seo";
@@ -27,6 +29,11 @@ const seoProps = { ...seo, title, description, image };
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#DA291C" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ashaz Autoz" />
     {preloadHero && <link rel="preload" as="image" href="/images/hero-bg.jpg" />}
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-latin.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bruno-ace-latin.woff2" />
@@ -56,6 +63,17 @@ const seoProps = { ...seo, title, description, image };
     </main>
     <Footer />
     <!-- <ThemePicker /> -->
+    <PwaToast />
+    <PwaInstallButton />
     <WhatsAppButton />
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+          navigator.serviceWorker.register(`${base}/sw.js`);
+        });
+      }
+    </script>
   </body>
 </html>
