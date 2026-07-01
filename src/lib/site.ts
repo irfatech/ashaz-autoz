@@ -26,7 +26,7 @@ export interface SiteSettings {
     tiktok?: string;
     whatsapp?: string;
   };
-  googleMapsUrl?: string;
+  googleMapsEmbedUrl?: string;
   currency: string;
 }
 

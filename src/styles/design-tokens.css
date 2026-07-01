@@ -5,17 +5,24 @@
    ========================================================================== */
 
 @theme {
-  /* ---- 🌈 Brand Colors (Timor-Leste flag inspired) ---- */
-  --color-brand-50: #fef2f2;
-  --color-brand-100: #fee2e2;
-  --color-brand-200: #fecaca;
-  --color-brand-300: #fca5a5;
-  --color-brand-400: #f87171;
-  --color-brand-500: #ef4444;
-  --color-brand-600: #dc2626;
-  --color-brand-700: #b91c1c;
-  --color-brand-800: #991b1b;
-  --color-brand-900: #7f1d1d;
+  /* 🇹🇱 Flag Colors */
+  --color-tl-red:    #DA291C;
+  --color-tl-yellow: #FFC72C;
+  --color-tl-black:  #000000;
+  --color-tl-white:  #FFFFFF;
+
+  /* ---- 🇹🇱 Timor-Leste Brand Colors ---- */
+  --color-brand-50:  #fff4f3;
+  --color-brand-100: #ffe4e1;
+  --color-brand-200: #ffc9c3;
+  --color-brand-300: #ffa59a;
+  --color-brand-400: #ff7665;
+  --color-brand-500: #da291c; /* Official Timor-Leste Red */
+  --color-brand-600: #c52419;
+  --color-brand-700: #a51f16;
+  --color-brand-800: #861913;
+  --color-brand-900: #5f110d;
+  --color-brand-950: #3a0907;
 
   /* ---- ⚪️ Neutral Palette ---- */
   --color-neutral-50: #fafafa;
@@ -63,11 +70,11 @@
   --color-body: #2d2d2d;
   --color-muted: #666666;
   --color-inverted: #ffffff;
-  --color-accent: #dc2626;
-  --color-accent-hover: #b91c1c;
+  --color-accent: #DA291C;
+  --color-accent-hover: #C52419;
   --color-accent-text: #ffffff;
   --color-accent-soft: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  --color-accent-border: #fca5a5;
+  --color-accent-border: #ffa59a;
   --color-border: color-mix(in srgb, var(--color-muted) 10%, transparent);
   --color-border-strong: #d4d4d4;
   --color-hero: #1a1a1a;
@@ -78,7 +85,7 @@
   --color-btn-secondary-hover-bg: #2d2d2d;
   --color-btn-secondary-hover-text: #ffffff;
   --color-input-border: #d4d4d4;
-  --color-selection-mix: #dc2626;
+  --color-selection-mix: #DA291C;
 
   /* ---- 🎬 Animations ---- */
   --animate-fade-in: fade-in 0.6s ease-out;

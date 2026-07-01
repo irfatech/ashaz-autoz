@@ -171,7 +171,7 @@ const siteSettings = defineCollection({
       tiktok: z.string().optional(),
       whatsapp: z.string().optional(),
     }).optional(),
-    googleMapsUrl: z.string().optional(),
+    googleMapsEmbedUrl: z.string().optional(),
     currency: z.string().default("USD"),
     language: z.string().default("en"),
     languages: z.array(z.string()).default(["en", "tet", "id"]),

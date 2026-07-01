@@ -186,6 +186,7 @@ collections:
           - { label: "Email", name: "email", widget: "string", required: false }
           - { label: "Address", name: "address", widget: "text", required: false }
           - { label: "Working Hours", name: "workingHours", widget: "string", required: false }
+          - { label: "Google Maps Embed URL", name: "googleMapsEmbedUrl", widget: "string", required: false }
           - label: "Social"
             name: "social"
             widget: "object"
