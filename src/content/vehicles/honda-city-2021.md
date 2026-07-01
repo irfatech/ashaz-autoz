@@ -7,7 +7,7 @@ transmission: Automatic
 fuelType: Petrol
 engine: 1.5L Turbo
 driveType: AWD
-price: 42000
+price: 19000
 currency: USD
 status: Available
 featured: true

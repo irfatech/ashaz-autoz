@@ -1,17 +1,17 @@
 ---
-title: "A Guide to Importing Vehicles to Timor-Leste"
+title: A Guide to Importing Vehicles to Timor-Leste
 slug: importing-vehicles-timor-leste
-excerpt: "Everything you need to know about importing vehicles to Timor-Leste, from documentation to customs clearance."
-author: "Ashaz Autoz"
+excerpt: Everything you need to know about importing vehicles to Timor-Leste, from documentation to customs clearance.
+author: Ashaz Autoz
 date: 2024-03-10
-category: "Imports"
+image: /images/ashaz-timor-flag-color-logo.png
+category: Imports
 tags:
   - imports
   - guide
   - timor-leste
 featured: false
 published: true
-image: /images/blog-placeholder.svg
 ---
 
 Importing a vehicle to Timor-Leste can seem complex, but with the right partner, it's straightforward.
@@ -23,6 +23,7 @@ Source from Japan, Singapore, or Australia through auctions or dealers.
 ## Step 2: Documentation
 
 Key documents needed:
+
 - Bill of lading
 - Commercial invoice
 - Certificate of origin

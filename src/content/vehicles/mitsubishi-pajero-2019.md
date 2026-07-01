@@ -5,15 +5,14 @@ year: 2019
 mileage: 55000
 transmission: Automatic
 fuelType: Diesel
-engine: "2.4L Turbo"
+engine: 2.4L Turbo
 driveType: 4WD
 price: 38000
 currency: USD
 status: Available
 featured: true
-slug: mitsubishi-pajero-2019
 images:
-  - /images/vehicle-placeholder.svg
+  - /images/rental-hero.jpg
 features:
   - 7 Seats
   - Leather Interior
@@ -26,6 +25,7 @@ features:
 doors: 4
 seats: 7
 color: Gray
+slug: mitsubishi-pajero-2019
 ---
 
 Mitsubishi Pajero Sport 2019 — the ultimate 7-seater SUV for families and off-road adventures.

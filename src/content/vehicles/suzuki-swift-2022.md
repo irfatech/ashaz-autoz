@@ -7,7 +7,7 @@ transmission: Automatic
 fuelType: Petrol
 engine: 1.2L
 driveType: FWD
-price: 15000
+price: 11000
 currency: USD
 status: Available
 featured: true

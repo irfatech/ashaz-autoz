@@ -33,10 +33,9 @@ collections:
     label: "Blog Posts"
     folder: "src/content/blog"
     create: true
-    slug: "{{slug}}"
+    slug: "{{title}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
       - { label: "Author", name: "author", widget: "string", default: "Ashaz Autoz" }
       - { label: "Date", name: "date", widget: "datetime" }
@@ -52,7 +51,7 @@ collections:
     label: "Vehicles"
     folder: "src/content/vehicles"
     create: true
-    slug: "{{slug}}"
+    slug: "{{title}}"
     fields:
       - { label: "Brand", name: "brand", widget: "string" }
       - { label: "Model", name: "model", widget: "string" }
@@ -84,17 +83,15 @@ collections:
       - { label: "Doors", name: "doors", widget: "number", required: false, value_type: "int" }
       - { label: "Seats", name: "seats", widget: "number", required: false, value_type: "int" }
       - { label: "Color", name: "color", widget: "string", required: false }
-      - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Body", name: "body", widget: "markdown", required: false }
 
   - name: "services"
     label: "Services"
     folder: "src/content/services"
     create: true
-    slug: "{{slug}}"
+    slug: "{{title}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Excerpt", name: "excerpt", widget: "string", required: false }
       - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }

@@ -1,17 +1,17 @@
 ---
-title: "Essential Car Maintenance Tips for Timor-Leste Roads"
+title: Essential Car Maintenance Tips for Timor-Leste Roads
 slug: car-maintenance-tips
-excerpt: "Keep your vehicle running smoothly with these essential maintenance tips tailored for driving conditions in Timor-Leste."
-author: "Ashaz Autoz"
+excerpt: Keep your vehicle running smoothly with these essential maintenance tips tailored for driving conditions in Timor-Leste.
+author: Ashaz Autoz
 date: 2024-02-20
-category: "Maintenance"
+image: /images/ashaz-timor-flag-color-logo.png
+category: Maintenance
 tags:
   - maintenance
   - tips
   - car-care
 featured: true
 published: true
-image: /images/blog-placeholder.svg
 ---
 
 Driving in Timor-Leste presents unique challenges. Here are essential maintenance tips to keep your vehicle in top condition.

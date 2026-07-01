@@ -5,15 +5,14 @@ year: 2021
 mileage: 32000
 transmission: Automatic
 fuelType: Petrol
-engine: "1.5L Turbo"
+engine: 1.5L Turbo
 driveType: AWD
-price: 42000
+price: 20000
 currency: USD
 status: Available
 featured: true
-slug: honda-crv-2021
 images:
-  - /images/vehicle-placeholder.svg
+  - /images/rental-2.jpg
 features:
   - Leather Seats
   - Sunroof
@@ -26,6 +25,7 @@ features:
 doors: 4
 seats: 5
 color: Black
+slug: honda-crv-2021
 ---
 
 Premium Honda CR-V 2021 with low mileage. Perfect family SUV with all the modern amenities.
