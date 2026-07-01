@@ -150,6 +150,20 @@ const partners = defineCollection({
   }),
 });
 
+const instagram = defineCollection({
+  loader: glob({ pattern: "*.yaml", base: "./src/content/instagram" }),
+  schema: z.object({
+    title: z.string(),
+    instagramUrl: z.string(),
+    thumbnail: z.string().optional(),
+    caption: z.string().optional(),
+    category: z.string().default("General"),
+    featured: z.boolean().default(false),
+    order: z.number({ coerce: true }).int().default(0),
+    date: z.date({ coerce: true }).optional(),
+  }),
+});
+
 const siteSettings = defineCollection({
   loader: glob({ pattern: "settings.yaml", base: "./src/content/site-settings" }),
   schema: z.object({
@@ -235,4 +249,5 @@ export const collections = {
   navigation,
   footer,
   tiktok,
+  instagram,
 };

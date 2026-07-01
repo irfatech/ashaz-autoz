@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  post: CollectionEntry<"instagram">;
+}
+
+const { post } = Astro.props;
+const { title, instagramUrl, thumbnail, caption, category } = post.data;
+const placeholder = "/images/vehicle-placeholder.svg";
+---
+
+<div class="instagram-card group relative overflow-hidden rounded-xl bg-card shadow-md border border-border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+  <div class="relative aspect-square overflow-hidden bg-muted/10 cursor-pointer" data-ig-url={instagramUrl}>
+    {
+      thumbnail ? (
+        <img src={thumbnail} alt={title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+      ) : (
+        <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/5">
+          <svg class="w-12 h-12 text-accent/40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/></svg>
+        </div>
+      )
+    }
+    <div class="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+      <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white/90 shadow-lg transition-transform duration-300 group-hover:scale-110">
+        <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 19.4 19.4 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zM7.6 4C5.6 4 4 5.6 4 7.6V16.4C4 18.4 5.6 20 7.6 20H16.4C18.4 20 20 18.4 20 16.4V7.6C20 5.6 18.4 4 16.4 4H7.6zM17.25 7.5a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-12">
+      <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent text-accent-text mb-2">{category}</span>
+      <h3 class="text-white font-semibold text-sm leading-snug">{title}</h3>
+    </div>
+  </div>
+  {
+    caption && (
+      <div class="p-3">
+        <p class="text-muted text-xs leading-relaxed line-clamp-2">{caption}</p>
+      </div>
+    )
+  }
+</div>
+
+<script>
+  document.querySelectorAll("[data-ig-url]").forEach((el) => {
+    el.addEventListener("click", function () {
+      const url = this.dataset.igUrl;
+      const match = url.match(/\/p\/([^\/]+)/);
+      if (!match) return;
+      const shortcode = match[1];
+      const iframe = document.createElement("iframe");
+      iframe.src = `https://www.instagram.com/p/${shortcode}/embed/`;
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.style.border = "0";
+      iframe.allow = "encrypted-media; picture-in-picture; fullscreen";
+      iframe.loading = "lazy";
+      iframe.title = this.querySelector("h3")?.textContent || "Instagram Post";
+      this.innerHTML = "";
+      this.appendChild(iframe);
+    });
+  });
+</script>

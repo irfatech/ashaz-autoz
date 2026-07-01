@@ -6,14 +6,20 @@ import VehicleCard from "../components/VehicleCard.astro";
 import BlogCard from "../components/BlogCard.astro";
 import TestimonialCard from "../components/TestimonialCard.astro";
 import TikTokCard from "../components/TikTokCard.astro";
+import InstagramCard from "../components/InstagramCard.astro";
 import { getCollection } from "astro:content";
 import { getSiteSettings } from "../lib/site";
 
 const settings = await getSiteSettings();
+const featuredInstagrams = (await getCollection("instagram"))
+  .filter((p) => p.data.featured)
+  .sort((a, b) => (a.data.order || 99) - (b.data.order || 99))
+  .slice(0, 4);
+
 const featuredTikToks = (await getCollection("tiktok"))
   .filter((v) => v.data.featured)
   .sort((a, b) => (a.data.order || 99) - (b.data.order || 99))
-  .slice(0, 5);
+  .slice(0, 4);
 
 const featuredVehicles = (await getCollection("vehicles"))
   .filter((v) => v.data.featured && v.data.status === "Available")
@@ -315,38 +321,29 @@ const stats = [
   )}
 
   {/* Instagram / Social Feed */}
+  {featuredInstagrams.length > 0 && (
   <section class="py-16 sm:py-20 lg:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12 sm:mb-16">
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-          Follow <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Us</span>
+          Instagram <span class="gradient-text">Feed</span>
         </h2>
-        <p class="text-muted text-lg max-w-2xl mx-auto">Stay connected on social media for the latest updates.</p>
+        <p class="text-muted text-lg max-w-2xl mx-auto">Follow <strong>@ashazautoz</strong> on Instagram for the latest updates.</p>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {[
-          { i: 1, alt: "Showroom display" },
-          { i: 2, alt: "Luxury vehicle showcase" },
-          { i: 3, alt: "Service center" },
-          { i: 4, alt: "Garage workspace" },
-          { i: 5, alt: "Team at work" },
-          { i: 6, alt: "Customer testimonial" },
-          { i: 7, alt: "New arrivals" },
-          { i: 8, alt: "Behind the scenes" },
-        ].map(({ i, alt }) => (
-          <div
-            class="aspect-square rounded-xl overflow-hidden bg-muted/10 group relative"
-            key={i}
-          >
-            <div class="absolute inset-0 bg-accent/0 group-hover:bg-accent/20 transition-all duration-300 flex items-center justify-center z-10">
-              <svg class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24"><path d="M7.8 2H16.2C19.4 2 22 4.6 22 7.8V16.2C22 19.4 19.4 22 16.2 22H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zM7.6 4C5.6 4 4 5.6 4 7.6V16.4C4 18.4 5.6 20 7.6 20H16.4C18.4 20 20 18.4 20 16.4V7.6C20 5.6 18.4 4 16.4 4H7.6zM17.25 7.5a1.25 1.25 0 100-2.5 1.25 1.25 0 000 2.5zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
-            </div>
-            <img src={`/images/instagram-${i}.jpg`} alt={alt} class="h-full w-full object-cover" loading="lazy" />
-          </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
+        {featuredInstagrams.map((post) => (
+          <InstagramCard post={post} />
         ))}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/instagram/" class="inline-flex items-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200">
+          Explore More Posts
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+        </a>
       </div>
     </div>
   </section>
+  )}
 
 
   {/* CTA Section */}
