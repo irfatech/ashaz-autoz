@@ -173,6 +173,7 @@ swLines.push("");
 swLines.push(`self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (request.method !== "GET") return;
+  if (!request.url.startsWith("http")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));
