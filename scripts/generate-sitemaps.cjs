@@ -73,3 +73,113 @@ console.log("Categorized sitemaps generated:");
 for (const [name, urlset] of Object.entries(groups)) {
   if (urlset.length > 0) console.log(`  sitemap-${name}.xml — ${urlset.length} URLs`);
 }
+
+/* ── Generate sw.js with all known page URLs ── */
+
+function walkDir(dir) {
+  const results = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) results.push(...walkDir(full));
+    else if (entry.isFile()) results.push(full);
+  }
+  return results;
+}
+
+const pageUrls = [];
+const assetUrls = [
+  "/fonts/inter-latin.woff2",
+  "/fonts/bruno-ace-latin.woff2",
+  "/fonts/lato-latin-300.woff2",
+  "/fonts/lato-latin-400.woff2",
+  "/fonts/lato-latin-700.woff2",
+  "/manifest.json",
+  "/favicon.svg",
+  "/apple-touch-icon.png",
+  "/pwa-192x192.png",
+  "/pwa-512x512.png",
+  "/ashaz-logo.png",
+  "/icon.png",
+];
+
+for (const file of walkDir(dist)) {
+  if (!file.endsWith(".html")) continue;
+  const rel = path.relative(dist, file);
+  const parts = rel.split(path.sep);
+  if (parts.includes("admin")) continue;
+  if (parts.length === 1 && parts[0] !== "index.html") continue;
+  pageUrls.push("/" + parts.slice(0, -1).join("/") + (parts[0] === "index.html" ? "" : "/"));
+}
+
+const allPrecache = [...new Set([...pageUrls, ...assetUrls])].sort();
+
+const swLines = [`const CACHE_NAME = "ashaz-autoz-v2";`, ""];
+swLines.push("const PRECACHE_URLS = [");
+for (const url of allPrecache) {
+  swLines.push(`  "${url}",`);
+}
+swLines.push("];");
+swLines.push("");
+swLines.push(`self.addEventListener("install", (event) => {
+  event.waitUntil(
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      await cache.addAll(PRECACHE_URLS);
+      await self.skipWaiting();
+    })(),
+  );
+});`);
+swLines.push("");
+swLines.push(`self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)));
+      await self.clients.claim();
+    })(),
+  );
+});`);
+swLines.push("");
+swLines.push(`async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    return new Response("Offline", { status: 503 });
+  }
+};`);
+swLines.push("");
+swLines.push(`async function networkFirst(request) {
+  try {
+    const response = await fetch(request);
+    if (response.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    return caches.match("/");
+  }
+};`);
+swLines.push("");
+swLines.push(`self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (request.method !== "GET") return;
+
+  if (request.mode === "navigate") {
+    event.respondWith(networkFirst(request));
+  } else {
+    event.respondWith(cacheFirst(request));
+  }
+});`);
+
+fs.writeFileSync(path.join(dist, "sw.js"), swLines.join("\n"), "utf-8");
+console.log(`  sw.js generated — ${allPrecache.length} URLs precached`);
