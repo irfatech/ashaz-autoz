@@ -41,9 +41,9 @@ const seoProps = { ...seo, title, description, image };
     <SEO {...seoProps} />
     <script is:inline>
       (function () {
-        // Restore dark mode
+        // Restore dark mode (default dark)
         const theme = localStorage.getItem("theme");
-        if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        if (theme !== "light") {
           document.documentElement.classList.add("dark");
         }
         // Restore color palette theme
