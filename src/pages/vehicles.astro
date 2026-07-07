@@ -22,6 +22,30 @@ const vehicleListSchema = itemListSchema(
 );
 
 const crumbs = generateBreadcrumbs("/vehicles/");
+
+const brands = [...new Set(availableVehicles.map((v) => v.data.brand))].sort();
+const transmissions = [
+  ...new Set(availableVehicles.map((v) => v.data.transmission)),
+].sort();
+const fuelTypes = [
+  ...new Set(availableVehicles.map((v) => v.data.fuelType)),
+].sort();
+
+const priceRanges = [
+  { label: "All", min: 0, max: Infinity },
+  { label: "Under $15k", min: 0, max: 15000 },
+  { label: "$15k – $25k", min: 15000, max: 25000 },
+  { label: "$25k – $35k", min: 25000, max: 35000 },
+  { label: "Over $35k", min: 35000, max: Infinity },
+];
+
+const sortOptions = [
+  { value: "newest", label: "Newest First" },
+  { value: "price-asc", label: "Price: Low to High" },
+  { value: "price-desc", label: "Price: High to Low" },
+  { value: "mileage-asc", label: "Mileage: Low to High" },
+  { value: "mileage-desc", label: "Mileage: High to Low" },
+];
 ---
 
 <BaseLayout
@@ -44,16 +68,95 @@ const crumbs = generateBreadcrumbs("/vehicles/");
           </p>
         </div>
 
+        <div class="mt-12 space-y-6" id="vehicle-filters">
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="relative flex-1">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+              <input
+                type="search"
+                id="vehicle-search"
+                placeholder="Search by make, model, or keyword…"
+                class="w-full rounded-xl border border-border bg-card pl-12 pr-4 py-3 text-sm text-body placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+            </div>
+            <select id="vehicle-sort" class="rounded-xl border border-border bg-card px-4 py-3 text-sm text-body focus:outline-none focus:ring-2 focus:ring-accent sm:w-48">
+              {sortOptions.map((opt) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <p class="text-xs font-semibold text-muted uppercase tracking-wider mb-2">Brand</p>
+            <div class="flex flex-wrap gap-2" id="brand-filters">
+              <button class="filter-btn active px-4 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-body hover:bg-accent hover:text-accent-text hover:border-accent transition-all data-[active=true]:bg-accent data-[active=true]:text-accent-text data-[active=true]:border-accent" data-filter="all" data-group="brand">All</button>
+              {brands.map((brand) => (
+                <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-body hover:bg-accent hover:text-accent-text hover:border-accent transition-all data-[active=true]:bg-accent data-[active=true]:text-accent-text data-[active=true]:border-accent" data-filter={brand.toLowerCase()} data-group="brand">{brand}</button>
+              ))}
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-6">
+            <div>
+              <p class="text-xs font-semibold text-muted uppercase tracking-wider mb-2">Transmission</p>
+              <div class="flex flex-wrap gap-2" id="transmission-filters">
+                <button class="filter-btn active px-4 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-body hover:bg-accent hover:text-accent-text hover:border-accent transition-all data-[active=true]:bg-accent data-[active=true]:text-accent-text data-[active=true]:border-accent" data-filter="all" data-group="transmission">All</button>
+                {transmissions.map((t) => (
+                  <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-body hover:bg-accent hover:text-accent-text hover:border-accent transition-all data-[active=true]:bg-accent data-[active=true]:text-accent-text data-[active=true]:border-accent" data-filter={t.toLowerCase()} data-group="transmission">{t}</button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-muted uppercase tracking-wider mb-2">Fuel Type</p>
+              <div class="flex flex-wrap gap-2" id="fuel-filters">
+                <button class="filter-btn active px-4 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-body hover:bg-accent hover:text-accent-text hover:border-accent transition-all data-[active=true]:bg-accent data-[active=true]:text-accent-text data-[active=true]:border-accent" data-filter="all" data-group="fuel">All</button>
+                {fuelTypes.map((f) => (
+                  <button class="filter-btn px-4 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-body hover:bg-accent hover:text-accent-text hover:border-accent transition-all data-[active=true]:bg-accent data-[active=true]:text-accent-text data-[active=true]:border-accent" data-filter={f.toLowerCase()} data-group="fuel">{f}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-xs font-semibold text-muted uppercase tracking-wider mb-2">Budget</p>
+            <div class="flex flex-wrap gap-2" id="price-filters">
+              {priceRanges.map((r, i) => (
+                <button class="filter-btn {i === 0 ? 'active' : ''} px-4 py-1.5 rounded-full text-xs font-medium border border-border bg-card text-body hover:bg-accent hover:text-accent-text hover:border-accent transition-all data-[active=true]:bg-accent data-[active=true]:text-accent-text data-[active=true]:border-accent" data-filter={i.toString()} data-group="price">{r.label}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {availableVehicles.length > 0 ? (
           <>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8" id="vehicle-grid">
               {availableVehicles.map((vehicle) => (
-                <VehicleCard vehicle={vehicle} />
+                <div
+                  class="vehicle-card"
+                  data-brand={vehicle.data.brand.toLowerCase()}
+                  data-price={vehicle.data.price}
+                  data-year={vehicle.data.year}
+                  data-transmission={vehicle.data.transmission.toLowerCase()}
+                  data-fuel={vehicle.data.fuelType.toLowerCase()}
+                  data-mileage={vehicle.data.mileage}
+                  data-name={`${vehicle.data.brand} ${vehicle.data.model}`.toLowerCase()}
+                >
+                  <VehicleCard vehicle={vehicle} />
+                </div>
               ))}
             </div>
 
+            <div class="text-center py-8 hidden" id="vehicle-no-results">
+              <div class="text-5xl mb-4 opacity-20">🔍</div>
+              <h3 class="text-xl font-semibold mb-2">No Vehicles Match Your Filters</h3>
+              <p class="text-muted">Try adjusting your search or filter criteria.</p>
+              <button id="clear-filters" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200 mt-4">
+                Clear All Filters
+              </button>
+            </div>
+
             {soldVehicles.length > 0 && (
-              <>
+              <div id="sold-section">
                 <div class="mt-16 mb-8">
                   <h2 class="text-2xl sm:text-3xl font-bold">Recently Sold</h2>
                   <p class="text-muted mt-1">These vehicles have been sold to their new owners.</p>
@@ -63,7 +166,7 @@ const crumbs = generateBreadcrumbs("/vehicles/");
                     <VehicleCard vehicle={vehicle} />
                   ))}
                 </div>
-              </>
+              </div>
             )}
           </>
         ) : (
@@ -78,3 +181,141 @@ const crumbs = generateBreadcrumbs("/vehicles/");
     </section>
   </div>
 </BaseLayout>
+
+<script is:inline>
+  (function () {
+    const priceRanges = [
+      { min: 0, max: Infinity },
+      { min: 0, max: 15000 },
+      { min: 15000, max: 25000 },
+      { min: 25000, max: 35000 },
+      { min: 35000, max: Infinity },
+    ];
+
+    const searchInput = document.getElementById("vehicle-search");
+    const sortSelect = document.getElementById("vehicle-sort");
+    const grid = document.getElementById("vehicle-grid");
+    const noResults = document.getElementById("vehicle-no-results");
+    const soldSection = document.getElementById("sold-section");
+    const clearBtn = document.getElementById("clear-filters");
+    const cards = grid ? Array.from(grid.querySelectorAll(".vehicle-card")) : [];
+
+    let filters = { brand: "all", transmission: "all", fuel: "all", price: "0" };
+    let searchTerm = "";
+    let sortValue = "newest";
+
+    function getUrlParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name) || "";
+    }
+
+    searchTerm = getUrlParam("search").toLowerCase();
+
+    function applyFilters() {
+      let visible = 0;
+      const term = searchTerm.toLowerCase().trim();
+
+      cards.forEach((card) => {
+        const brand = card.dataset.brand;
+        const transmission = card.dataset.transmission;
+        const fuel = card.dataset.fuel;
+        const price = parseInt(card.dataset.price, 10);
+        const name = card.dataset.name || "";
+
+        const brandMatch = filters.brand === "all" || brand === filters.brand;
+        const transMatch = filters.transmission === "all" || transmission === filters.transmission;
+        const fuelMatch = filters.fuel === "all" || fuel === filters.fuel;
+        const range = priceRanges[parseInt(filters.price, 10)];
+        const priceMatch = price >= range.min && price < range.max;
+        const searchMatch = !term || name.includes(term);
+
+        const show = brandMatch && transMatch && fuelMatch && priceMatch && searchMatch;
+        card.style.display = show ? "" : "none";
+        if (show) visible++;
+      });
+
+      if (noResults) {
+        noResults.classList.toggle("hidden", visible > 0 || cards.length === 0);
+      }
+      if (soldSection) {
+        soldSection.style.display = visible > 0 || cards.length === 0 ? "" : "none";
+      }
+    }
+
+    function sortCards() {
+      const entries = cards.filter((c) => c.style.display !== "none");
+      entries.sort((a, b) => {
+        switch (sortValue) {
+          case "price-asc": return parseInt(a.dataset.price, 10) - parseInt(b.dataset.price, 10);
+          case "price-desc": return parseInt(b.dataset.price, 10) - parseInt(a.dataset.price, 10);
+          case "mileage-asc": return parseInt(a.dataset.mileage, 10) - parseInt(b.dataset.mileage, 10);
+          case "mileage-desc": return parseInt(b.dataset.mileage, 10) - parseInt(a.dataset.mileage, 10);
+          case "newest":
+          default: return parseInt(b.dataset.year, 10) - parseInt(a.dataset.year, 10);
+        }
+      });
+      entries.forEach((el) => grid?.appendChild(el));
+    }
+
+    function updateUI() {
+      applyFilters();
+      sortCards();
+    }
+
+    document.querySelectorAll("#vehicle-filters .filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const group = btn.dataset.group;
+        const filterValue = btn.dataset.filter;
+
+        document.querySelectorAll(`#vehicle-filters .filter-btn[data-group="${group}"]`).forEach((b) => {
+          b.classList.remove("active");
+          b.setAttribute("data-active", "false");
+        });
+        btn.classList.add("active");
+        btn.setAttribute("data-active", "true");
+
+        filters[group] = filterValue;
+        updateUI();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        searchTerm = searchInput.value;
+        updateUI();
+      });
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener("change", () => {
+        sortValue = sortSelect.value;
+        sortCards();
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        document.querySelectorAll("#vehicle-filters .filter-btn").forEach((b) => {
+          if (b.dataset.filter === "all") {
+            b.classList.add("active");
+            b.setAttribute("data-active", "true");
+          } else {
+            b.classList.remove("active");
+            b.setAttribute("data-active", "false");
+          }
+        });
+        filters = { brand: "all", transmission: "all", fuel: "all", price: "0" };
+        if (searchInput) searchInput.value = "";
+        searchTerm = "";
+        sortValue = "newest";
+        if (sortSelect) sortSelect.value = "newest";
+        updateUI();
+      });
+    }
+
+    if (searchTerm && searchInput) {
+      searchInput.value = searchTerm;
+    }
+    updateUI();
+  })();
+</script>
