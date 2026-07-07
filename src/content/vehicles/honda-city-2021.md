@@ -9,7 +9,7 @@ engine: 1.5L Turbo
 driveType: AWD
 price: 19000
 currency: USD
-status: Available
+status: Sold
 featured: true
 images:
   - /images/hero-bg.jpg

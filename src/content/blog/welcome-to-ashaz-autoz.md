@@ -1,10 +1,10 @@
 ---
 title: Welcome to Ashaz Autoz — Your Premium Automotive Partner
-slug: welcome-to-ashaz-autoz
 excerpt: Discover Ashaz Autoz, Timor-Leste's trusted destination for vehicle sales, imports, rentals, and workshop services.
 author: Ashaz Autoz
 date: 2024-01-15
-image: /images/ashaz-timor-flag-color-logo.png
+updatedDate: ''
+image: /images/ashaz-logo.png
 category: Company News
 tags:
   - welcome
@@ -12,6 +12,7 @@ tags:
   - timor-leste
 featured: true
 published: true
+slug: welcome-to-ashaz-autoz
 ---
 
 Welcome to Ashaz Autoz, your premier automotive destination in Timor-Leste.
