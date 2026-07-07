@@ -7,16 +7,18 @@ import { getSiteSettings, generateBreadcrumbs } from "../lib/site";
 import { itemListSchema } from "../lib/schema";
 
 const settings = await getSiteSettings();
-const allVehicles = (await getCollection("vehicles"))
-  .filter((v) => v.data.status !== "Sold")
-  .sort((a, b) => b.data.year - a.data.year);
+const allVehicles = (await getCollection("vehicles")).sort(
+  (a, b) => b.data.year - a.data.year,
+);
+const availableVehicles = allVehicles.filter((v) => v.data.status !== "Sold");
+const soldVehicles = allVehicles.filter((v) => v.data.status === "Sold");
 
 const vehicleListSchema = itemListSchema(
-  allVehicles.map((v) => ({
+  availableVehicles.map((v) => ({
     url: `${settings.url}/vehicles/${v.id}/`,
     name: `${v.data.brand} ${v.data.model} (${v.data.year})`,
   })),
-  allVehicles.length,
+  availableVehicles.length,
 );
 
 const crumbs = generateBreadcrumbs("/vehicles/");
@@ -42,12 +44,28 @@ const crumbs = generateBreadcrumbs("/vehicles/");
           </p>
         </div>
 
-        {allVehicles.length > 0 ? (
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
-            {allVehicles.map((vehicle) => (
-              <VehicleCard vehicle={vehicle} />
-            ))}
-          </div>
+        {availableVehicles.length > 0 ? (
+          <>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-12">
+              {availableVehicles.map((vehicle) => (
+                <VehicleCard vehicle={vehicle} />
+              ))}
+            </div>
+
+            {soldVehicles.length > 0 && (
+              <>
+                <div class="mt-16 mb-8">
+                  <h2 class="text-2xl sm:text-3xl font-bold">Recently Sold</h2>
+                  <p class="text-muted mt-1">These vehicles have been sold to their new owners.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {soldVehicles.map((vehicle) => (
+                    <VehicleCard vehicle={vehicle} />
+                  ))}
+                </div>
+              </>
+            )}
+          </>
         ) : (
           <div class="text-center py-20">
             <div class="text-6xl mb-4 opacity-20">🚗</div>

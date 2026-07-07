@@ -64,14 +64,20 @@ const enquiryMessage = `Hello! I'm interested in the ${data.brand} ${data.model}
       <a href={`/vehicles/${vehicle.id}/`} class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border-2 border-btn-secondary-border text-btn-secondary-text px-4 py-2.5 text-sm font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200">
         View Details
       </a>
-      <a
-        href={getWhatsAppUrl(phone, enquiryMessage)}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-4 py-2.5 text-sm font-medium hover:bg-accent-hover transition-all duration-200"
-      >
-        Enquire
-      </a>
+      {data.status === "Sold" ? (
+        <span class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-muted/30 text-muted px-4 py-2.5 text-sm font-medium cursor-default">
+          Sold
+        </span>
+      ) : (
+        <a
+          href={getWhatsAppUrl(phone, enquiryMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-4 py-2.5 text-sm font-medium hover:bg-accent-hover transition-all duration-200"
+        >
+          Enquire
+        </a>
+      )}
     </div>
   </div>
 </article>
