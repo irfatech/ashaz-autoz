@@ -180,6 +180,8 @@ const siteSettings = defineCollection({
       whatsapp: z.string().optional(),
     }).optional(),
     googleMapsEmbedUrl: z.string().optional(),
+    lat: z.coerce.number().optional(),
+    lng: z.coerce.number().optional(),
     currency: z.string().default("USD"),
     language: z.string().default("en"),
     languages: z.array(z.string()).default(["en", "tet", "id"]),

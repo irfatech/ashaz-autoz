@@ -24,7 +24,7 @@ const schemaOrg = breadcrumbs
         "@type": "ListItem",
         position: i + 1,
         name: crumb.label,
-        item: `${Astro.site}${crumb.href}`,
+        item: new URL(crumb.href, Astro.site).href,
       })),
     }
   : null;

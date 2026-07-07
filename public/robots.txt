@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+LLM-Text: /llms.txt
+LLM-Full-Text: /llms-full.txt
+
 Sitemap: https://ashazautoz.com/sitemap-index.xml

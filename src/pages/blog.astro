@@ -3,6 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
+import { generateBreadcrumbs } from "../lib/site";
+
+const crumbs = generateBreadcrumbs("/blog/");
 
 const posts = (await getCollection("blog"))
   .filter((p) => p.data.published)
@@ -14,6 +17,7 @@ const categories = [...new Set(posts.map((p) => p.data.category))];
 <BaseLayout
   title="Blog"
   description="Automotive tips, news, and insights from Ashaz Autoz."
+  seo={{ breadcrumbs: crumbs }}
 >
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">

@@ -1,6 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
+import { generateBreadcrumbs } from "../lib/site";
+import { faqPageSchema } from "../lib/schema";
+
+const crumbs = generateBreadcrumbs("/faq/");
 
 const faqs = [
   { q: "What types of vehicles do you sell?", a: "We offer a wide range of vehicles including sedans, SUVs, 4x4s, trucks, minibuses, and luxury vehicles sourced from Japan, Singapore, and Australia." },
@@ -21,7 +25,11 @@ const faqs = [
 <BaseLayout
   title="FAQ"
   description="Frequently asked questions about Ashaz Autoz services."
+  seo={{ breadcrumbs: crumbs }}
 >
+  {faqPageSchema(faqs) && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema(faqs))} />
+  )}
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

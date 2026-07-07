@@ -168,17 +168,6 @@ collections:
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
       - { label: "Date", name: "date", widget: "datetime", required: false }
 
-  - name: "partners"
-    label: "Partners"
-    folder: "src/content/partners"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Logo", name: "logo", widget: "image" }
-      - { label: "URL", name: "url", widget: "string", required: false }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
-
   - name: "site-settings"
     label: "Site Settings"
     files:

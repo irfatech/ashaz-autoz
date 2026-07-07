@@ -3,17 +3,36 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import TikTokCard from "../../components/TikTokCard.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
+import { generateBreadcrumbs } from "../../lib/site";
+import { videoObjectSchema } from "../../lib/schema";
+
+const crumbs = generateBreadcrumbs("/tiktok/");
 
 const allVideos = await getCollection("tiktok");
 allVideos.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
 const categories = [...new Set(allVideos.map((v) => v.data.category))].sort();
+
+const videoData = videoObjectSchema(
+  allVideos.map((v) => ({
+    name: v.data.title,
+    description: v.data.caption,
+    thumbnailUrl: v.data.thumbnail,
+    contentUrl: v.data.tiktokUrl,
+    embedUrl: v.data.tiktokUrl,
+    uploadDate: v.data.date?.toISOString() || new Date().toISOString(),
+  })),
+);
 ---
 
 <BaseLayout
   title="TikTok Videos"
   description="Follow Ashaz Autoz on TikTok for vehicle showcases, imports, workshop tips, and more."
+  seo={{ breadcrumbs: crumbs }}
 >
+  {videoData && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(videoData)} />
+  )}
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

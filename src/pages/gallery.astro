@@ -2,6 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
+import { generateBreadcrumbs } from "../lib/site";
+import { imageGallerySchema } from "../lib/schema";
+
+const crumbs = generateBreadcrumbs("/gallery/");
 
 const allImages = await getCollection("gallery");
 for (let i = allImages.length - 1; i > 0; i--) {
@@ -10,13 +14,24 @@ for (let i = allImages.length - 1; i > 0; i--) {
 }
 const images = allImages;
 
+const galleryData = imageGallerySchema(
+  allImages.map((img) => ({
+    url: img.data.image,
+    caption: img.data.title || undefined,
+  })),
+);
+
 const categories = ["All", "Vehicles", "Workshop", "Events", "Team", "Yard"];
 ---
 
 <BaseLayout
   title="Gallery"
   description="Browse our gallery showcasing vehicles, workshop, and team at Ashaz Autoz."
+  seo={{ breadcrumbs: crumbs }}
 >
+  {galleryData && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(galleryData)} />
+  )}
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

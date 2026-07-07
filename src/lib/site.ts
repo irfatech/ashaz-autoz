@@ -26,6 +26,8 @@ export interface SiteSettings {
     whatsapp?: string;
   };
   googleMapsEmbedUrl?: string;
+  lat?: number;
+  lng?: number;
   currency: string;
 }
 
@@ -56,6 +58,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     workingHours: data.workingHours,
     social: data.social,
     googleMapsEmbedUrl: data.googleMapsEmbedUrl,
+    lat: data.lat,
+    lng: data.lng,
     currency: data.currency || "USD",
   };
 }

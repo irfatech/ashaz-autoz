@@ -9,6 +9,7 @@ import TikTokCard from "../components/TikTokCard.astro";
 import InstagramCard from "../components/InstagramCard.astro";
 import { getCollection } from "astro:content";
 import { getSiteSettings } from "../lib/site";
+import { reviewSchema, speakableSchema } from "../lib/schema";
 
 const settings = await getSiteSettings();
 const services = (await getCollection("services"))
@@ -45,6 +46,22 @@ const latestPosts = (await getCollection("blog"))
 const testimonials = (await getCollection("testimonials"))
   .filter((t) => t.data.featured)
   .slice(0, 3);
+
+const reviewsData = reviewSchema({
+  name: settings.siteName,
+  itemReviewed: settings.siteName,
+  reviews: testimonials.map((t) => ({
+    author: t.data.name,
+    reviewBody: t.data.content,
+    rating: t.data.rating,
+  })),
+});
+
+const speakableData = speakableSchema([
+  ".hero-section",
+  ".section-title h2",
+  ".text-muted.text-lg",
+]);
 
 const whyChooseUs = [
   {
@@ -87,6 +104,12 @@ const stats = [
 ---
 
 <BaseLayout preloadHero>
+  {speakableData && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(speakableData)} />
+  )}
+  {reviewsData && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(reviewsData)} />
+  )}
   <Hero />
 
   {/* Company Introduction */}

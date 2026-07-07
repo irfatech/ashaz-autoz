@@ -3,19 +3,32 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import InstagramCard from "../../components/InstagramCard.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
-import { getSiteSettings } from "../../lib/site";
+import { getSiteSettings, generateBreadcrumbs } from "../../lib/site";
+import { imageGallerySchema } from "../../lib/schema";
 
 const settings = await getSiteSettings();
+const crumbs = generateBreadcrumbs("/instagram/");
 const allPosts = await getCollection("instagram");
 allPosts.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));
 
 const categories = [...new Set(allPosts.map((p) => p.data.category))].sort();
+
+const galleryData = imageGallerySchema(
+  allPosts.map((p) => ({
+    url: p.data.instagramUrl,
+    caption: p.data.caption || p.data.title,
+  })),
+);
 ---
 
 <BaseLayout
   title="Instagram"
   description="Follow Ashaz Autoz on Instagram for vehicle showcases, imports, workshop updates, and more."
+  seo={{ breadcrumbs: crumbs }}
 >
+  {galleryData && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(galleryData)} />
+  )}
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

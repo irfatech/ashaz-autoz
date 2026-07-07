@@ -3,6 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import ServiceCard from "../components/ServiceCard.astro";
 import { getCollection } from "astro:content";
+import { generateBreadcrumbs } from "../lib/site";
+
+const crumbs = generateBreadcrumbs("/services/");
 
 const services = (await getCollection("services"))
   .sort((a, b) => a.data.order - b.data.order)
@@ -19,6 +22,7 @@ const services = (await getCollection("services"))
 <BaseLayout
   title="Services"
   description="Comprehensive automotive services in Timor-Leste — vehicle sales, imports, rentals, workshop, and more."
+  seo={{ breadcrumbs: crumbs }}
 >
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">

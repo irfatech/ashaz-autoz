@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import ServiceCard from "../../components/ServiceCard.astro";
 import { getCollection, render } from "astro:content";
+import { generateBreadcrumbs } from "../../lib/site";
 
 export async function getStaticPaths() {
   const services = await getCollection("services");
@@ -15,12 +16,14 @@ export async function getStaticPaths() {
 const { service } = Astro.props;
 const { data } = service;
 const { Content } = await render(service);
+const crumbs = generateBreadcrumbs(`/services/${service.id}/`);
 ---
 
 <BaseLayout
   title={data.title}
   description={data.description}
   image={data.image}
+  seo={{ breadcrumbs: crumbs }}
 >
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">

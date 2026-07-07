@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
-import { formatPrice, formatMileage, getWhatsAppUrl, statusColors, phoneClean, getSiteSettings } from "../../lib/site";
+import { formatPrice, formatMileage, getWhatsAppUrl, statusColors, phoneClean, getSiteSettings, generateBreadcrumbs } from "../../lib/site";
 import { vehicleSchema } from "../../lib/schema";
 
 export async function getStaticPaths() {
@@ -18,13 +18,18 @@ const { data } = vehicle;
 const settings = await getSiteSettings();
 const phone = settings.social?.whatsapp ?? settings.phone[0];
 const enquiryMessage = `Hello! I'm interested in the ${data.brand} ${data.model} (${data.year}) - ${formatPrice(data.price, data.currency)}. Is it still available?`;
-const carSchema = vehicleSchema(data, `${settings.url}/vehicles/${vehicle.id}/`);
+const carSchema = vehicleSchema(
+  { ...data, slug: vehicle.id, description: vehicle.body?.trim() || data.features?.join(", ") },
+  `${settings.url}/vehicles/${vehicle.id}/`,
+);
+const crumbs = generateBreadcrumbs(`/vehicles/${vehicle.id}/`);
 ---
 
 <BaseLayout
   title={`${data.brand} ${data.model} (${data.year})`}
   description={`${data.brand} ${data.model} ${data.year} - ${formatMileage(data.mileage)}, ${data.transmission}, ${data.fuelType}. ${formatPrice(data.price, data.currency)}.`}
   image={data.images?.[0]}
+  seo={{ breadcrumbs: crumbs }}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(carSchema)} />
   <div class="pt-24">

@@ -3,16 +3,31 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import VehicleCard from "../components/VehicleCard.astro";
 import { getCollection } from "astro:content";
+import { getSiteSettings, generateBreadcrumbs } from "../lib/site";
+import { itemListSchema } from "../lib/schema";
 
+const settings = await getSiteSettings();
 const allVehicles = (await getCollection("vehicles"))
   .filter((v) => v.data.status !== "Sold")
   .sort((a, b) => b.data.year - a.data.year);
+
+const vehicleListSchema = itemListSchema(
+  allVehicles.map((v) => ({
+    url: `${settings.url}/vehicles/${v.id}/`,
+    name: `${v.data.brand} ${v.data.model} (${v.data.year})`,
+  })),
+  allVehicles.length,
+);
+
+const crumbs = generateBreadcrumbs("/vehicles/");
 ---
 
 <BaseLayout
   title="Vehicle Inventory"
   description="Browse our selection of quality vehicles for sale in Timor-Leste."
+  seo={{ breadcrumbs: crumbs }}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(vehicleListSchema)} />
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
