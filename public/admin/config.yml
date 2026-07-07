@@ -13,12 +13,24 @@ logo:
 media_folder: "public/images"
 public_folder: "/images"
 
+media_libraries:
+  default:
+    config:
+      max_file_size: 5242880
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 2048
+
 collections:
   - name: "pages"
     label: "Pages"
     folder: "src/content/pages"
     create: true
     slug: "{{slug}}"
+    preview_path: "{{slug}}/"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string" }
@@ -50,6 +62,7 @@ collections:
     folder: "src/content/blog"
     create: true
     slug: "{{title}}"
+    preview_path: "blog/{{slug}}/"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Excerpt", name: "excerpt", widget: "text" }
@@ -68,6 +81,23 @@ collections:
     folder: "src/content/vehicles"
     create: true
     slug: "{{title}}"
+    preview_path: "vehicles/{{slug}}/"
+    view_filters:
+      - label: "All"
+        field: status
+        pattern: all
+      - label: "Available"
+        field: status
+        pattern: Available
+      - label: "Reserved"
+        field: status
+        pattern: Reserved
+      - label: "Sold"
+        field: status
+        pattern: Sold
+    view_groups:
+      - label: "Status"
+        field: status
     fields:
       - { label: "Brand", name: "brand", widget: "string" }
       - { label: "Model", name: "model", widget: "string" }
@@ -106,6 +136,7 @@ collections:
     folder: "src/content/services"
     create: true
     slug: "{{title}}"
+    preview_path: "services/{{slug}}/"
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
