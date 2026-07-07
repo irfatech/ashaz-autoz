@@ -32,19 +32,14 @@
 </style>
 
 <script>
+  import { isInstalled } from "../lib/pwa";
+
   (() => {
-    const btn = document.getElementById("pwa-install-btn");
-    const trigger = document.getElementById("pwa-install-trigger");
+    const btn = document.getElementById("pwa-install-btn") as HTMLElement;
+    const trigger = document.getElementById("pwa-install-trigger") as HTMLElement;
     if (!btn || !trigger) return;
 
-    let deferredPrompt = null;
-
-    function isInstalled() {
-      return (
-        window.matchMedia("(display-mode: standalone)").matches ||
-        (navigator.standalone === true)
-      );
-    }
+    let deferredPrompt: any = null;
 
     function showButton() {
       if (isInstalled()) return;

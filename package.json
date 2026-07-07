@@ -9,19 +9,24 @@
     "build": "astro build && node scripts/generate-sitemaps.cjs",
     "preview": "astro preview",
     "check": "astro check",
-    "lint": "eslint src/",
+    "lint": "astro check",
     "format": "prettier --write src/",
     "astro": "astro"
   },
-  "keywords": ["automotive", "timor-leste", "astro", "tailwindcss"],
+  "keywords": [
+    "automotive",
+    "timor-leste",
+    "astro",
+    "tailwindcss"
+  ],
   "author": "Ashaz Autoz",
   "license": "MIT",
   "dependencies": {
+    "@astrojs/check": "^0.9.9",
     "@astrojs/mdx": "^7.0.0",
     "@astrojs/sitemap": "^3.3.0",
     "@tailwindcss/vite": "^4.1.0",
     "astro": "^7.0.3",
-    "astro-icon": "^1.1.0",
     "sharp": "^0.35.2",
     "tailwindcss": "^4.1.0",
     "typescript": "^6.0.3"

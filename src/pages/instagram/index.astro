@@ -76,38 +76,12 @@ const categories = [...new Set(allPosts.map((p) => p.data.category))].sort();
 </BaseLayout>
 
 <script>
-  const filterBtns = document.querySelectorAll("#ig-filters .filter-btn");
-  const items = document.querySelectorAll(".ig-item");
-  const sortSelect = document.getElementById("sort");
-  const grid = document.getElementById("ig-grid");
+  import { setupGalleryFilter } from "../../lib/gallery-filter";
 
-  let currentFilter = "all";
-
-  filterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      filterBtns.forEach((b) => b.classList.remove("active", "bg-accent", "text-accent-text", "border-accent"));
-      btn.classList.add("active", "bg-accent", "text-accent-text", "border-accent");
-      currentFilter = btn.dataset.filter;
-      applyFilter();
-    });
-  });
-
-  function applyFilter() {
-    items.forEach((item) => {
-      const cat = item.dataset.category;
-      item.style.display = currentFilter === "all" || cat === currentFilter ? "" : "none";
-    });
-  }
-
-  sortSelect?.addEventListener("change", () => {
-    const order = sortSelect.value;
-    const entries = Array.from(items);
-    entries.sort((a, b) => {
-      if (order === "newest") {
-        return new Date(b.dataset.date || 0) - new Date(a.dataset.date || 0);
-      }
-      return (parseInt(a.dataset.order) || 99) - (parseInt(b.dataset.order) || 99);
-    });
-    entries.forEach((el) => grid.appendChild(el));
+  setupGalleryFilter({
+    filterBtnSelector: "#ig-filters .filter-btn",
+    itemSelector: ".ig-item",
+    gridId: "ig-grid",
+    sortSelectId: "sort",
   });
 </script>

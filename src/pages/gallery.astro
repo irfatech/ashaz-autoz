@@ -3,7 +3,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
 
-const images = (await getCollection("gallery")).sort(() => Math.random() - 0.5);
+const allImages = await getCollection("gallery");
+for (let i = allImages.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
+}
+const images = allImages;
 
 const categories = ["All", "Vehicles", "Workshop", "Events", "Team", "Yard"];
 ---
@@ -76,8 +81,8 @@ const categories = ["All", "Vehicles", "Workshop", "Events", "Team", "Yard"];
 </BaseLayout>
 
 <script>
-  const filters = document.querySelectorAll("[data-filter]");
-  const items = document.querySelectorAll("[data-category]");
+  const filters = document.querySelectorAll("[data-filter]") as NodeListOf<HTMLElement>;
+  const items = document.querySelectorAll("[data-category]") as NodeListOf<HTMLElement>;
 
   filters.forEach((btn) => {
     btn.addEventListener("click", () => {

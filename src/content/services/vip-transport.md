@@ -5,7 +5,7 @@ icon: "star"
 description: "Premium chauffeur-driven transport for executives, special events, and VIP guests."
 excerpt: "Travel in comfort and style."
 order: 7
-featured: false
+featured: true
 features:
   - Professional chauffeurs
   - Premium vehicles

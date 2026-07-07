@@ -23,7 +23,18 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string" }
       - { label: "Description", name: "description", widget: "text", required: false }
-      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false, hint: "Hero/featured image for the page" }
+      - { label: "Published", name: "published", widget: "boolean", default: true, required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, required: false, hint: "Sort order (lower = first)" }
+      - label: "Template"
+        name: "template"
+        widget: "select"
+        required: false
+        default: "default"
+        options: ["default", "full-width"]
+      - { label: "Hero Title", name: "heroTitle", widget: "string", required: false }
+      - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
       - label: "SEO"
         name: "seo"
         widget: "object"

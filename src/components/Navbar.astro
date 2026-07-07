@@ -1,5 +1,8 @@
 ---
-const navItems = [
+import { getCollection } from "astro:content";
+
+const [navData] = await getCollection("navigation");
+const navItems = navData?.data?.items ?? [
   { label: "Home", href: "/" },
   { label: "About", href: "/about/" },
   { label: "Services", href: "/services/" },
@@ -7,7 +10,6 @@ const navItems = [
   { label: "Rentals", href: "/rentals/" },
   { label: "Workshop", href: "/workshop/" },
   { label: "Gallery", href: "/gallery/" },
-  // { label: "TikTok", href: "/tiktok/" },
   { label: "Blog", href: "/blog/" },
   { label: "Install App", href: "/install/" },
 ];
@@ -17,7 +19,7 @@ const navItems = [
   <nav class="backdrop-blur-md bg-nav-bg border-b border-nav-border" aria-label="Main navigation">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex h-18 items-center justify-between">
       <a href="/" class="flex items-center gap-3 shrink-0" aria-label="Ashaz Autoz Home">
-        <img src="/ashaz-logo.png" alt="Ashaz Autoz" class="h-10 w-auto" width="1536" height="1024" loading="eager" />
+        <img src="/ashaz-logo.png" alt="Ashaz Autoz" class="h-10 w-auto" width="60" height="40" loading="eager" />
       </a>
 
       <div class="hidden lg:flex items-center gap-1">
@@ -81,7 +83,7 @@ const navItems = [
 </header>
 
 <script>
-  const navbar = document.getElementById("navbar");
+  const navbar = document.getElementById("navbar") as HTMLElement;
   const mobileBtn = document.getElementById("mobile-menu-btn");
   const mobileMenu = document.getElementById("mobile-menu");
   const toggleDesktop = document.getElementById("theme-toggle");
@@ -108,7 +110,7 @@ const navItems = [
     mobileBtn.addEventListener("click", () => {
       const isOpen = mobileMenu.classList.contains("hidden");
       mobileMenu.classList.toggle("hidden");
-      mobileBtn.setAttribute("aria-expanded", isOpen);
+      mobileBtn.setAttribute("aria-expanded", String(isOpen));
     });
   }
 

@@ -7,7 +7,6 @@ export interface Props {
 
 const { post } = Astro.props;
 const { title, instagramUrl, thumbnail, caption, category } = post.data;
-const placeholder = "/images/vehicle-placeholder.svg";
 ---
 
 <div class="instagram-card group relative overflow-hidden rounded-xl bg-card shadow-md border border-border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
@@ -42,8 +41,9 @@ const placeholder = "/images/vehicle-placeholder.svg";
 
 <script>
   document.querySelectorAll("[data-ig-url]").forEach((el) => {
-    el.addEventListener("click", function () {
+    el.addEventListener("click", function (this: HTMLElement) {
       const url = this.dataset.igUrl;
+      if (!url) return;
       const match = url.match(/\/p\/([^\/]+)/);
       if (!match) return;
       const shortcode = match[1];
@@ -55,7 +55,9 @@ const placeholder = "/images/vehicle-placeholder.svg";
       iframe.allow = "encrypted-media; picture-in-picture; fullscreen";
       iframe.loading = "lazy";
       iframe.title = this.querySelector("h3")?.textContent || "Instagram Post";
-      this.innerHTML = "";
+      while (this.firstChild) {
+        this.removeChild(this.firstChild);
+      }
       this.appendChild(iframe);
     });
   });

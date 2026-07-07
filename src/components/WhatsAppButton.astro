@@ -1,5 +1,8 @@
 ---
-const phone = "+67077154379";
+import { getSiteSettings, phoneClean } from "../lib/site";
+
+const settings = await getSiteSettings();
+const phone = phoneClean(settings.social?.whatsapp ?? settings.phone[0]);
 const message = "Hello! I'm interested in your automotive services.";
 const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 ---

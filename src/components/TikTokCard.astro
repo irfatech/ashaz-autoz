@@ -6,9 +6,8 @@ export interface Props {
   featured?: boolean;
 }
 
-const { video, featured } = Astro.props;
+const { video } = Astro.props;
 const { title, tiktokUrl, thumbnail, caption, category } = video.data;
-const placeholder = "/images/vehicle-placeholder.svg";
 ---
 
 <div class="tiktok-card group relative overflow-hidden rounded-xl bg-card shadow-md border border-border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 {featured ? 'sm:col-span-2 sm:row-span-2' : ''}">
@@ -43,8 +42,9 @@ const placeholder = "/images/vehicle-placeholder.svg";
 
 <script>
   document.querySelectorAll("[data-tiktok-url]").forEach((el) => {
-    el.addEventListener("click", function () {
+    el.addEventListener("click", function (this: HTMLElement) {
       const url = this.dataset.tiktokUrl;
+      if (!url) return;
       const match = url.match(/\/video\/(\d+)/);
       if (!match) return;
       const videoId = match[1];
@@ -56,7 +56,9 @@ const placeholder = "/images/vehicle-placeholder.svg";
       iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
       iframe.loading = "lazy";
       iframe.title = this.querySelector("h3")?.textContent || "TikTok Video";
-      this.innerHTML = "";
+      while (this.firstChild) {
+        this.removeChild(this.firstChild);
+      }
       this.appendChild(iframe);
     });
   });

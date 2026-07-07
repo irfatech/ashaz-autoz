@@ -76,72 +76,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 </BaseLayout>
 
 <script>
+  import { isInstalled, getPlatform, platformInstructions } from "../lib/pwa";
+
   (() => {
-    const readySection = document.getElementById("pwa-install-ready");
-    const alreadySection = document.getElementById("pwa-install-already");
+    const readySection = document.getElementById("pwa-install-ready") as HTMLElement;
+    const alreadySection = document.getElementById("pwa-install-already") as HTMLElement;
     const unsupportedSection = document.getElementById("pwa-install-unsupported");
-    const instructionsSection = document.getElementById("pwa-platform-instructions");
-    const installBtn = document.getElementById("pwa-page-install-btn");
-    const iconEl = document.getElementById("pwa-instruction-icon");
-    const titleEl = document.getElementById("pwa-instruction-title");
-    const stepsEl = document.getElementById("pwa-instruction-steps");
+    const instructionsSection = document.getElementById("pwa-platform-instructions") as HTMLElement;
+    const installBtn = document.getElementById("pwa-page-install-btn") as HTMLElement;
+    const iconEl = document.getElementById("pwa-instruction-icon") as HTMLElement;
+    const titleEl = document.getElementById("pwa-instruction-title") as HTMLElement;
+    const stepsEl = document.getElementById("pwa-instruction-steps") as HTMLElement;
 
-    let deferredPrompt = null;
+    let deferredPrompt: any = null;
 
-    const platformInfo = {
-      android: {
-        icon: "M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z",
-        title: "Install on Android",
-        steps: [
-          'Tap the <strong class="text-accent">⋮</strong> menu button in Chrome',
-          'Select <strong class="text-accent">Install app</strong> or <strong class="text-accent">Add to Home Screen</strong>',
-          'Tap <strong class="text-accent">Install</strong> in the popup',
-          "The app icon will appear on your home screen",
-        ],
-      },
-      ios: {
-        icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z",
-        title: "Install on iPhone / iPad",
-        steps: [
-          'Tap the <strong class="text-accent">Share</strong> button (square with arrow) at the bottom of Safari',
-          'Scroll down and tap <strong class="text-accent">Add to Home Screen</strong>',
-          'Tap <strong class="text-accent">Add</strong> in the top-right corner',
-          "The app icon will appear on your home screen",
-        ],
-      },
-      desktop: {
-        icon: "M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8h2v8H9zm4 0h2v8h-2z",
-        title: "Install on Desktop",
-        steps: [
-          "Click the install icon <strong class=\"text-accent\">⊕</strong> in the address bar",
-          'Alternatively, click <strong class="text-accent">Install Ashaz Autoz</strong> in the browser menu',
-          'Click <strong class="text-accent">Install</strong> in the popup',
-          "The app will open in its own window",
-        ],
-      },
-    };
-
-    function isInstalled() {
-      return (
-        window.matchMedia("(display-mode: standalone)").matches ||
-        navigator.standalone === true
-      );
-    }
-
-    function getPlatform() {
-      const ua = navigator.userAgent;
-      if (/android/i.test(ua)) return "android";
-      if (/iphone|ipad|ipod/i.test(ua)) return "ios";
-      return "desktop";
-    }
-
-    function showInstructions(platform) {
-      const info = platformInfo[platform];
+    function showInstructions(platform: string) {
+      const info = platformInstructions[platform as keyof typeof platformInstructions];
       if (!info) return;
       iconEl.setAttribute("d", info.icon);
       titleEl.textContent = info.title;
       stepsEl.innerHTML = info.steps
-        .map((s, i) => `<li class="flex items-start gap-3"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent text-sm font-bold">${i + 1}</span><span class="pt-0.5 text-body/80">${s}</span></li>`)
+        .map((s: string, i: number) => `<li class="flex items-start gap-3"><span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent text-sm font-bold">${i + 1}</span><span class="pt-0.5 text-body/80">${s}</span></li>`)
         .join("");
       instructionsSection.classList.remove("hidden");
     }

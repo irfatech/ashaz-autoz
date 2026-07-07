@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
-import ServiceCard from "../components/ServiceCard.astro";
+import { getSiteSettings, phoneClean } from "../lib/site";
+
+const settings = await getSiteSettings();
 
 const rentalBenefits = [
   { title: "Daily & Monthly Rentals", description: "Flexible rental periods to suit your needs, from daily to long-term." },
@@ -102,7 +104,7 @@ const rentalFleet = [
         </p>
         <div class="flex flex-wrap justify-center gap-4">
           <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200 text-lg px-8 py-4">Book Now</a>
-          <a href="tel:+67077154379" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-inverted/30 text-inverted font-medium transition-all duration-200 text-lg px-8 py-4 hover:bg-inverted hover:text-inverse">Call 7715 4379</a>
+          <a href={`tel:${phoneClean(settings.phone[0])}`} class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-inverted/30 text-inverted font-medium transition-all duration-200 text-lg px-8 py-4 hover:bg-inverted hover:text-inverse">Call {phoneClean(settings.phone[0]).replace(/(\d{4})(\d{4})/, "$1 $2")}</a>
         </div>
       </div>
     </section>

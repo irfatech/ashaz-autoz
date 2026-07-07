@@ -61,13 +61,13 @@ const themes = [
 
 <script>
   const picker = document.getElementById("theme-picker");
-  const dots = picker?.querySelectorAll(".theme-dot");
+  const dots = picker?.querySelectorAll(".theme-dot") as NodeListOf<HTMLElement> | undefined;
 
   function getActiveTheme() {
     return document.documentElement.getAttribute("data-theme") || "brand";
   }
 
-  function setTheme(themeId) {
+  function setTheme(themeId: string) {
     const html = document.documentElement;
     if (themeId === "brand") {
       html.removeAttribute("data-theme");
@@ -75,7 +75,7 @@ const themes = [
       html.setAttribute("data-theme", themeId);
     }
     localStorage.setItem("theme-palette", themeId);
-    dots?.forEach((dot) => {
+    dots?.forEach((dot: HTMLElement) => {
       dot.classList.toggle("active", dot.dataset.themeId === themeId);
     });
   }
@@ -84,9 +84,9 @@ const themes = [
   const saved = localStorage.getItem("theme-palette") || "brand";
   setTheme(saved);
 
-  dots?.forEach((dot) => {
+  dots?.forEach((dot: HTMLElement) => {
     dot.addEventListener("click", () => {
-      setTheme(dot.dataset.themeId);
+      setTheme(dot.dataset.themeId!);
     });
   });
 </script>

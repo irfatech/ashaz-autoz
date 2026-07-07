@@ -1,42 +1,12 @@
 ---
-import { getSiteSettings } from "../lib/site";
+import { getSiteSettings, phoneClean, phoneDisplay } from "../lib/site";
+import { getCollection } from "astro:content";
 
 const settings = await getSiteSettings();
+const [footerData] = await getCollection("footer");
 const currentYear = new Date().getFullYear();
 
-const phoneClean = (p: string) => p.replace(/[^0-9]/g, "");
-
-const columns = [
-  {
-    title: "Quick Links",
-    links: [
-      { label: "Home", href: "/" },
-      { label: "About Us", href: "/about/" },
-      { label: "Services", href: "/services/" },
-      { label: "Vehicles", href: "/vehicles/" },
-      { label: "Blog", href: "/blog/" },
-      { label: "Contact", href: "/contact/" },
-    ],
-  },
-  {
-    title: "Services",
-    links: [
-      { label: "Vehicle Sales", href: "/services/vehicle-sales/" },
-      { label: "Vehicle Import", href: "/services/vehicle-import/" },
-      { label: "Car Rental", href: "/rentals/" },
-      { label: "Workshop", href: "/workshop/" },
-      { label: "Fleet Services", href: "/services/fleet-services/" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { label: "FAQ", href: "/faq/" },
-      { label: "Privacy Policy", href: "/privacy/" },
-      { label: "Terms & Conditions", href: "/terms/" },
-    ],
-  },
-];
+const footerItems = footerData?.data?.columns ?? [];
 
 const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address ?? "Dili, Timor-Leste")}`;
 ---
@@ -76,7 +46,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
       <!-- Brand -->
       <div class="col-span-2 lg:col-span-4">
         <a href="/" class="inline-block" aria-label="Ashaz Autoz Home">
-          <img src="/ashaz-logo.png" alt="Ashaz Autoz" class="h-12 w-auto" width="1536" height="1024" loading="lazy" />
+          <img src="/ashaz-logo.png" alt="Ashaz Autoz" class="h-12 w-auto" width="72" height="48" loading="lazy" />
         </a>
         <p class="mt-4 text-muted leading-relaxed text-sm max-w-xs">
           Direct-from-Japan vehicle imports, sales, rentals, and workshop
@@ -159,7 +129,7 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
       </div>
 
       <!-- Link columns -->
-      {columns.map((col) => (
+      {footerItems.map((col) => (
         <div class="col-span-1 lg:col-span-2">
           <h3 class="font-semibold text-sm uppercase tracking-widest text-accent mb-4">{col.title}</h3>
           <ul class="space-y-3">
@@ -193,10 +163,9 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
             <div>
               {settings.phone.map((p) => {
                 const clean = phoneClean(p);
-                const display = clean.replace(/(\d{4})(\d{4})(\d+)?/, (_, a, b, c) => c ? `${a} ${b} ${c}` : `${a} ${b}`);
                 return (
                   <a href={`tel:${clean}`} class="block hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent rounded-sm">
-                    {display}
+                    {phoneDisplay(p)}
                   </a>
                 );
               })}

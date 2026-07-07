@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { formatPrice, formatMileage, getWhatsAppUrl } from "../lib/site";
+import { formatPrice, formatMileage, getWhatsAppUrl, statusColors, getSiteSettings } from "../lib/site";
 
 interface Props {
   vehicle: CollectionEntry<"vehicles">;
@@ -8,14 +8,9 @@ interface Props {
 
 const { vehicle } = Astro.props;
 const { data } = vehicle;
-const phone = "+67077154379";
+const settings = await getSiteSettings();
+const phone = settings.social?.whatsapp ?? settings.phone[0];
 const enquiryMessage = `Hello! I'm interested in the ${data.brand} ${data.model} (${data.year}) - $${data.price.toLocaleString()}. Is it still available?`;
-
-const statusColors: Record<string, string> = {
-  Available: "bg-green-500",
-  Reserved: "bg-yellow-500",
-  Sold: "bg-red-500",
-};
 ---
 
 <article class="rounded-2xl bg-card border-border shadow-sm hover:shadow-lg hover:border-accent-border hover:-translate-y-1 transition-all duration-300 overflow-hidden group">

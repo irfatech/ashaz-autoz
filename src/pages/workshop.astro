@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
+import { getSiteSettings, phoneClean } from "../lib/site";
+
+const settings = await getSiteSettings();
 
 const services = [
   { title: "Oil & Filter Change", description: "Regular oil changes to keep your engine running smoothly." },
@@ -34,7 +37,7 @@ const services = [
             </p>
             <div class="flex flex-wrap gap-4">
               <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200 text-lg px-8 py-4">Book a Service</a>
-              <a href="tel:+67077154379" class="inline-flex items-center justify-center gap-2 rounded-xl border-btn-secondary-border text-body font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200 text-lg px-8 py-4">Call 7715 4379</a>
+              <a href={`tel:${phoneClean(settings.phone[0])}`} class="inline-flex items-center justify-center gap-2 rounded-xl border-btn-secondary-border text-body font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200 text-lg px-8 py-4">Call {phoneClean(settings.phone[0]).replace(/(\d{4})(\d{4})/, "$1 $2")}</a>
             </div>
           </div>
           <div class="aspect-[4/3] rounded-2xl overflow-hidden">

@@ -5,7 +5,7 @@ icon: "wrench"
 description: "Advanced computer diagnostics to quickly and accurately identify vehicle issues."
 excerpt: "Fast, accurate diagnostics for all vehicle makes."
 order: 5
-featured: false
+featured: true
 features:
   - Computer diagnostics
   - Engine analysis

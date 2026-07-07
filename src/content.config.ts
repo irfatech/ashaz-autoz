@@ -1,5 +1,5 @@
 import { z, defineCollection } from "astro:content";
-import { glob, file } from "astro/loaders";
+import { glob } from "astro/loaders";
 
 const seoSchema = z.object({
   title: z.string().optional(),
@@ -16,8 +16,8 @@ const blog = defineCollection({
     slug: z.string().optional(),
     excerpt: z.string(),
     author: z.string().default("Ashaz Autoz"),
-    date: z.date({ coerce: true }),
-    updatedDate: z.coerce.date().or(z.literal('')).optional(),
+    date: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
     image: z.string().optional(),
     category: z.string().default("General"),
     tags: z.array(z.string()).default([]),
@@ -33,23 +33,23 @@ const vehicles = defineCollection({
   schema: z.object({
     brand: z.string(),
     model: z.string(),
-    year: z.number({ coerce: true }).int().min(2000).max(2030),
-    mileage: z.number({ coerce: true }).int().min(0),
+    year: z.coerce.number().int().min(2000).max(2030),
+    mileage: z.coerce.number().int().min(0),
     transmission: z.enum(["Automatic", "Manual", "CVT", "DCT"]),
     fuelType: z.enum(["Petrol", "Diesel", "Hybrid", "Electric", "LPG"]),
     engine: z.string().optional(),
     driveType: z.enum(["FWD", "RWD", "AWD", "4WD"]),
-    price: z.number({ coerce: true }).int().min(0),
+    price: z.coerce.number().int().min(0),
     currency: z.string().default("USD"),
     status: z.enum(["Available", "Reserved", "Sold"]).default("Available"),
     featured: z.boolean().default(false),
     images: z.array(z.string()).default([]),
     features: z.array(z.string()).default([]),
-    doors: z.number({ coerce: true }).int().min(1).max(7).optional(),
-    seats: z.number({ coerce: true }).int().min(1).max(12).optional(),
+    doors: z.coerce.number().int().min(1).max(7).optional(),
+    seats: z.coerce.number().int().min(1).max(12).optional(),
     color: z.string().optional(),
     colorHex: z.string().optional(),
-    registrationYear: z.number({ coerce: true }).int().optional(),
+    registrationYear: z.coerce.number().int().optional(),
     vin: z.string().optional(),
     slug: z.string().optional(),
     lang: z.string().default("en"),
@@ -65,7 +65,7 @@ const services = defineCollection({
     icon: z.string().optional(),
     description: z.string(),
     excerpt: z.string().optional(),
-    order: z.number({ coerce: true }).int().default(0),
+    order: z.coerce.number().int().default(0),
     featured: z.boolean().default(false),
     image: z.string().optional(),
     features: z.array(z.string()).default([]),
@@ -85,7 +85,7 @@ const team = defineCollection({
     image: z.string().optional(),
     email: z.string().optional(),
     phone: z.string().optional(),
-    order: z.number({ coerce: true }).int().default(0),
+    order: z.coerce.number().int().default(0),
     lang: z.string().default("en"),
   }),
 });
@@ -97,7 +97,7 @@ const testimonials = defineCollection({
     role: z.string().optional(),
     company: z.string().optional(),
     avatar: z.string().optional(),
-    rating: z.number({ coerce: true }).int().min(1).max(5).default(5),
+    rating: z.coerce.number().int().min(1).max(5).default(5),
     content: z.string(),
     featured: z.boolean().default(false),
     lang: z.string().default("en"),
@@ -110,7 +110,7 @@ const faq = defineCollection({
     question: z.string(),
     answer: z.string(),
     category: z.string().default("General"),
-    order: z.number({ coerce: true }).int().default(0),
+    order: z.coerce.number().int().default(0),
     lang: z.string().default("en"),
   }),
 });
@@ -122,7 +122,7 @@ const gallery = defineCollection({
     image: z.string(),
     category: z.string().default("General"),
     featured: z.boolean().default(false),
-    date: z.date({ coerce: true }).optional(),
+    date: z.coerce.date().optional(),
     lang: z.string().default("en"),
   }),
 });
@@ -134,19 +134,13 @@ const pages = defineCollection({
     slug: z.string(),
     description: z.string().optional(),
     image: z.string().optional(),
+    published: z.boolean().default(true),
+    order: z.coerce.number().int().default(0),
+    template: z.enum(["default", "full-width"]).default("default"),
+    heroTitle: z.string().optional(),
+    heroSubtitle: z.string().optional(),
     lang: z.string().default("en"),
     seo: seoSchema.optional(),
-  }),
-});
-
-const partners = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/partners" }),
-  schema: z.object({
-    name: z.string(),
-    logo: z.string(),
-    url: z.string().optional(),
-    order: z.number({ coerce: true }).int().default(0),
-    lang: z.string().default("en"),
   }),
 });
 
@@ -159,8 +153,8 @@ const instagram = defineCollection({
     caption: z.string().optional(),
     category: z.string().default("General"),
     featured: z.boolean().default(false),
-    order: z.number({ coerce: true }).int().default(0),
-    date: z.date({ coerce: true }).optional(),
+    order: z.coerce.number().int().default(0),
+    date: z.coerce.date().optional(),
   }),
 });
 
@@ -201,8 +195,8 @@ const tiktok = defineCollection({
     caption: z.string().optional(),
     category: z.string().default("General"),
     featured: z.boolean().default(false),
-    order: z.number({ coerce: true }).int().default(0),
-    date: z.date({ coerce: true }).optional(),
+    order: z.coerce.number().int().default(0),
+    date: z.coerce.date().optional(),
   }),
 });
 
@@ -244,7 +238,6 @@ export const collections = {
   faq,
   gallery,
   pages,
-  partners,
   "site-settings": siteSettings,
   navigation,
   footer,
