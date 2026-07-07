@@ -7,7 +7,7 @@ backend:
   branch: main
 
 logo:
-  src: /public/ashaz-logo.png
+  src: /ashaz-logo.png
   show_in_header: true
 
 media_folder: "public/images"
