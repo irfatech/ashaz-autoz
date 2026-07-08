@@ -1,7 +1,7 @@
 ---
 brand: Serena
 model: Swift
-year: 2022
+year: 2021
 mileage: 15000
 transmission: Automatic
 fuelType: Petrol
