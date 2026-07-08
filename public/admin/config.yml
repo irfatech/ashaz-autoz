@@ -102,7 +102,6 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string", hint: "Used to generate the filename (e.g. 'Toyota Hilux 2020' → toyota-hilux-2020.md)" }
       - { label: "Slug", name: "slug", widget: "hidden", required: false }
-      - { label: "Thumbnail", name: "thumbnail", widget: "image", required: false, hint: "Shown as card image in the CMS list. Leave empty to use the first gallery image." }
       - { label: "Brand", name: "brand", widget: "string" }
       - { label: "Model", name: "model", widget: "string" }
       - { label: "Year", name: "year", widget: "number", value_type: "int", min: 2000, max: 2030 }
