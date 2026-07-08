@@ -124,7 +124,7 @@ collections:
       - label: "Status"
         name: "status"
         widget: "select"
-        options: ["Available", "Reserved", "Sold"]
+        options: ["Available", "Reserved", "Sold", "Upcoming"]
         default: "Available"
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
       - { label: "Gallery Images", name: "images", widget: "image", multiple: true, required: false, hint: "Select multiple images at once. First image is used as the card thumbnail." }

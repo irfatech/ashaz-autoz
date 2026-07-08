@@ -89,6 +89,7 @@ export const statusColors: Record<string, string> = {
   Available: "bg-green-500",
   Reserved: "bg-yellow-500",
   Sold: "bg-red-500",
+  Upcoming: "bg-blue-500",
 };
 
 export function getWhatsAppUrl(phone: string, message?: string): string {
