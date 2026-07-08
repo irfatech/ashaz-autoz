@@ -128,7 +128,7 @@ collections:
         options: ["Available", "Reserved", "Sold"]
         default: "Available"
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Gallery Images", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Gallery Images", name: "images", widget: "image", multiple: true, required: false, hint: "Select multiple images at once. First image is used as the card thumbnail." }
       - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
       - { label: "Doors", name: "doors", widget: "number", required: false, value_type: "int" }
       - { label: "Seats", name: "seats", widget: "number", required: false, value_type: "int" }
