@@ -81,6 +81,7 @@ collections:
     folder: "src/content/vehicles"
     create: true
     slug: "{{title}}"
+    summary: "{{brand}} {{model}} ({{year}})"
     preview_path: "vehicles/{{slug}}/"
     view_filters:
       - label: "All"
@@ -99,6 +100,9 @@ collections:
       - label: "Status"
         field: status
     fields:
+      - { label: "Title", name: "title", widget: "string", hint: "Used to generate the filename (e.g. 'Toyota Hilux 2020' → toyota-hilux-2020.md)" }
+      - { label: "Slug", name: "slug", widget: "hidden", required: false }
+      - { label: "Thumbnail", name: "thumbnail", widget: "image", required: false, hint: "Shown as card image in the CMS list. Leave empty to use the first gallery image." }
       - { label: "Brand", name: "brand", widget: "string" }
       - { label: "Model", name: "model", widget: "string" }
       - { label: "Year", name: "year", widget: "number", value_type: "int", min: 2000, max: 2030 }
@@ -124,12 +128,12 @@ collections:
         options: ["Available", "Reserved", "Sold"]
         default: "Available"
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Images", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Gallery Images", name: "images", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
       - { label: "Doors", name: "doors", widget: "number", required: false, value_type: "int" }
       - { label: "Seats", name: "seats", widget: "number", required: false, value_type: "int" }
       - { label: "Color", name: "color", widget: "string", required: false }
-      - { label: "Body", name: "body", widget: "markdown", required: false }
+      - { label: "Description", name: "body", widget: "markdown", required: false }
 
   - name: "services"
     label: "Services"
