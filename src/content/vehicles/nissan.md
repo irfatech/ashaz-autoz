@@ -1,6 +1,6 @@
 ---
-title: Nissan
-brand: Serena
+title: Serena
+brand: Nissan
 model: '2022'
 year: 2022
 mileage: 35000
