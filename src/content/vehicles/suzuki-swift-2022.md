@@ -1,5 +1,7 @@
 ---
-brand: Serena
+title: Swift
+slug: suzuki-swift-2022
+brand: Suzuki
 model: Swift
 year: 2021
 mileage: 15000
@@ -9,7 +11,7 @@ engine: 1.2L
 driveType: FWD
 price: 11000
 currency: USD
-status: Available
+status: Sold
 featured: true
 images:
   - /images/about-2.jpg
@@ -20,10 +22,9 @@ features:
   - Central Locking
   - ABS Brakes
   - Dual Airbags
-doors: 4
+doors: 5
 seats: 5
 color: Red
-slug: suzuki-swift-2022
 ---
 
 The Suzuki Swift 2022 is a fuel-efficient, reliable, and fun-to-drive compact car perfect for city driving.
