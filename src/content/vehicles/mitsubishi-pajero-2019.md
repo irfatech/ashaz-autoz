@@ -1,4 +1,6 @@
 ---
+title: Mitsubishi
+slug: mitsubishi-pajero-2019
 brand: Mitsubishi
 model: Pajero Sport
 year: 2019
@@ -9,7 +11,7 @@ engine: 2.4L Turbo
 driveType: 4WD
 price: 38000
 currency: USD
-status: Available
+status: Sold
 featured: true
 images:
   - /images/rental-hero.jpg
@@ -25,7 +27,6 @@ features:
 doors: 4
 seats: 7
 color: Gray
-slug: mitsubishi-pajero-2019
 ---
 
 Mitsubishi Pajero Sport 2019 — the ultimate 7-seater SUV for families and off-road adventures.
