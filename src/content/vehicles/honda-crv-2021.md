@@ -1,4 +1,6 @@
 ---
+title: Honda
+slug: honda-crv-2021
 brand: Honda
 model: CR-V
 year: 2021
@@ -9,7 +11,7 @@ engine: 1.5L Turbo
 driveType: AWD
 price: 20000
 currency: USD
-status: Available
+status: Sold
 featured: true
 images:
   - /images/rental-2.jpg
@@ -25,7 +27,6 @@ features:
 doors: 4
 seats: 5
 color: Black
-slug: honda-crv-2021
 ---
 
 Premium Honda CR-V 2021 with low mileage. Perfect family SUV with all the modern amenities.
