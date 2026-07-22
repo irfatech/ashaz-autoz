@@ -26,9 +26,9 @@ export function organizationSchema(settings: SiteSettings) {
     "@type": ["AutoDealer", "LocalBusiness", "Organization"],
     name: settings.siteName,
     url: settings.url,
-    logo: `${settings.url}/ashaz-logo.png`,
+    logo: `${settings.url}/ashaz-logo.webp`,
     description: settings.description,
-    image: `${settings.url}/ashaz-logo.png`,
+    image: `${settings.url}/ashaz-logo.webp`,
     address: settings.address
       ? {
           "@type": "PostalAddress",

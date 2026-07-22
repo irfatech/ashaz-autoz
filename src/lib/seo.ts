@@ -18,7 +18,7 @@ const defaults = {
   description:
     "Your trusted automotive partner in Timor-Leste. Vehicle sales, imports, rentals, workshop, and premium automotive services.",
   url: "https://ashazautoz.com",
-  image: "/images/og-default.jpg",
+  image: "/images/og-default.webp",
 };
 
 export function buildSEO(props: SEOProps) {

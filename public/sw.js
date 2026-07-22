@@ -23,7 +23,7 @@ const PRECACHE_URLS = [
   "/pwa-192x192.png",
   "/pwa-512x512.png",
   "/ashaz-logo.png",
-  "/icon.png",
+  "/icon.webp",
 ];
 
 self.addEventListener("install", (event) => {

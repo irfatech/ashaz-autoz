@@ -83,6 +83,8 @@ collections:
     slug: "{{title}}"
     summary: "{{brand}} {{model}} ({{year}})"
     preview_path: "vehicles/{{slug}}/"
+    media_folder: "{{media_folder}}/Cars/{{year}}"
+    public_folder: "{{public_folder}}/Cars/{{year}}"
     view_filters:
       - label: "All"
         field: status
