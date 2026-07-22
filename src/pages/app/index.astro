@@ -1,0 +1,75 @@
+---
+import "../../styles/global.css"
+import { isAuthenticated } from "../../lib/auth"
+---
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Login — Ashaz Autoz</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script>
+    if (sessionStorage.getItem("app_auth") === "true") {
+      window.location.replace("/app/quotations/")
+    }
+  </script>
+  <script>
+    if (localStorage.getItem("theme") !== "light") {
+      document.documentElement.classList.add("dark")
+    }
+  </script>
+</head>
+<body class="bg-page text-body font-sans antialiased">
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div class="w-full max-w-sm">
+      <div class="text-center mb-8">
+        <img src="/images/ashaz-timor-flag-color-logo.webp" alt="Ashaz Autoz" class="h-12 mx-auto mb-4" />
+        <h1 class="text-2xl font-bold">App Login</h1>
+        <p class="text-muted text-sm mt-1">Enter the app password to continue</p>
+      </div>
+      <div class="card p-6">
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label for="password" class="block text-sm font-medium mb-1">Password</label>
+            <input
+              type="password"
+              id="password"
+              required
+              autofocus
+              class="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-body placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-accent"
+              placeholder="Enter password"
+            />
+          </div>
+          <p id="error-msg" class="text-red-500 text-sm hidden">Incorrect password</p>
+          <button
+            type="submit"
+            class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200"
+          >
+            Sign In
+          </button>
+        </form>
+      </div>
+      <p class="text-center text-xs text-muted mt-6">
+        <a href="/" class="hover:text-accent transition-colors">&larr; Back to website</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("login-form")?.addEventListener("submit", async (e) => {
+      e.preventDefault()
+      const passwordInput = document.getElementById("password")
+      const errorMsg = document.getElementById("error-msg")
+
+      const { login } = await import("../../lib/auth")
+      if (passwordInput instanceof HTMLInputElement && login(passwordInput.value)) {
+        window.location.replace("/app/quotations/")
+      } else {
+        errorMsg?.classList.remove("hidden")
+      }
+    })
+  </script>
+</body>
+</html>

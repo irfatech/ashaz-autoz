@@ -1,0 +1,287 @@
+---
+import "../../../styles/global.css"
+---
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Invoices — Ashaz Autoz</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script>
+    if (sessionStorage.getItem("app_auth") !== "true") {
+      window.location.replace("/app/")
+    }
+  </script>
+  <script>
+    if (localStorage.getItem("theme") !== "light") {
+      document.documentElement.classList.add("dark")
+    }
+  </script>
+</head>
+<body class="bg-page text-body font-sans antialiased">
+  <nav class="sticky top-0 z-40 border-b border-border bg-page/80 backdrop-blur-md">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 flex items-center justify-between h-14">
+      <div class="flex items-center gap-4">
+        <a href="/" class="text-muted hover:text-body transition-colors" title="Back to site">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+        </a>
+        <span class="text-sm font-semibold">Invoices</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="/app/quotations/" class="text-xs text-muted hover:text-body transition-colors">Quotations</a>
+        <a href="/app/invoices/new/" class="inline-flex items-center gap-1 rounded-xl bg-accent text-accent-text px-3 py-1.5 text-xs font-medium hover:bg-accent-hover transition-all">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+          New
+        </a>
+        <button id="logout-btn" class="text-xs text-muted hover:text-red-500 transition-colors">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 py-8">
+    <div id="list-view">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold">Invoices</h1>
+        <span id="doc-count" class="text-xs text-muted"></span>
+      </div>
+      <div id="empty-state" class="text-center py-20 hidden">
+        <div class="text-5xl mb-4 opacity-20">
+          <svg class="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">No Invoices Yet</h3>
+        <p class="text-muted text-sm mb-6">Create your first invoice to get started.</p>
+        <a href="/app/invoices/new/" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200">
+          Create Invoice
+        </a>
+      </div>
+      <div id="doc-list" class="space-y-3 hidden"></div>
+    </div>
+
+    <div id="detail-view" class="hidden">
+      <button id="back-btn" class="flex items-center gap-2 text-sm text-muted hover:text-body transition-colors mb-6">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+        Back to list
+      </button>
+      <div id="detail-content"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { isAuthenticated, logout } from "../../../lib/auth"
+    import { getDocuments, deleteDocument } from "../../../lib/documents"
+    import { generatePdf } from "../../../lib/pdf"
+    import { buildPdfHtml } from "../../../lib/pdfTemplate"
+
+    if (!isAuthenticated()) window.location.replace("/app/")
+    document.getElementById("logout-btn")?.addEventListener("click", () => { logout(); window.location.replace("/app/") })
+
+    const listView = document.getElementById("list-view")
+    const detailView = document.getElementById("detail-view")
+    const detailContent = document.getElementById("detail-content")
+    const emptyState = document.getElementById("empty-state")
+    const docList = document.getElementById("doc-list")
+    const docCount = document.getElementById("doc-count")
+    const backBtn = document.getElementById("back-btn")
+
+    function renderList() {
+      const docs = getDocuments("invoice")
+      if (docs.length === 0) {
+        emptyState.classList.remove("hidden")
+        docList.classList.add("hidden")
+        docCount.textContent = ""
+        return
+      }
+      emptyState.classList.add("hidden")
+      docList.classList.remove("hidden")
+      docCount.textContent = `${docs.length} invoice${docs.length !== 1 ? "s" : ""}`
+
+      docList.innerHTML = docs.map((doc) => {
+        const total = doc.lineItems.reduce((s, i) => s + i.total, 0)
+        const tax = total * (doc.taxRate / 100)
+        const grandTotal = total + tax - (doc.discount || 0)
+        const customerName = doc.customer?.name || "No customer"
+        return `
+          <div class="card p-4 flex items-center justify-between gap-4" data-id="${doc.id}">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-accent uppercase">${doc.number}</span>
+                <span class="text-xs text-muted">${doc.date}</span>
+              </div>
+              <p class="text-sm font-medium truncate">${customerName}</p>
+              <p class="text-xs text-muted">Total: <span class="font-semibold text-body">$${grandTotal.toLocaleString()}</span></p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button class="view-btn text-xs font-medium text-accent hover:text-accent-hover transition-colors">View</button>
+              <button class="delete-btn text-xs font-medium text-muted hover:text-red-500 transition-colors">Delete</button>
+            </div>
+          </div>
+        `
+      }).join("")
+
+      docList.querySelectorAll(".view-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.closest("[data-id]")?.getAttribute("data-id")
+          if (id) showDetail(id)
+        })
+      })
+
+      docList.querySelectorAll(".delete-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const id = btn.closest("[data-id]")?.getAttribute("data-id")
+          if (id && confirm("Delete this invoice?")) {
+            deleteDocument("invoice", id)
+            renderList()
+          }
+        })
+      })
+    }
+
+    function showDetail(id) {
+      const doc = getDocuments("invoice").find((d) => d.id === id)
+      if (!doc) { renderList(); return }
+
+      listView.classList.add("hidden")
+      detailView.classList.remove("hidden")
+
+      const total = doc.lineItems.reduce((s, i) => s + i.total, 0)
+      const tax = total * (doc.taxRate / 100)
+      const grandTotal = total + tax - (doc.discount || 0)
+
+      const itemsHtml = doc.lineItems.map((item, i) => `
+        <tr class="border-b border-border/50">
+          <td class="py-2 text-sm text-center">${i + 1}</td>
+          <td class="py-2 text-sm">${item.description}</td>
+          <td class="py-2 text-sm text-center">${item.quantity}</td>
+          <td class="py-2 text-sm text-right">$${item.unitPrice.toLocaleString()}</td>
+          <td class="py-2 text-sm text-right font-medium">$${item.total.toLocaleString()}</td>
+        </tr>
+      `).join("")
+
+      const v = doc.vehicle
+      detailContent.innerHTML = `
+        <div class="card p-6 space-y-6">
+          <div class="flex items-start justify-between">
+            <div>
+              <h2 class="text-2xl font-bold">${doc.number}</h2>
+              <p class="text-muted text-sm">${doc.date} ${doc.validUntil ? `| Due: ${doc.validUntil}` : ""}</p>
+            </div>
+            <span class="text-xs font-bold text-accent uppercase tracking-wider">Invoice</span>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="bg-muted/5 rounded-xl p-4">
+              <h3 class="text-xs font-bold text-muted uppercase tracking-wider mb-2">Customer</h3>
+              <p class="text-sm font-medium">${doc.customer.name || "—"}</p>
+              <p class="text-xs text-muted">${doc.customer.phone || ""}</p>
+              <p class="text-xs text-muted">${doc.customer.email || ""}</p>
+              <p class="text-xs text-muted">${doc.customer.address || ""}</p>
+            </div>
+            <div class="bg-muted/5 rounded-xl p-4">
+              <h3 class="text-xs font-bold text-muted uppercase tracking-wider mb-2">Vehicle</h3>
+              ${v.brand ? `<p class="text-sm font-medium">${v.brand} ${v.model} (${v.year || ""})</p>` : '<p class="text-sm text-muted">—</p>'}
+              ${v.vin ? `<p class="text-xs text-muted">VIN: ${v.vin}</p>` : ""}
+              ${v.mileage ? `<p class="text-xs text-muted">Mileage: ${v.mileage.toLocaleString()} km</p>` : ""}
+              ${v.color ? `<p class="text-xs text-muted">Color: ${v.color}</p>` : ""}
+            </div>
+          </div>
+
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-border">
+                <th class="text-left py-2 text-xs text-muted font-semibold">#</th>
+                <th class="text-left py-2 text-xs text-muted font-semibold">Description</th>
+                <th class="text-center py-2 text-xs text-muted font-semibold">Qty</th>
+                <th class="text-right py-2 text-xs text-muted font-semibold">Unit Price</th>
+                <th class="text-right py-2 text-xs text-muted font-semibold">Total</th>
+              </tr>
+            </thead>
+            <tbody>${itemsHtml}</tbody>
+          </table>
+
+          <div class="text-right space-y-1">
+            <div class="text-sm text-muted">Subtotal: <span class="text-body font-medium">$${total.toLocaleString()}</span></div>
+            ${doc.taxRate > 0 ? `<div class="text-sm text-muted">Tax (${doc.taxRate}%): <span class="text-body font-medium">$${tax.toLocaleString()}</span></div>` : ""}
+            ${doc.discount > 0 ? `<div class="text-sm text-muted">Discount: <span class="text-body font-medium">-$${doc.discount.toLocaleString()}</span></div>` : ""}
+            <div class="text-xl font-bold text-accent pt-2 border-t border-border">Total: $${grandTotal.toLocaleString()}</div>
+          </div>
+
+          ${doc.notes ? `<div><h3 class="text-xs font-bold text-muted uppercase tracking-wider mb-1">Notes</h3><p class="text-sm text-muted">${doc.notes}</p></div>` : ""}
+          ${doc.terms ? `<div><h3 class="text-xs font-bold text-muted uppercase tracking-wider mb-1">Terms</h3><p class="text-sm text-muted">${doc.terms}</p></div>` : ""}
+
+          <div class="flex gap-3 pt-4 border-t border-border">
+            <button id="dl-pdf-btn" class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+              Download PDF
+            </button>
+            <button id="print-btn" class="inline-flex items-center justify-center gap-2 rounded-xl border border-border text-muted px-4 py-3 font-medium hover:text-body hover:bg-muted/10 transition-all duration-200">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z" /></svg>
+              Print
+            </button>
+            <button id="delete-doc-btn" class="inline-flex items-center justify-center gap-2 rounded-xl border border-red-200 text-red-500 px-6 py-3 font-medium hover:bg-red-50 transition-all duration-200 dark:border-red-800 dark:hover:bg-red-950/30">
+              Delete
+            </button>
+          </div>
+        </div>
+      `
+
+      document.getElementById("dl-pdf-btn")?.addEventListener("click", async () => {
+        const btn = document.getElementById("dl-pdf-btn")
+        btn.textContent = "Downloading…"
+        btn.disabled = true
+        try {
+          const html = buildPdfHtml(doc)
+          const target = document.getElementById("pdf-render-target") || (() => {
+            const el = document.createElement("div")
+            el.id = "pdf-render-target"
+            el.style.cssText = "position:fixed;top:0;left:0;width:794px;background:#fff;pointer-events:none;z-index:9999;"
+            document.body.appendChild(el)
+            return el
+          })()
+          target.innerHTML = html
+          await generatePdf(target, `${doc.number}.pdf`)
+        } catch (err) {
+          alert("Failed to generate PDF: " + err.message)
+        }
+        btn.textContent = "Download PDF"
+        btn.disabled = false
+      })
+
+      document.getElementById("print-btn")?.addEventListener("click", () => {
+        const html = buildPdfHtml(doc)
+        const pw = window.open("", "_blank", "width=800,height=600")
+        if (pw) {
+          pw.document.write(html)
+          pw.document.close()
+          pw.focus()
+          pw.onafterprint = () => pw.close()
+        }
+      })
+
+      document.getElementById("delete-doc-btn")?.addEventListener("click", () => {
+        if (confirm("Delete this invoice?")) {
+          deleteDocument("invoice", id)
+          showList()
+        }
+      })
+    }
+
+    function showList() {
+      listView.classList.remove("hidden")
+      detailView.classList.add("hidden")
+      detailContent.innerHTML = ""
+      renderList()
+    }
+
+    backBtn?.addEventListener("click", showList)
+
+    const viewParam = new URLSearchParams(window.location.search).get("view")
+    if (viewParam) {
+      showDetail(viewParam)
+    } else {
+      renderList()
+    }
+  </script>
+</body>
+</html>
