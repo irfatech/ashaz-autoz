@@ -14,7 +14,7 @@ currency: USD
 status: Sold
 featured: true
 images:
-  - /images/rental-2.jpg
+  - /images/rental-2.webp
 features:
   - Leather Seats
   - Sunroof

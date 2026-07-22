@@ -4,7 +4,7 @@ excerpt: Tips for finding quality premium vehicles in Timor-Leste, from what to 
 author: Ashaz Autoz
 date: 2026-07-01T00:48
 updatedDate: 2026-07-01T00:49
-image: /images/about-1.jpg
+image: /images/about-1.webp
 category: Cars
 tags:
   - Cars

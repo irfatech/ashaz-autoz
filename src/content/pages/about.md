@@ -2,7 +2,7 @@
 title: About Us
 slug: about
 description: Learn about Ashaz Autoz — your trusted automotive partner in Timor-Leste.
-image: /images/about-1.jpg
+image: /images/about-1.webp
 published: true
 order: 10
 template: default

@@ -2,7 +2,7 @@
 title: Car Rentals
 slug: rentals
 description: Car rental services in Dili, Timor-Leste from Ashaz Autoz.
-image: /images/rental-fleet.jpg
+image: /images/rental-hero.webp
 published: true
 order: 20
 template: default

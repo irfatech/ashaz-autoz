@@ -2,7 +2,7 @@ siteName: Ashaz Autoz
 tagline: Quality Cars, Premium Automotive Services
 description: Your trusted automotive partner in Timor-Leste. Vehicle sales, imports, rentals, workshop, and premium automotive services.
 url: https://ashazautoz.com
-logo: /images/ashaz-timor-flag-color-logo.png
+logo: /images/ashaz-logo.webp
 favicon: /favicon.svg
 phone:
   - +670 7715 4379
@@ -17,8 +17,8 @@ social:
   instagram: https://instagram.com/ashazautoz
   whatsapp: '+67077154379'
   tiktok: https://tiktok.com/@ashazautoztimorleste
-currency: USD
 lng: 125.52886647513672
+currency: USD
 lat: -8.56148098683303
 languages:
   - en

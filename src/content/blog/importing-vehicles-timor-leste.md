@@ -4,7 +4,7 @@ slug: importing-vehicles-timor-leste
 excerpt: Everything you need to know about importing vehicles to Timor-Leste, from documentation to customs clearance.
 author: Ashaz Autoz
 date: 2024-03-10
-image: /images/ashaz-timor-flag-color-logo.png
+image: /images/ashaz-timor-flag-color-logo.webp
 category: Imports
 tags:
   - imports

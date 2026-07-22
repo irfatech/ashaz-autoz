@@ -4,7 +4,7 @@ slug: car-maintenance-tips
 excerpt: Keep your vehicle running smoothly with these essential maintenance tips tailored for driving conditions in Timor-Leste.
 author: Ashaz Autoz
 date: 2024-02-20
-image: /images/ashaz-timor-flag-color-logo.png
+image: /images/ashaz-timor-flag-color-logo.webp
 category: Maintenance
 tags:
   - maintenance

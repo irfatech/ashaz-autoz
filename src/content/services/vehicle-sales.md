@@ -6,7 +6,7 @@ description: "Premium pre-owned and new vehicles sourced from Japan, Singapore, 
 excerpt: "Find your perfect vehicle from our handpicked selection."
 order: 1
 featured: true
-image: /images/service-default.jpg
+image: /images/service-default.webp
 features:
   - Quality inspected vehicles
   - Competitive pricing

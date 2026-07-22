@@ -14,7 +14,7 @@ currency: USD
 status: Sold
 featured: true
 images:
-  - /images/about-2.jpg
+  - /images/about-2.webp
 features:
   - Air Conditioning
   - Bluetooth

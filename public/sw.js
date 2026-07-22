@@ -22,7 +22,7 @@ const PRECACHE_URLS = [
   "/apple-touch-icon-120x120.png",
   "/pwa-192x192.png",
   "/pwa-512x512.png",
-  "/ashaz-logo.png",
+  "/ashaz-logo.webp",
   "/icon.webp",
 ];
 

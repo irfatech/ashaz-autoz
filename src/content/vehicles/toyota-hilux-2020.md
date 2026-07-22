@@ -14,7 +14,7 @@ currency: USD
 status: Sold
 featured: true
 images:
-  - /images/rental-3.jpg
+  - /images/rental-3.webp
 features:
   - Dual Airbags
   - Air Conditioning

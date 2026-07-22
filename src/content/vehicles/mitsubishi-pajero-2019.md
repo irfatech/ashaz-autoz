@@ -14,7 +14,7 @@ currency: USD
 status: Sold
 featured: true
 images:
-  - /images/rental-hero.jpg
+  - /images/rental-hero.webp
 features:
   - 7 Seats
   - Leather Interior

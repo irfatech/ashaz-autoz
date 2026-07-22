@@ -12,7 +12,7 @@ currency: USD
 status: Sold
 featured: true
 images:
-  - /images/hero-bg.jpg
+  - /images/hero-bg.webp
 features:
   - Leather Seats
   - Sunroof
