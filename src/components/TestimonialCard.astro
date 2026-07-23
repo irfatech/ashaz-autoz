@@ -35,7 +35,7 @@ const { name, content, role, company, avatar, rating = 5 } = Astro.props;
     <div>
       <div class="font-semibold">{name}</div>
       {(role || company) && (
-        <div class="text-sm text-metallic">{role}{role && company ? ", " : ""}{company}</div>
+        <div class="text-sm text-muted">{role}{role && company ? ", " : ""}{company}</div>
       )}
     </div>
   </figcaption>

@@ -48,7 +48,10 @@ const siteSchema = webSiteSchema(settings);
     <meta name="apple-mobile-web-app-title" content="Ashaz Autoz" />
     {preloadHero && <link rel="preload" as="image" href="/images/hero-bg.webp" />}
     <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-latin.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bruno-ace-latin.woff2" />
+    <link rel="preconnect" href="https://plausible.io" />
+    <link rel="preconnect" href="https://www.google.com" />
+    <link rel="dns-prefetch" href="https://plausible.io" />
+    {preloadHero && <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/bruno-ace-latin.woff2" />}
     <SEO {...seoProps} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(siteSchema)} />

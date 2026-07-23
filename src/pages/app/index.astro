@@ -42,7 +42,7 @@ import { isAuthenticated } from "../../lib/auth"
               placeholder="Enter password"
             />
           </div>
-          <p id="error-msg" class="text-red-500 text-sm hidden">Incorrect password</p>
+          <p id="error-msg" class="text-red-500 text-sm hidden" role="alert" aria-live="polite">Incorrect password</p>
           <button
             type="submit"
             class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200"

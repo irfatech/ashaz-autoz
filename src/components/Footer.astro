@@ -247,8 +247,8 @@ const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURICom
     );
     const day = diliTime.getDay(); // 0 = Sunday
     const minutes = diliTime.getHours() * 60 + diliTime.getMinutes();
-    const opensAt = 8 * 60;
-    const closesAt = 17 * 60 + 30;
+    const opensAt = 9 * 60;
+    const closesAt = 18 * 60;
     const isOpen = day !== 0 && minutes >= opensAt && minutes < closesAt;
 
     dot.className = `h-1.5 w-1.5 rounded-full ${isOpen ? "bg-emerald-400 animate-pulse" : "bg-white/30"}`;

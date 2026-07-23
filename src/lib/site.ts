@@ -98,6 +98,18 @@ export function getWhatsAppUrl(phone: string, message?: string): string {
   return `https://wa.me/${cleaned}${text}`;
 }
 
+const breadcrumbLabels: Record<string, string> = {
+  faq: "FAQ",
+  tiktok: "TikTok",
+  instagram: "Instagram",
+  "vehicle-sales": "Vehicle Sales",
+  "spare-parts": "Spare Parts",
+  diagnostics: "Diagnostics",
+  "fleet-services": "Fleet Services",
+  "vip-transport": "VIP Transport",
+  "vehicle-import": "Vehicle Import",
+};
+
 export function generateBreadcrumbs(path: string) {
   const parts = path.split("/").filter(Boolean);
   const crumbs = [{ label: "Home", href: "/" }];
@@ -106,7 +118,7 @@ export function generateBreadcrumbs(path: string) {
   for (const part of parts) {
     current += `/${part}`;
     crumbs.push({
-      label: part.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
+      label: breadcrumbLabels[part] || part.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
       href: current,
     });
   }

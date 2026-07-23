@@ -205,6 +205,8 @@ export function articleSchema(article: {
   dateModified?: string;
   image?: string;
   url: string;
+  publisherName?: string;
+  publisherLogo?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -214,6 +216,11 @@ export function articleSchema(article: {
     author: {
       "@type": "Person",
       name: article.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: article.publisherName || "Ashaz Autoz",
+      ...(article.publisherLogo ? { logo: { "@type": "ImageObject", url: article.publisherLogo } } : {}),
     },
     datePublished: article.datePublished,
     ...(article.dateModified ? { dateModified: article.dateModified } : {}),

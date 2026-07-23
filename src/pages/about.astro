@@ -1,13 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
+import { getCollection } from "astro:content";
 
-const team = [
-  { name: "Ashaz", role: "Founder & CEO", bio: "Over 20 years of experience in the automotive industry.", initials: "A" },
-  { name: "Maria", role: "Operations Manager", bio: "Ensuring smooth day-to-day operations and customer satisfaction.", initials: "M" },
-  { name: "João", role: "Head Mechanic", bio: "Master technician with 15 years of workshop experience.", initials: "J" },
-  { name: "Ana", role: "Customer Relations", bio: "Dedicated to providing exceptional customer service.", initials: "A" },
-];
+const team = (await getCollection("team"))
+  .sort((a, b) => (a.data.order || 99) - (b.data.order || 99))
+  .map((m) => ({
+    name: m.data.name,
+    role: m.data.role,
+    bio: m.data.bio,
+    initials: m.data.name.charAt(0),
+  }));
 
 const values = [
   { title: "Integrity", description: "Honest, transparent dealings with every customer." },

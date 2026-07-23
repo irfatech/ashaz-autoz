@@ -3,10 +3,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import InstagramCard from "../../components/InstagramCard.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
-import { getSiteSettings, generateBreadcrumbs } from "../../lib/site";
+import { generateBreadcrumbs } from "../../lib/site";
 import { imageGallerySchema } from "../../lib/schema";
 
-const settings = await getSiteSettings();
 const crumbs = generateBreadcrumbs("/instagram/");
 const allPosts = await getCollection("instagram");
 allPosts.sort((a, b) => (a.data.order || 99) - (b.data.order || 99));

@@ -10,7 +10,7 @@ const { title, instagramUrl, thumbnail, caption, category } = post.data;
 ---
 
 <div class="instagram-card group relative overflow-hidden rounded-xl bg-card shadow-md border border-border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-  <div class="relative aspect-square overflow-hidden bg-muted/10 cursor-pointer" data-ig-url={instagramUrl}>
+  <div class="relative aspect-square overflow-hidden bg-muted/10 cursor-pointer" role="button" tabindex="0" data-ig-url={instagramUrl}>
     {
       thumbnail ? (
         <img src={thumbnail} alt={title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -40,25 +40,36 @@ const { title, instagramUrl, thumbnail, caption, category } = post.data;
 </div>
 
 <script>
-  document.querySelectorAll("[data-ig-url]").forEach((el) => {
+  function embedInstagram(el: HTMLElement) {
+    const url = el.dataset.igUrl;
+    if (!url) return;
+    const match = url.match(/\/p\/([^\/]+)/);
+    if (!match) return;
+    const shortcode = match[1];
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.instagram.com/p/${shortcode}/embed/`;
+    iframe.width = "100%";
+    iframe.height = "100%";
+    iframe.style.border = "0";
+    iframe.allow = "encrypted-media; picture-in-picture; fullscreen";
+    iframe.loading = "lazy";
+    iframe.title = (el.querySelector("h3")?.textContent) || "Instagram Post";
+    while (el.firstChild) {
+      el.removeChild(el.firstChild);
+    }
+    el.appendChild(iframe);
+  }
+
+  document.querySelectorAll("[data-ig-url]").forEach((el: Element) => {
     el.addEventListener("click", function (this: HTMLElement) {
-      const url = this.dataset.igUrl;
-      if (!url) return;
-      const match = url.match(/\/p\/([^\/]+)/);
-      if (!match) return;
-      const shortcode = match[1];
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://www.instagram.com/p/${shortcode}/embed/`;
-      iframe.width = "100%";
-      iframe.height = "100%";
-      iframe.style.border = "0";
-      iframe.allow = "encrypted-media; picture-in-picture; fullscreen";
-      iframe.loading = "lazy";
-      iframe.title = this.querySelector("h3")?.textContent || "Instagram Post";
-      while (this.firstChild) {
-        this.removeChild(this.firstChild);
+      embedInstagram(this);
+    });
+    el.addEventListener("keydown", function (this: HTMLElement, e: Event) {
+      const ke = e as KeyboardEvent;
+      if (ke.key === "Enter" || ke.key === " ") {
+        ke.preventDefault();
+        embedInstagram(this);
       }
-      this.appendChild(iframe);
     });
   });
 </script>

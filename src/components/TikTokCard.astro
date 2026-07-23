@@ -11,7 +11,7 @@ const { title, tiktokUrl, thumbnail, caption, category } = video.data;
 ---
 
 <div class="tiktok-card group relative overflow-hidden rounded-xl bg-card shadow-md border border-border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 {featured ? 'sm:col-span-2 sm:row-span-2' : ''}">
-  <div class="relative aspect-[9/16] overflow-hidden bg-muted/10 cursor-pointer" data-tiktok-url={tiktokUrl}>
+  <div class="relative aspect-[9/16] overflow-hidden bg-muted/10 cursor-pointer" role="button" tabindex="0" data-tiktok-url={tiktokUrl}>
     {
       thumbnail ? (
         <img src={thumbnail} alt={title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -41,25 +41,36 @@ const { title, tiktokUrl, thumbnail, caption, category } = video.data;
 </div>
 
 <script>
-  document.querySelectorAll("[data-tiktok-url]").forEach((el) => {
+  function embedTikTok(el: HTMLElement) {
+    const url = el.dataset.tiktokUrl;
+    if (!url) return;
+    const match = url.match(/\/video\/(\d+)/);
+    if (!match) return;
+    const videoId = match[1];
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.tiktok.com/embed/v2/${videoId}`;
+    iframe.width = "100%";
+    iframe.height = "100%";
+    iframe.style.border = "0";
+    iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
+    iframe.loading = "lazy";
+    iframe.title = (el.querySelector("h3")?.textContent) || "TikTok Video";
+    while (el.firstChild) {
+      el.removeChild(el.firstChild);
+    }
+    el.appendChild(iframe);
+  }
+
+  document.querySelectorAll("[data-tiktok-url]").forEach((el: Element) => {
     el.addEventListener("click", function (this: HTMLElement) {
-      const url = this.dataset.tiktokUrl;
-      if (!url) return;
-      const match = url.match(/\/video\/(\d+)/);
-      if (!match) return;
-      const videoId = match[1];
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://www.tiktok.com/embed/v2/${videoId}`;
-      iframe.width = "100%";
-      iframe.height = "100%";
-      iframe.style.border = "0";
-      iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
-      iframe.loading = "lazy";
-      iframe.title = this.querySelector("h3")?.textContent || "TikTok Video";
-      while (this.firstChild) {
-        this.removeChild(this.firstChild);
+      embedTikTok(this);
+    });
+    el.addEventListener("keydown", function (this: HTMLElement, e: Event) {
+      const ke = e as KeyboardEvent;
+      if (ke.key === "Enter" || ke.key === " ") {
+        ke.preventDefault();
+        embedTikTok(this);
       }
-      this.appendChild(iframe);
     });
   });
 </script>
