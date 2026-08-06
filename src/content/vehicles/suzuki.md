@@ -19,16 +19,17 @@ features:
   - AllGrip Pro 4WD
   - Brand New (0 km)
   - Automatic Transmission
-  - Grey
+  - Black
+  - Blue
 doors: 5
 seats: 5
-color: Grey
+color: Black, Blue
 ---
 
 Coming soon
 
 The first brand new Maruti Suzuki in Timor-Leste.
 
-Maruti Suzuki Jimny Alpha — 2026, AllGrip Pro 4WD, Grey.
+Maruti Suzuki Jimny Alpha — 2026, AllGrip Pro 4WD. 3 units: 2 Black, 1 Blue. One Black already reserved — 2 remaining.
 
 Full launch details: https://ashazautoz.com/new-car-launch/
