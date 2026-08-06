@@ -1,0 +1,334 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { getSiteSettings, generateBreadcrumbs, getWhatsAppUrl, phoneClean } from "../lib/site";
+import { faqPageSchema, imageGallerySchema } from "../lib/schema";
+
+const settings = await getSiteSettings();
+const phone = settings.social?.whatsapp ?? settings.phone[0];
+const pageUrl = `${settings.url}/new-car-launch/`;
+const crumbs = generateBreadcrumbs("/new-car-launch/");
+const heroImage = "/images/Cars/2026/f35d1880-70d6-4a0e-9dfe-369404f90526.webp";
+const galleryImages = [
+  { url: "/images/Cars/2026/f35d1880-70d6-4a0e-9dfe-369404f90526.webp", caption: "Maruti Suzuki Jimny Alpha — front view" },
+  { url: "/images/Cars/2026/e0b0ca31-9423-43aa-bf69-6ae8075c009c.webp", caption: "Maruti Suzuki Jimny Alpha — exterior" },
+];
+
+const reserveMessage =
+  "Hello Ashaz Autoz! I'm interested in reserving the brand new Maruti Suzuki Jimny Alpha (Grey). Please share the launch details.";
+const priceMessage =
+  "Hello Ashaz Autoz! What is the launch price of the brand new Maruti Suzuki Jimny Alpha (Grey)?";
+
+const faqs = [
+  {
+    q: "Is the Maruti Suzuki Jimny Alpha really a brand new car?",
+    a: "Yes. This is the first ever shipment of brand new, factory-built Maruti Suzuki vehicles brought into Timor-Leste. The Jimny Alpha arrives with 0 km on the odometer — not a used or reconditioned import.",
+  },
+  {
+    q: "What color is available?",
+    a: "The launch unit is the Maruti Suzuki Jimny Alpha in Grey. Please contact us for details on other available colors and future allocations.",
+  },
+  {
+    q: "What is the price of the Maruti Suzuki Jimny Alpha?",
+    a: "Launch pricing is available on request. Message us on WhatsApp or call our yard and we will share the complete launch package, including any limited-time introductory offers.",
+  },
+  {
+    q: "Is there a manufacturer warranty?",
+    a: "Yes, the Jimny Alpha is covered by the new vehicle warranty provided by Maruti Suzuki. Our workshop in Ponte Foun, Comoro, Dili, is ready to support your vehicle with genuine service and parts.",
+  },
+  {
+    q: "How can I reserve one?",
+    a: "Contact us on WhatsApp, by phone, or visit our yard. We will guide you through the reservation process and the deposit required to secure your unit.",
+  },
+  {
+    q: "When can I take delivery?",
+    a: "Units are arriving soon. We are currently taking reservations to secure your place in the first allocation. We will confirm your delivery timeline when you reserve.",
+  },
+  {
+    q: "Can I test drive the Jimny Alpha?",
+    a: "Yes. Test drives will be available once the launch unit arrives at our yard. Contact us to be notified as soon as it is ready.",
+  },
+  {
+    q: "Does Ashaz Autoz offer service and spare parts for the Jimny?",
+    a: "Absolutely. As part of this launch, our workshop provides maintenance and genuine spare parts support for the Jimny Alpha, giving you peace of mind after your purchase.",
+  },
+];
+
+const specs = [
+  { label: "Brand", value: "Maruti Suzuki" },
+  { label: "Model", value: "Jimny Alpha" },
+  { label: "Year", value: "2026" },
+  { label: "Body Type", value: "Compact 4x4 SUV" },
+  { label: "Color", value: "Grey" },
+  { label: "Condition", value: "Brand New (0 km)" },
+  { label: "Engine", value: "1.5L Petrol" },
+  { label: "Power", value: "105 PS" },
+  { label: "Torque", value: "134 Nm" },
+  { label: "Transmission", value: "Automatic" },
+  { label: "Drive", value: "AllGrip Pro 4WD (4H / 4L)" },
+  { label: "Fuel Type", value: "Petrol" },
+  { label: "Doors", value: "5" },
+  { label: "Seats", value: "5" },
+  { label: "Ground Clearance", value: "210 mm" },
+  { label: "Warranty", value: "Manufacturer Warranty" },
+];
+
+const highlights = [
+  {
+    title: "AllGrip Pro 4WD",
+    description: "Genuine 4WD with low-range gearing, built to handle Timor-Leste's toughest roads.",
+    icon: "M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z",
+  },
+  {
+    title: "Brand New, 0 km",
+    description: "Factory-built and shipped new — not a used or reconditioned import.",
+    icon: "M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z",
+  },
+  {
+    title: "Iconic Heritage",
+    description: "Over 50 years of Jimny off-road legend, now officially available brand new in Timor-Leste.",
+    icon: "M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25",
+  },
+  {
+    title: "Full Support",
+    description: "Workshop service, genuine parts, and warranty backed by Ashaz Autoz in Dili.",
+    icon: "M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z",
+  },
+];
+
+const carSchema = {
+  "@context": "https://schema.org",
+  "@type": "Car",
+  name: "Maruti Suzuki Jimny Alpha (2026)",
+  description:
+    "The first brand new Maruti Suzuki Jimny Alpha in Timor-Leste. AllGrip Pro 4WD, Grey, 1.5L petrol. Reserve yours now.",
+  brand: { "@type": "Brand", name: "Maruti Suzuki" },
+  model: "Jimny Alpha",
+  vehicleModelDate: "2026",
+  vehicleTransmission: "Automatic",
+  fuelType: "Petrol",
+  driveWheelConfiguration: "4WD",
+  color: "Grey",
+  vehicleSeatingCapacity: 5,
+  mileageFromOdometer: { "@type": "QuantitativeValue", value: 0, unitCode: "KMT" },
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "USD",
+    priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+    itemCondition: "https://schema.org/NewCondition",
+    availability: "https://schema.org/PreOrder",
+    url: pageUrl,
+  },
+  image: galleryImages.map((g) => `${settings.url}${g.url}`),
+};
+---
+
+<BaseLayout
+  title="Maruti Suzuki Jimny Alpha — First Brand New Car in Timor-Leste"
+  description="Introducing the first brand new Maruti Suzuki in Timor-Leste. The 2026 Jimny Alpha in Grey with AllGrip Pro 4WD. Reserve yours today at Ashaz Autoz, Dili."
+  image={heroImage}
+  seo={{ breadcrumbs: crumbs }}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(carSchema)} />
+  {faqPageSchema(faqs) && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPageSchema(faqs))} />
+  )}
+  {imageGallerySchema(galleryImages.map((g) => ({ url: `${settings.url}${g.url}`, caption: g.caption }))) && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(imageGallerySchema(galleryImages.map((g) => ({ url: `${settings.url}${g.url}`, caption: g.caption }))))} />
+  )}
+
+  {/* Campaign Hero */}
+  <section class="relative overflow-hidden bg-inverse">
+    <div class="absolute inset-0">
+      <img
+        src={heroImage}
+        alt="Brand new Maruti Suzuki Jimny Alpha in Grey"
+        class="h-full w-full object-cover opacity-40"
+      />
+      <div class="absolute inset-0 bg-linear-to-r from-black/90 via-black/60 to-black/30" />
+    </div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 pt-40 lg:pt-48 pb-20 lg:pb-28">
+      <Breadcrumb path="/new-car-launch/" class="text-white/70 [&_a]:text-white/80" />
+      <div class="max-w-3xl mt-6">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-accent-text text-sm font-medium mb-6">
+          <span class="h-2 w-2 rounded-full bg-white animate-pulse" />
+          Brand New · First in Timor-Leste
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-heading font-black text-white leading-[0.95] tracking-tight mb-6">
+          Maruti Suzuki
+          <br />
+          <span class="gradient-text">Jimny Alpha</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-white/70 max-w-2xl mb-8">
+          We're proud to introduce the first ever brand new Maruti Suzuki car in Timor-Leste.
+          AllGrip Pro 4WD. Grey. 0 km. Yours to reserve.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href={getWhatsAppUrl(phone, reserveMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-8 py-4 text-lg font-medium hover:bg-accent-hover transition-all duration-200"
+          >
+            Reserve on WhatsApp
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="#specs" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/30 text-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-all duration-200">
+            View Specifications
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-page to-transparent z-10" />
+  </section>
+
+  {/* Campaign Story */}
+  <section class="py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div>
+          <span class="text-accent font-semibold text-sm uppercase tracking-widest">A New Era Begins</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mt-3 mb-6">
+            A Brand New Chapter for
+            <span class="bg-linear-to-r from-accent to-accent-hover bg-clip-text text-transparent">Timor-Leste</span>
+          </h2>
+          <p class="text-muted leading-relaxed text-lg mb-6">
+            For years, Timor-Leste has relied on used and reconditioned vehicles imported from Japan.
+            Today, we're changing that. Ashaz Autoz is proud to introduce the very first brand new
+            Maruti Suzuki vehicle to the country — the iconic Jimny Alpha.
+          </p>
+          <p class="text-muted leading-relaxed mb-8">
+            Renowned worldwide for its rugged AllGrip Pro 4WD capability, the Jimny Alpha is the perfect
+            companion for Timor-Leste — from the streets of Dili to the mountain roads of Ermera, Ainaro,
+            and beyond. Factory-built, zero kilometres, and backed by a manufacturer warranty and our own
+            workshop in Ponte Foun, Comoro.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href={getWhatsAppUrl(phone, priceMessage)} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-6 py-3 font-medium hover:bg-accent-hover transition-all duration-200">
+              Ask for Launch Price
+            </a>
+            <a href="/contact/" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-btn-secondary-border text-body px-6 py-3 font-medium hover:bg-btn-secondary-hover-bg hover:text-btn-secondary-hover-text transition-all duration-200">
+              Visit Our Yard
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden">
+            <img src={heroImage} alt="Maruti Suzuki Jimny Alpha in Grey" class="h-full w-full object-cover" loading="lazy" />
+          </div>
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden mt-8">
+            <img src="/images/Cars/2026/e0b0ca31-9423-43aa-bf69-6ae8075c009c.webp" alt="Maruti Suzuki Jimny Alpha exterior" class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Highlights */}
+  <section class="py-16 sm:py-20 lg:py-24 bg-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="section-title mb-12 sm:mb-16">
+        <h2>Why the <span class="gradient-text">Jimny Alpha</span></h2>
+        <p>Purpose-built for Timor-Leste's roads, with the heritage of a true 4x4 icon.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {highlights.map((item) => (
+          <div class="text-center group">
+            <div class="mx-auto mb-5 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-soft text-accent transition-all duration-300 group-hover:bg-accent group-hover:text-accent-text">
+              <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d={item.icon} /></svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-3">{item.title}</h3>
+            <p class="text-muted text-sm leading-relaxed">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Specifications */}
+  <section id="specs" class="py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="section-title mb-12 sm:mb-16">
+        <span class="text-accent font-semibold text-sm uppercase tracking-widest">Full Specifications</span>
+        <h2 class="mt-2">Maruti Suzuki <span class="gradient-text">Jimny Alpha</span></h2>
+        <p>Everything you need to know about the launch unit.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {specs.map((spec) => (
+          <div class="card p-5">
+            <p class="text-xs text-muted uppercase tracking-wider mb-1">{spec.label}</p>
+            <p class="font-semibold">{spec.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Gallery */}
+  <section class="py-16 sm:py-20 lg:py-24 bg-section">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="section-title mb-12 sm:mb-16">
+        <h2>In <span class="gradient-text">Grey</span></h2>
+        <p>A first look at the launch unit arriving at our yard.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        {galleryImages.map((img) => (
+          <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-muted/10">
+            <img src={img.url} alt={img.caption} class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Pricing + Reservation CTA */}
+  <section class="py-16 sm:py-20 lg:py-24 relative overflow-hidden bg-inverse">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(220,38,38,0.12),transparent_60%)]" />
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <span class="text-accent font-semibold text-sm uppercase tracking-widest">Limited First Allocation</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-inverted mt-3 mb-4">
+        Reserve Your Jimny Alpha
+      </h2>
+      <p class="text-inverted/60 text-lg max-w-2xl mx-auto mb-3">
+        Launch pricing is available on request. Be among the first in Timor-Leste to own a brand new Maruti Suzuki.
+      </p>
+      <p class="text-inverted/60 text-lg max-w-2xl mx-auto mb-10">
+        Available in <strong class="text-white">Grey</strong> · AllGrip Pro 4WD · 0 km
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href={getWhatsAppUrl(phone, reserveMessage)} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-8 py-4 text-lg font-medium hover:bg-accent-hover transition-all duration-200">
+          Reserve on WhatsApp
+          <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a href={`tel:${phoneClean(phone)}`} class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-inverted/30 text-inverted px-8 py-4 text-lg font-medium hover:bg-inverted hover:text-inverse transition-all duration-200">
+          Call {settings.phone[0].replace(/[^0-9]/g, "").replace(/(\d{4})(\d{4})/, "$1 $2")}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="py-16 sm:py-20 lg:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="section-title mb-12 sm:mb-16">
+        <h2>Jimny Alpha <span class="gradient-text">FAQ</span></h2>
+        <p>Answers to common questions about the launch.</p>
+      </div>
+      <div class="max-w-3xl space-y-3 mx-auto">
+        {faqs.map((faq) => (
+          <details class="card group open:border-accent-border transition-all duration-200">
+            <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-medium">
+              <span>{faq.q}</span>
+              <svg class="h-5 w-5 text-muted shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </summary>
+            <div class="px-5 pb-5 text-muted leading-relaxed">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
