@@ -10,7 +10,9 @@ const { vehicle } = Astro.props;
 const { data } = vehicle;
 const settings = await getSiteSettings();
 const phone = settings.social?.whatsapp ?? settings.phone[0];
-const enquiryMessage = `Hello! I'm interested in the ${data.brand} ${data.model} (${data.year}) - $${data.price.toLocaleString()}. Is it still available?`;
+const enquiryMessage = data.priceOnRequest
+  ? `Hello! I'm interested in reserving the ${data.brand} ${data.model} (${data.year}). Please share the launch details.`
+  : `Hello! I'm interested in the ${data.brand} ${data.model} (${data.year}) - $${data.price.toLocaleString()}. Is it still available?`;
 const vehicleUrl = `${settings.url}/vehicles/${vehicle.id}/`;
 
 const vehicleJson = JSON.stringify({
@@ -59,7 +61,11 @@ const vehicleJson = JSON.stringify({
     <p class="text-muted text-sm mb-3">{data.year}</p>
 
     <div class="flex items-baseline gap-1 mb-4">
-      <span class="text-2xl font-bold text-accent">{formatPrice(data.price, data.currency)}</span>
+      {data.priceOnRequest ? (
+        <span class="text-xl font-bold text-accent">Price on Request</span>
+      ) : (
+        <span class="text-2xl font-bold text-accent">{formatPrice(data.price, data.currency)}</span>
+      )}
     </div>
 
     <div class="grid grid-cols-2 gap-3 text-sm text-muted border-t border-border pt-4 mb-4">
@@ -96,7 +102,7 @@ const vehicleJson = JSON.stringify({
           rel="noopener noreferrer"
           class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-text px-4 py-2.5 text-sm font-medium hover:bg-accent-hover transition-all duration-200"
         >
-          Enquire
+          {data.priceOnRequest ? "Reserve" : "Enquire"}
         </a>
       )}
     </div>

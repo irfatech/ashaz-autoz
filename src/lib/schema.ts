@@ -104,6 +104,7 @@ export function vehicleSchema(
     vin?: string;
     doors?: number;
     seats?: number;
+    priceOnRequest?: boolean;
   },
   url: string,
 ) {
@@ -125,11 +126,19 @@ export function vehicleSchema(
     },
     offers: {
       "@type": "Offer",
-      price: vehicle.price,
+      ...(vehicle.priceOnRequest ? {} : { price: vehicle.price }),
       priceCurrency: vehicle.currency,
       priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      itemCondition: "https://schema.org/UsedCondition",
-      availability: vehicle.status === "Available" ? "https://schema.org/InStock" : "https://schema.org/SoldOut",
+      itemCondition: vehicle.priceOnRequest
+        ? "https://schema.org/NewCondition"
+        : "https://schema.org/UsedCondition",
+      availability: vehicle.priceOnRequest
+        ? "https://schema.org/PreOrder"
+        : vehicle.status === "Available"
+          ? "https://schema.org/InStock"
+          : vehicle.status === "Reserved"
+            ? "https://schema.org/LimitedAvailability"
+            : "https://schema.org/SoldOut",
       url,
     },
     vehicleTransmission: vehicle.transmission,

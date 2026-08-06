@@ -41,6 +41,7 @@ const vehicles = defineCollection({
     driveType: z.enum(["FWD", "RWD", "AWD", "4WD"]),
     price: z.coerce.number().int().min(0),
     currency: z.string().default("USD"),
+    priceOnRequest: z.boolean().default(false),
     status: z.enum(["Available", "Reserved", "Sold", "Upcoming"]).default("Available"),
     featured: z.boolean().default(false),
     images: z.array(z.string()).default([]),

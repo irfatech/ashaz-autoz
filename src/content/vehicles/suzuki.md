@@ -10,6 +10,7 @@ engine: 1.5L
 driveType: 4WD
 price: 30000
 currency: USD
+priceOnRequest: true
 status: Upcoming
 featured: true
 images:
