@@ -15,6 +15,8 @@ featured: true
 images:
   - /images/Cars/2026/f35d1880-70d6-4a0e-9dfe-369404f90526.webp
   - /images/Cars/2026/e0b0ca31-9423-43aa-bf69-6ae8075c009c.webp
+  - /images/Cars/2026/jimny-black.webp
+  - /images/Cars/2026/jimny-blue.webp
 features:
   - AllGrip Pro 4WD
   - Brand New (0 km)

@@ -12,6 +12,8 @@ const heroImage = "/images/Cars/2026/f35d1880-70d6-4a0e-9dfe-369404f90526.webp";
 const galleryImages = [
   { url: "/images/Cars/2026/f35d1880-70d6-4a0e-9dfe-369404f90526.webp", caption: "Maruti Suzuki Jimny Alpha — front view" },
   { url: "/images/Cars/2026/e0b0ca31-9423-43aa-bf69-6ae8075c009c.webp", caption: "Maruti Suzuki Jimny Alpha — exterior" },
+  { url: "/images/Cars/2026/jimny-black.webp", caption: "Maruti Suzuki Jimny Alpha in Black" },
+  { url: "/images/Cars/2026/jimny-blue.webp", caption: "Maruti Suzuki Jimny Alpha in Blue" },
 ];
 
 const reserveMessage =
@@ -276,11 +278,17 @@ const carSchema = {
       </div>
       <div class="grid md:grid-cols-2 gap-6">
         {galleryImages.map((img) => (
-          <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-muted/10">
+          <figure class="aspect-[4/3] rounded-2xl overflow-hidden bg-muted/10 relative group">
             <img src={img.url} alt={img.caption} class="h-full w-full object-cover" loading="lazy" />
-          </div>
+            <figcaption class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-linear-to-t from-black/70 to-transparent text-white text-sm font-medium">
+              {img.caption}
+            </figcaption>
+          </figure>
         ))}
       </div>
+      <p class="text-muted text-xs text-center mt-6">
+        Black &amp; Blue color photos courtesy of Wikimedia Commons (CC0 / CC BY-SA 4.0).
+      </p>
     </div>
   </section>
 
