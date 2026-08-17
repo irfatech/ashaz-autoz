@@ -74,7 +74,7 @@ import "../../../styles/global.css"
           <input id="v-fuel" placeholder="Fuel Type" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
           <input id="v-engine" placeholder="Engine" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
           <input id="v-chassis" placeholder="Chassis Number" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-engine-capacity" placeholder="Engine Capacity" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+          <input id="v-engine-no" placeholder="Engine Number" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
           <input id="v-reg-no" placeholder="Registration No." class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
         </div>
       </div>
@@ -177,6 +177,7 @@ import "../../../styles/global.css"
 
     const params = new URLSearchParams(window.location.search)
     const vehicleParam = params.get("vehicle")
+    let vehiclePrice = 0
     if (vehicleParam) {
       try {
         const v = JSON.parse(decodeURIComponent(vehicleParam))
@@ -191,8 +192,9 @@ import "../../../styles/global.css"
         setVal("v-fuel", v.fuelType)
         setVal("v-engine", v.engine)
         setVal("v-chassis", v.chassisNumber)
-        setVal("v-engine-capacity", v.engineCapacity)
+        setVal("v-engine-no", v.engineNumber)
         setVal("v-reg-no", v.registrationNo)
+        vehiclePrice = Number(v.price) || 0
       } catch {}
     }
 
@@ -281,7 +283,7 @@ import "../../../styles/global.css"
           fuelType: getVal("v-fuel"),
           engine: getVal("v-engine"),
           chassisNumber: getVal("v-chassis"),
-          engineCapacity: getVal("v-engine-capacity"),
+          engineNumber: getVal("v-engine-no"),
           registrationNo: getVal("v-reg-no"),
         },
         lineItems: items,
@@ -321,7 +323,9 @@ import "../../../styles/global.css"
     }
 
     document.getElementById("add-item")?.addEventListener("click", () => addItem())
-    addItem("Vehicle Price", 1, 0)
+    addItem("Vehicle Price", 1, vehiclePrice)
+    if (vehicleParam) addItem("Name Transfer", 1, 150)
+    recalcAll()
 
     document.getElementById("tax-rate")?.addEventListener("input", recalcAll)
     document.getElementById("discount")?.addEventListener("input", recalcAll)

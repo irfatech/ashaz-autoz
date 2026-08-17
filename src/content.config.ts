@@ -53,7 +53,7 @@ const vehicles = defineCollection({
     registrationYear: z.coerce.number().int().optional(),
     vin: z.string().optional(),
     chassisNumber: z.string().optional(),
-    engineCapacity: z.string().optional(),
+    engineNumber: z.string().optional(),
     registrationNo: z.string().optional(),
     slug: z.string().optional(),
     lang: z.string().default("en"),

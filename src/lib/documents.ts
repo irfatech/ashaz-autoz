@@ -24,7 +24,7 @@ export interface VehicleInfo {
   fuelType: string
   engine: string
   chassisNumber: string
-  engineCapacity: string
+  engineNumber: string
   registrationNo: string
 }
 

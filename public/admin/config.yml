@@ -136,7 +136,7 @@ collections:
       - { label: "Color", name: "color", widget: "string", required: false }
       - { label: "VIN", name: "vin", widget: "string", required: false }
       - { label: "Chassis Number", name: "chassisNumber", widget: "string", required: false }
-      - { label: "Engine Capacity", name: "engineCapacity", widget: "string", required: false, hint: "e.g. 1500cc" }
+      - { label: "Engine Number", name: "engineNumber", widget: "string", required: false }
       - { label: "Registration No.", name: "registrationNo", widget: "string", required: false }
       - { label: "Description", name: "body", widget: "markdown", required: false }
 

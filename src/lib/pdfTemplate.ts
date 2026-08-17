@@ -106,7 +106,7 @@ export function buildPdfHtml(data: DocumentData): string {
         ${vehicle.mileage ? `<div class="row"><span class="label">Mileage</span><span class="value">${vehicle.mileage.toLocaleString()} km</span></div>` : ""}
         ${vehicle.color ? `<div class="row"><span class="label">Color</span><span class="value">${vehicle.color}</span></div>` : ""}
         ${vehicle.chassisNumber ? `<div class="row"><span class="label">Chassis No.</span><span class="value">${vehicle.chassisNumber}</span></div>` : ""}
-        ${vehicle.engineCapacity ? `<div class="row"><span class="label">Engine Cap.</span><span class="value">${vehicle.engineCapacity}</span></div>` : ""}
+        ${vehicle.engineNumber ? `<div class="row"><span class="label">Engine No.</span><span class="value">${vehicle.engineNumber}</span></div>` : ""}
         ${vehicle.registrationNo ? `<div class="row"><span class="label">Reg. No.</span><span class="value">${vehicle.registrationNo}</span></div>` : ""}
       </div>
     </div>
