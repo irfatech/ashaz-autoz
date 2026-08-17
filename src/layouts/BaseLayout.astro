@@ -83,10 +83,14 @@ const siteSchema = webSiteSchema(settings);
     <PwaInstallButton />
     <WhatsAppButton />
 
-    <script>
-      if ("serviceWorker" in navigator) {
+    <script define:vars={{ isDev: import.meta.env.DEV }}>
+      if (!isDev && "serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("/sw.js");
+        });
+      } else if (isDev && "serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then((regs) => {
+          regs.forEach((reg) => reg.unregister());
         });
       }
     </script>

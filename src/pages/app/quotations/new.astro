@@ -39,6 +39,7 @@ import { APP_PASSWORD } from "../../../lib/auth"
 
   <div class="mx-auto max-w-5xl px-4 sm:px-6 py-8">
     <form id="doc-form" class="space-y-8">
+      <div id="form-errors" class="hidden rounded-xl border border-red-300 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-400 px-4 py-3 text-sm" role="alert" aria-live="polite"></div>
 
       <div class="grid sm:grid-cols-2 gap-4">
         <div>
@@ -73,6 +74,9 @@ import { APP_PASSWORD } from "../../../lib/auth"
           <input id="v-transmission" placeholder="Transmission" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
           <input id="v-fuel" placeholder="Fuel Type" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
           <input id="v-engine" placeholder="Engine" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+          <input id="v-chassis" placeholder="Chassis Number" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+          <input id="v-engine-capacity" placeholder="Engine Capacity" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+          <input id="v-reg-no" placeholder="Registration No." class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
         </div>
       </div>
 
@@ -155,7 +159,7 @@ import { APP_PASSWORD } from "../../../lib/auth"
     </form>
   </div>
 
-  <div id="pdf-render-target" style="position:fixed;top:0;left:0;width:794px;background:#fff;pointer-events:none;z-index:9999;"></div>
+  <div id="pdf-render-target" style="position:absolute;top:0;left:-10000px;width:794px;background:#fff;pointer-events:none;"></div>
 
   <script type="module">
     import { isAuthenticated, logout } from "../../../lib/auth"
@@ -188,6 +192,9 @@ import { APP_PASSWORD } from "../../../lib/auth"
         setVal("v-transmission", v.transmission)
         setVal("v-fuel", v.fuelType)
         setVal("v-engine", v.engine)
+        setVal("v-chassis", v.chassisNumber)
+        setVal("v-engine-capacity", v.engineCapacity)
+        setVal("v-reg-no", v.registrationNo)
       } catch {}
     }
 
@@ -240,6 +247,14 @@ import { APP_PASSWORD } from "../../../lib/auth"
       document.getElementById("calc-total").textContent = `$${Math.max(0, total).toLocaleString()}`
     }
 
+    let cachedId = null
+    let cachedNumber = null
+    function getOrCreateDocMeta() {
+      if (!cachedId) cachedId = generateDocId()
+      if (!cachedNumber) cachedNumber = generateDocNumber("quotation")
+      return { id: cachedId, number: cachedNumber }
+    }
+
     function getFormData() {
       const getVal = (id) => document.getElementById(id)?.value || ""
       const items = Array.from(document.querySelectorAll("#items-body tr")).map((row) => {
@@ -249,9 +264,6 @@ import { APP_PASSWORD } from "../../../lib/auth"
         return { id: generateDocId(), description: desc, quantity: qty, unitPrice: price, total: qty * price }
       })
       return {
-        id: generateDocId(),
-        type: "quotation",
-        number: generateDocNumber("quotation"),
         date: getVal("doc-date"),
         validUntil: getVal("doc-valid"),
         customer: {
@@ -270,6 +282,9 @@ import { APP_PASSWORD } from "../../../lib/auth"
           transmission: getVal("v-transmission"),
           fuelType: getVal("v-fuel"),
           engine: getVal("v-engine"),
+          chassisNumber: getVal("v-chassis"),
+          engineCapacity: getVal("v-engine-capacity"),
+          registrationNo: getVal("v-reg-no"),
         },
         lineItems: items,
         taxRate: Number(getVal("tax-rate")) || 0,
@@ -281,6 +296,32 @@ import { APP_PASSWORD } from "../../../lib/auth"
       }
     }
 
+    function buildDocument(formData) {
+      const meta = getOrCreateDocMeta()
+      return { id: meta.id, type: "quotation", number: meta.number, ...formData }
+    }
+
+    function validateForm(formData) {
+      const errors = []
+      if (!formData.customer.name.trim()) errors.push("Customer name is required.")
+      const validItems = formData.lineItems.filter((i) => i.description.trim() && i.total > 0)
+      if (validItems.length === 0) errors.push("Add at least one line item with a description and a price greater than $0.")
+      return errors
+    }
+
+    function showFormErrors(errors) {
+      const box = document.getElementById("form-errors")
+      if (!box) return
+      if (errors.length === 0) {
+        box.classList.add("hidden")
+        box.innerHTML = ""
+        return
+      }
+      box.innerHTML = `<ul class="list-disc pl-4 space-y-0.5">${errors.map((e) => `<li>${e}</li>`).join("")}</ul>`
+      box.classList.remove("hidden")
+      box.scrollIntoView({ behavior: "smooth", block: "center" })
+    }
+
     document.getElementById("add-item")?.addEventListener("click", () => addItem())
     addItem("Vehicle Price", 1, 0)
 
@@ -288,12 +329,17 @@ import { APP_PASSWORD } from "../../../lib/auth"
     document.getElementById("discount")?.addEventListener("input", recalcAll)
 
     document.getElementById("generate-btn")?.addEventListener("click", async () => {
+      const formData = getFormData()
+      const errors = validateForm(formData)
+      if (errors.length) { showFormErrors(errors); return }
+      showFormErrors([])
+
       const btn = document.getElementById("generate-btn")
       btn.textContent = "Generating…"
       btn.disabled = true
 
       try {
-        const data = getFormData()
+        const data = buildDocument(formData)
         saveDocument(data)
         const html = buildPdfHtml(data)
         const target = document.getElementById("pdf-render-target")
@@ -309,7 +355,12 @@ import { APP_PASSWORD } from "../../../lib/auth"
     })
 
     document.getElementById("print-btn")?.addEventListener("click", () => {
-      const data = getFormData()
+      const formData = getFormData()
+      const errors = validateForm(formData)
+      if (errors.length) { showFormErrors(errors); return }
+      showFormErrors([])
+
+      const data = buildDocument(formData)
       saveDocument(data)
       const html = buildPdfHtml(data)
       const pw = window.open("", "_blank", "width=800,height=600")
@@ -318,11 +369,18 @@ import { APP_PASSWORD } from "../../../lib/auth"
         pw.document.close()
         pw.focus()
         pw.onafterprint = () => pw.close()
+      } else {
+        alert("Your browser blocked the print popup. Please allow popups for this site and try again.")
       }
     })
 
     document.getElementById("save-btn")?.addEventListener("click", () => {
-      const data = getFormData()
+      const formData = getFormData()
+      const errors = validateForm(formData)
+      if (errors.length) { showFormErrors(errors); return }
+      showFormErrors([])
+
+      const data = buildDocument(formData)
       saveDocument(data)
       window.location.href = "/app/quotations/"
     })

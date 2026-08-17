@@ -23,6 +23,9 @@ export interface VehicleInfo {
   transmission: string
   fuelType: string
   engine: string
+  chassisNumber: string
+  engineCapacity: string
+  registrationNo: string
 }
 
 export interface DocumentData {

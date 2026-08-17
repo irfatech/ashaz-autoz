@@ -1,4 +1,4 @@
-const CACHE_NAME = "ashaz-autoz-v1";
+const CACHE_NAME = "ashaz-autoz-v2";
 
 const PRECACHE_URLS = [
   "/",

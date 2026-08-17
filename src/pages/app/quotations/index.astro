@@ -184,6 +184,9 @@ import "../../../styles/global.css"
               ${v.vin ? `<p class="text-xs text-muted">VIN: ${v.vin}</p>` : ""}
               ${v.mileage ? `<p class="text-xs text-muted">Mileage: ${v.mileage.toLocaleString()} km</p>` : ""}
               ${v.color ? `<p class="text-xs text-muted">Color: ${v.color}</p>` : ""}
+              ${v.chassisNumber ? `<p class="text-xs text-muted">Chassis No.: ${v.chassisNumber}</p>` : ""}
+              ${v.engineCapacity ? `<p class="text-xs text-muted">Engine Cap.: ${v.engineCapacity}</p>` : ""}
+              ${v.registrationNo ? `<p class="text-xs text-muted">Reg. No.: ${v.registrationNo}</p>` : ""}
             </div>
           </div>
 
@@ -235,7 +238,7 @@ import "../../../styles/global.css"
           const target = document.getElementById("pdf-render-target") || (() => {
             const el = document.createElement("div")
             el.id = "pdf-render-target"
-            el.style.cssText = "position:fixed;top:0;left:0;width:794px;background:#fff;pointer-events:none;z-index:9999;"
+            el.style.cssText = "position:absolute;top:0;left:-10000px;width:794px;background:#fff;pointer-events:none;"
             document.body.appendChild(el)
             return el
           })()

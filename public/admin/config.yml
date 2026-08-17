@@ -134,6 +134,10 @@ collections:
       - { label: "Doors", name: "doors", widget: "number", required: false, value_type: "int" }
       - { label: "Seats", name: "seats", widget: "number", required: false, value_type: "int" }
       - { label: "Color", name: "color", widget: "string", required: false }
+      - { label: "VIN", name: "vin", widget: "string", required: false }
+      - { label: "Chassis Number", name: "chassisNumber", widget: "string", required: false }
+      - { label: "Engine Capacity", name: "engineCapacity", widget: "string", required: false, hint: "e.g. 1500cc" }
+      - { label: "Registration No.", name: "registrationNo", widget: "string", required: false }
       - { label: "Description", name: "body", widget: "markdown", required: false }
 
   - name: "services"
