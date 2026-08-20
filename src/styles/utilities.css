@@ -76,6 +76,36 @@
   background: var(--color-section);
 }
 
+/* ---- Floating Label Field ---- */
+.floating-field {
+  position: relative;
+}
+
+.floating-field .floating-label {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  pointer-events: none;
+  transition: all 0.15s ease;
+}
+
+.floating-field input:focus + .floating-label,
+.floating-field input:not(:placeholder-shown) + .floating-label {
+  top: 0.65rem;
+  transform: translateY(0);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.floating-field input:focus + .floating-label {
+  color: var(--color-accent);
+}
+
 /* ---- Fade-in animation ---- */
 .animate-fade-in {
   animation: fade-in 0.6s ease-out;

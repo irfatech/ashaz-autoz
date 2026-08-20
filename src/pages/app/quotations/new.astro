@@ -55,28 +55,76 @@ import { APP_PASSWORD } from "../../../lib/auth"
       <div>
         <h2 class="text-sm font-bold text-accent uppercase tracking-wider mb-3">Customer Details</h2>
         <div class="grid sm:grid-cols-2 gap-4">
-          <input id="cust-name" placeholder="Customer Name" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="cust-phone" placeholder="Phone" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="cust-email" type="email" placeholder="Email" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="cust-address" placeholder="Address" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+          <div class="floating-field">
+            <input id="cust-name" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="cust-name" class="floating-label">Customer Name</label>
+          </div>
+          <div class="floating-field">
+            <input id="cust-phone" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="cust-phone" class="floating-label">Phone</label>
+          </div>
+          <div class="floating-field">
+            <input id="cust-email" type="email" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="cust-email" class="floating-label">Email</label>
+          </div>
+          <div class="floating-field">
+            <input id="cust-address" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="cust-address" class="floating-label">Address</label>
+          </div>
         </div>
       </div>
 
       <div>
         <h2 class="text-sm font-bold text-accent uppercase tracking-wider mb-3">Vehicle Details</h2>
         <div class="grid sm:grid-cols-3 gap-4">
-          <input id="v-brand" placeholder="Brand" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-model" placeholder="Model" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-year" type="number" placeholder="Year" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-vin" placeholder="VIN" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-mileage" type="number" placeholder="Mileage (km)" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-color" placeholder="Color" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-transmission" placeholder="Transmission" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-fuel" placeholder="Fuel Type" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-engine" placeholder="Engine" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-chassis" placeholder="Chassis Number" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-engine-no" placeholder="Engine Number" class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
-          <input id="v-reg-no" placeholder="Registration No." class="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+          <div class="floating-field">
+            <input id="v-brand" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-brand" class="floating-label">Brand</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-model" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-model" class="floating-label">Model</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-year" type="number" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-year" class="floating-label">Year</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-vin" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-vin" class="floating-label">VIN</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-mileage" type="number" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-mileage" class="floating-label">Mileage (km)</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-color" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-color" class="floating-label">Color</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-transmission" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-transmission" class="floating-label">Transmission</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-fuel" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-fuel" class="floating-label">Fuel Type</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-engine" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-engine" class="floating-label">Engine</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-chassis" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-chassis" class="floating-label">Chassis Number</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-engine-no" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-engine-no" class="floating-label">Engine Number</label>
+          </div>
+          <div class="floating-field">
+            <input id="v-reg-no" placeholder=" " class="w-full rounded-xl border border-border bg-card px-4 pt-5 pb-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent" />
+            <label for="v-reg-no" class="floating-label">Registration No.</label>
+          </div>
         </div>
       </div>
 
