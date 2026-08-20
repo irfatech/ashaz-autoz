@@ -28,6 +28,8 @@ export interface SiteSettings {
   googleMapsEmbedUrl?: string;
   lat?: number;
   lng?: number;
+  foundingYear?: number;
+  priceRange?: string;
   currency: string;
 }
 
@@ -60,6 +62,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     googleMapsEmbedUrl: data.googleMapsEmbedUrl,
     lat: data.lat,
     lng: data.lng,
+    foundingYear: data.foundingYear,
+    priceRange: data.priceRange,
     currency: data.currency || "USD",
   };
 }

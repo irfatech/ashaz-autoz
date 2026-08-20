@@ -22,6 +22,7 @@ const vehicleListSchema = itemListSchema(
     name: `${v.data.brand} ${v.data.model} (${v.data.year})`,
   })),
   allVehicles.length,
+  "Car",
 );
 
 const crumbs = generateBreadcrumbs("/vehicles/");

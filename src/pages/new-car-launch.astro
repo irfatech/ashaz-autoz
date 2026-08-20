@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import { getSiteSettings, generateBreadcrumbs, getWhatsAppUrl, phoneClean } from "../lib/site";
-import { faqPageSchema, imageGallerySchema } from "../lib/schema";
+import { faqPageSchema, imageGallerySchema, vehicleSchema, getOrganizationId } from "../lib/schema";
 
 const settings = await getSiteSettings();
 const phone = settings.social?.whatsapp ?? settings.phone[0];
@@ -100,31 +100,30 @@ const highlights = [
   },
 ];
 
-const carSchema = {
-  "@context": "https://schema.org",
-  "@type": "Car",
-  name: "Maruti Suzuki Jimny Alpha (2026)",
-  description:
-    "The first brand new Maruti Suzuki Jimny Alpha in Timor-Leste. AllGrip Pro 4WD, in Black and Blue, 1.5L petrol. Only 2 of 3 units remain. Reserve yours now.",
-  brand: { "@type": "Brand", name: "Maruti Suzuki" },
-  model: "Jimny Alpha",
-  vehicleModelDate: "2026",
-  vehicleTransmission: "Automatic",
-  fuelType: "Petrol",
-  driveWheelConfiguration: "4WD",
-  color: "Black, Blue",
-  vehicleSeatingCapacity: 5,
-  mileageFromOdometer: { "@type": "QuantitativeValue", value: 0, unitCode: "KMT" },
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "USD",
-    priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-    itemCondition: "https://schema.org/NewCondition",
-    availability: "https://schema.org/PreOrder",
-    url: pageUrl,
+const carSchema = vehicleSchema(
+  {
+    brand: "Maruti Suzuki",
+    model: "Jimny Alpha",
+    year: 2026,
+    mileage: 0,
+    price: 0,
+    currency: "USD",
+    transmission: "Automatic",
+    fuelType: "Petrol",
+    driveType: "4WD",
+    color: "Black, Blue",
+    doors: 5,
+    seats: 5,
+    bodyType: "Compact 4x4 SUV",
+    status: "Upcoming",
+    priceOnRequest: true,
+    images: galleryImages.map((g) => `${settings.url}${g.url}`),
+    description:
+      "The first brand new Maruti Suzuki Jimny Alpha in Timor-Leste. AllGrip Pro 4WD, in Black and Blue, 1.5L petrol. Only 2 of 3 units remain. Reserve yours now.",
   },
-  image: galleryImages.map((g) => `${settings.url}${g.url}`),
-};
+  pageUrl,
+  getOrganizationId(settings),
+);
 ---
 
 <BaseLayout

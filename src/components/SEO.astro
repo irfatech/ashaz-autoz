@@ -50,7 +50,9 @@ const schemaOrg = breadcrumbs
 {author && <meta name="author" content={author} />}
 {noIndex && <meta name="robots" content="noindex" />}
 
-<script type="application/ld+json" set:html={schemaOrg && JSON.stringify(schemaOrg)} />
+{schemaOrg && (
+  <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+)}
 
 {breadcrumbs && (
   <nav aria-label="Breadcrumb" class="sr-only">

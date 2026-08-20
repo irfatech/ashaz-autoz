@@ -9,6 +9,7 @@ import SEO from "../components/SEO.astro";
 import type { SEOProps } from "../lib/seo";
 import { getSiteSettings } from "../lib/site";
 import { organizationSchema, webSiteSchema } from "../lib/schema";
+import { getCollection } from "astro:content";
 
 export interface Props {
   seo?: SEOProps;
@@ -21,7 +22,11 @@ export interface Props {
 const { seo, title, description, image, preloadHero } = Astro.props;
 const seoProps = { ...seo, title, description, image };
 const settings = await getSiteSettings();
-const orgSchema = organizationSchema(settings);
+const testimonials = (await getCollection("testimonials")).filter((t) => t.data.featured);
+const orgSchema = organizationSchema(
+  settings,
+  testimonials.map((t) => ({ author: t.data.name, reviewBody: t.data.content, rating: t.data.rating })),
+);
 const siteSchema = webSiteSchema(settings);
 ---
 

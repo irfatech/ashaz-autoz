@@ -1,9 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
-import { getSiteSettings, phoneClean } from "../lib/site";
+import { getSiteSettings, phoneClean, generateBreadcrumbs } from "../lib/site";
+import { serviceSchema } from "../lib/schema";
 
 const settings = await getSiteSettings();
+const crumbs = generateBreadcrumbs("/rentals/");
+const rentalService = serviceSchema(
+  {
+    name: "Car Rentals",
+    description: "Daily and monthly car rental services with insurance included, in Dili, Timor-Leste.",
+    url: `${settings.url}/rentals/`,
+    serviceType: "AutoRental",
+  },
+  settings,
+);
 
 const rentalBenefits = [
   { title: "Daily & Monthly Rentals", description: "Flexible rental periods to suit your needs, from daily to long-term." },
@@ -25,7 +36,9 @@ const rentalFleet = [
 <BaseLayout
   title="Car Rentals"
   description="Quality car rental services in Dili, Timor-Leste. Daily and monthly rates available."
+  seo={{ breadcrumbs: crumbs }}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(rentalService)} />
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

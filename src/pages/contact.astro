@@ -1,15 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
-import { getSiteSettings, phoneClean, phoneDisplay } from "../lib/site";
+import { getSiteSettings, phoneClean, phoneDisplay, generateBreadcrumbs } from "../lib/site";
+import { contactPageSchema } from "../lib/schema";
 
 const settings = await getSiteSettings();
+const crumbs = generateBreadcrumbs("/contact/");
+const contactData = contactPageSchema(settings, `${settings.url}/contact/`);
 ---
 
 <BaseLayout
   title="Contact Us"
   description="Get in touch with Ashaz Autoz. Visit our yard in Comoro, Dili or call us."
+  seo={{ breadcrumbs: crumbs }}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(contactData)} />
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

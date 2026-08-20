@@ -3,15 +3,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
-import { generateBreadcrumbs } from "../lib/site";
+import { generateBreadcrumbs, getSiteSettings } from "../lib/site";
+import { blogListSchema } from "../lib/schema";
 
 const crumbs = generateBreadcrumbs("/blog/");
+const settings = await getSiteSettings();
 
 const posts = (await getCollection("blog"))
   .filter((p) => p.data.published)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const categories = [...new Set(posts.map((p) => p.data.category))];
+
+const blogData = blogListSchema(
+  posts.map((p) => ({ url: `${settings.url}/blog/${p.id}/`, name: p.data.title })),
+  settings,
+);
 ---
 
 <BaseLayout
@@ -19,6 +26,9 @@ const categories = [...new Set(posts.map((p) => p.data.category))];
   description="Automotive tips, news, and insights from Ashaz Autoz."
   seo={{ breadcrumbs: crumbs }}
 >
+  {blogData && (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(blogData)} />
+  )}
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

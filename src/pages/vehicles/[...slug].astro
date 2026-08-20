@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
 import { formatPrice, formatMileage, getWhatsAppUrl, statusColors, phoneClean, getSiteSettings, generateBreadcrumbs } from "../../lib/site";
-import { vehicleSchema } from "../../lib/schema";
+import { vehicleSchema, getOrganizationId } from "../../lib/schema";
 
 export async function getStaticPaths() {
   const vehicles = await getCollection("vehicles");
@@ -23,6 +23,7 @@ const enquiryMessage = data.priceOnRequest
 const carSchema = vehicleSchema(
   { ...data, slug: vehicle.id, description: vehicle.body?.trim() || data.features?.join(", ") },
   `${settings.url}/vehicles/${vehicle.id}/`,
+  getOrganizationId(settings),
 );
 const crumbs = generateBreadcrumbs(`/vehicles/${vehicle.id}/`);
 const vehicleJson = JSON.stringify({

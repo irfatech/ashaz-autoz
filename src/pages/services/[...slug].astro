@@ -2,7 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection, render } from "astro:content";
-import { generateBreadcrumbs } from "../../lib/site";
+import { generateBreadcrumbs, getSiteSettings } from "../../lib/site";
+import { serviceSchema } from "../../lib/schema";
 
 export async function getStaticPaths() {
   const services = await getCollection("services");
@@ -15,7 +16,17 @@ export async function getStaticPaths() {
 const { service } = Astro.props;
 const { data } = service;
 const { Content } = await render(service);
+const settings = await getSiteSettings();
 const crumbs = generateBreadcrumbs(`/services/${service.id}/`);
+const serviceData = serviceSchema(
+  {
+    name: data.title,
+    description: data.excerpt || data.description,
+    url: `${settings.url}/services/${service.id}/`,
+    image: data.image ? `${settings.url}${data.image}` : undefined,
+  },
+  settings,
+);
 ---
 
 <BaseLayout
@@ -24,6 +35,7 @@ const crumbs = generateBreadcrumbs(`/services/${service.id}/`);
   image={data.image}
   seo={{ breadcrumbs: crumbs }}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(serviceData)} />
   <div class="pt-24">
     <section class="py-16 sm:py-20 lg:py-24">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -26,6 +26,7 @@ const blogSchema = articleSchema({
   dateModified: data.updatedDate?.toISOString(),
   image: data.image ? `${settings.url}${data.image}` : undefined,
   url: `${settings.url}/blog/${post.id}/`,
+  keywords: data.tags,
 });
 ---
 
