@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /app/
 
 Sitemap: https://ashazautoz.com/sitemap-index.xml

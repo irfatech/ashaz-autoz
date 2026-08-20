@@ -1,7 +1,6 @@
 ---
-title: Serena
 brand: Nissan
-model: '2022'
+model: Serena
 year: 2022
 mileage: 35000
 transmission: Automatic

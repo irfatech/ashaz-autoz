@@ -1,7 +1,6 @@
 ---
-title: Toyota Rav4
-brand: Rav4
-model: '2021'
+brand: Toyota
+model: Rav4
 year: 2021
 mileage: 27000
 transmission: Automatic

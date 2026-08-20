@@ -59,15 +59,24 @@ for (const [name, urlset] of Object.entries(groups)) {
 
 const indexLines = [`<?xml version="1.0" encoding="UTF-8"?>`];
 indexLines.push(`<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`);
-for (const name of Object.keys(groups)) {
-  if (groups[name].length === 0) continue;
+for (const [name, urlset] of Object.entries(groups)) {
+  if (urlset.length === 0) continue;
+  const mostRecent = urlset.reduce((max, e) => {
+    if (!e.lastmod) return max;
+    return !max || e.lastmod > max ? e.lastmod : max;
+  }, null);
   indexLines.push("  <sitemap>");
   indexLines.push(`    <loc>https://ashazautoz.com/sitemap-${name}.xml</loc>`);
-  indexLines.push(`    <lastmod>${entries[0].lastmod}</lastmod>`);
+  if (mostRecent) indexLines.push(`    <lastmod>${mostRecent}</lastmod>`);
   indexLines.push("  </sitemap>");
 }
 indexLines.push("</sitemapindex>");
 fs.writeFileSync(path.join(dist, "sitemap-index.xml"), indexLines.join("\n"), "utf-8");
+
+// The pre-split, uncategorized sitemap is a build intermediate, not a
+// published artifact — remove it so it can't be discovered/submitted
+// separately and drift out of sync with the categorized sitemaps above.
+fs.unlinkSync(SOURCE);
 
 console.log("Categorized sitemaps generated:");
 for (const [name, urlset] of Object.entries(groups)) {

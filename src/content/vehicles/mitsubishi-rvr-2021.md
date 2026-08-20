@@ -1,7 +1,6 @@
 ---
-title: RVR
 brand: Mitsubishi
-model: '2021'
+model: RVR
 year: 2021
 mileage: 29000
 transmission: Automatic

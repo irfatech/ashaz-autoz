@@ -1,7 +1,6 @@
 ---
-title: Serena
 brand: Nissan
-model: '2021'
+model: Serena
 year: 2021
 mileage: 26000
 transmission: Automatic

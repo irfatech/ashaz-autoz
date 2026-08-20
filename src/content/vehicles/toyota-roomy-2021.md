@@ -1,7 +1,6 @@
 ---
-title: Roomy
 brand: Toyota
-model: '2021'
+model: Roomy
 year: 2021
 mileage: 26000
 transmission: Automatic

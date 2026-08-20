@@ -1,7 +1,6 @@
 ---
-title: Raize
 brand: Toyota
-model: '2021'
+model: Raize
 year: 2021
 mileage: 26500
 transmission: Automatic
