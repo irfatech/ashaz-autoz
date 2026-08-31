@@ -1,4 +1,5 @@
 ---
+title: Daihatsu Mira ES 2021
 brand: Daihatsu
 model: Mira
 year: 2021
@@ -7,7 +8,7 @@ transmission: Automatic
 fuelType: Petrol
 engine: 660cc
 driveType: RWD
-price: 5500
+price: 5000
 currency: USD
 status: Available
 featured: true
@@ -19,6 +20,10 @@ features:
 doors: 5
 seats: 5
 color: White
+vin: ''
+chassisNumber: ''
+engineNumber: ''
+registrationNo: ''
 ---
 
 Arrival 24th July
