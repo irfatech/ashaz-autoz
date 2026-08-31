@@ -1,4 +1,5 @@
 ---
+title: Toyota Passo
 brand: Toyota
 model: Passo
 year: 2021
@@ -9,7 +10,7 @@ engine: 1000cc
 driveType: RWD
 price: 7000
 currency: USD
-status: Available
+status: Sold
 featured: true
 images:
   - /images/1e982940-a732-4b3c-80bb-91c0a69e923d.webp
@@ -19,6 +20,10 @@ features:
 doors: 5
 seats: 5
 color: White
+vin: ''
+chassisNumber: ''
+engineNumber: ''
+registrationNo: ''
 ---
 
 Stock Ready
