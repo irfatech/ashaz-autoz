@@ -1,4 +1,5 @@
 ---
+title: Roomy
 brand: Toyota
 model: Roomy
 year: 2021
@@ -9,7 +10,7 @@ engine: 1000cc
 driveType: RWD
 price: 7800
 currency: USD
-status: Upcoming
+status: Available
 featured: true
 images:
   - /images/8c4d24a8-c7fa-49bb-b18c-9b494c4ddafe.webp
@@ -19,6 +20,10 @@ features:
 doors: 5
 seats: 5
 color: Silver
+vin: ''
+chassisNumber: ''
+engineNumber: ''
+registrationNo: ''
 ---
 
 Coming soon
