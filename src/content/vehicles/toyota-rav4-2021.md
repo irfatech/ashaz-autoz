@@ -10,7 +10,7 @@ engine: 2000cc
 driveType: 4WD
 price: 22000
 currency: USD
-status: Upcoming
+status: Available
 featured: true
 images:
   - /images/a85a2aff-7f2e-4107-a46a-ba18b4b50fd7.webp
