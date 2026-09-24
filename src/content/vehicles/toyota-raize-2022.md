@@ -10,7 +10,7 @@ engine: 1000cc
 driveType: RWD
 price: 13500
 currency: USD
-status: Reserved
+status: Sold
 featured: false
 features: []
 doors: 5
