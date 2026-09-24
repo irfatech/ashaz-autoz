@@ -1,8 +1,9 @@
 ---
+title: Rav4
 brand: Toyota
 model: Rav4
 year: 2021
-mileage: 27000
+mileage: 127000
 transmission: Automatic
 fuelType: Petrol
 engine: 2000cc
@@ -18,6 +19,10 @@ features:
 doors: 5
 seats: 5
 color: Grey
+vin: ''
+chassisNumber: ''
+engineNumber: ''
+registrationNo: ''
 ---
 
 Coming soon
