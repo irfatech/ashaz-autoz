@@ -1,4 +1,5 @@
 ---
+title: Mitsubishi
 brand: Mitsubishi
 model: RVR
 year: 2021
@@ -7,9 +8,9 @@ transmission: Automatic
 fuelType: Petrol
 engine: '1800'
 driveType: RWD
-price: 14000
+price: 14800
 currency: USD
-status: Upcoming
+status: Available
 featured: true
 images:
   - /images/img_6616.webp
@@ -18,6 +19,10 @@ features:
 doors: 5
 seats: 5
 color: Silver
+vin: ''
+chassisNumber: ''
+engineNumber: ''
+registrationNo: ''
 ---
 
 Coming soon
