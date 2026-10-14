@@ -25,7 +25,9 @@ features:
   - Blue
 doors: 5
 seats: 5
-color: Black, Blue
+colors:
+  - name: Black
+  - name: Blue
 ---
 
 Coming soon

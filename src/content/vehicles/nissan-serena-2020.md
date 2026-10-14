@@ -18,7 +18,8 @@ features:
   - Japanese Vehicles
 doors: 5
 seats: 7
-color: Silver
+colors:
+  - name: Silver
 ---
 
 Stock Ready

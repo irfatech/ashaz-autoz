@@ -140,12 +140,13 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Files: `public/admin/config.yml`, `scripts/one-off/migrate-colors.mjs`
   - Depends on: T10
 
-- [ ] **T12: Run the migration** (S)
+- [x] **T12: Run the migration** (S)
   - Acceptance: every vehicle has `colors`; legacy `color` line removed; pages render the same
     swatch name as before; one commit that can be reverted alone.
   - Verify: build; compare `dist` vehicle pages before/after (only the color text may differ in
     markup); `npm run check:content`.
-  - Files: ~22 content files (mechanical, from the script)
+  - Files: 23 content files (mechanical). Preceded by a no-op commit that routes the four readers of
+    `color` through `colorNames()`; built output was identical before and after both commits.
   - Depends on: T11
 
 - [ ] **T13: Vehicle page color picker + gallery** (M)

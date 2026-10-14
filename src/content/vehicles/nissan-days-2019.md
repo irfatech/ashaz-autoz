@@ -18,7 +18,8 @@ features:
   - Japense Vehicles
 doors: 5
 seats: 5
-color: White
+colors:
+  - name: White
 ---
 
 Stock Ready

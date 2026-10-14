@@ -17,7 +17,8 @@ images:
 features: []
 doors: 5
 seats: 7
-color: Blue
+colors:
+  - name: Blue
 ---
 
 Coming soon

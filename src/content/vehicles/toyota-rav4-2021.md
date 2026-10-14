@@ -17,7 +17,8 @@ features:
   - Japanese Vehicles
 doors: 5
 seats: 5
-color: Grey
+colors:
+  - name: Grey
 vin: ''
 chassisNumber: ''
 engineNumber: ''

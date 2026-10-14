@@ -14,7 +14,8 @@ featured: false
 features: []
 doors: 5
 seats: 5
-color: Beige
+colors:
+  - name: Beige
 vin: ''
 chassisNumber: ''
 engineNumber: ''

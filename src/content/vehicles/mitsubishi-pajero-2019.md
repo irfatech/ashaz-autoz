@@ -24,7 +24,8 @@ features:
   - Apple CarPlay
 doors: 4
 seats: 7
-color: Gray
+colors:
+  - name: Gray
 ---
 
 Mitsubishi Pajero Sport 2019 — the ultimate 7-seater SUV for families and off-road adventures.

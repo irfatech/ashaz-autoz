@@ -18,7 +18,8 @@ features:
   - Japanese vehicles
 doors: 5
 seats: 5
-color: White
+colors:
+  - name: White
 ---
 
 Arrival on 24th July

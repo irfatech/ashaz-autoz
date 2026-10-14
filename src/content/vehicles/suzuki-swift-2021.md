@@ -17,7 +17,8 @@ images:
 features: []
 doors: 5
 seats: 5
-color: Silver
+colors:
+  - name: Silver
 ---
 
 Arrival 24th july
