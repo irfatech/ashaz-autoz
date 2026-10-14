@@ -100,7 +100,7 @@ but not installed).
 
 **Phase 1 — CMS ⇄ schema parity.**
 - Vehicles: drop `Title` and hidden `Slug`; `slug: "{{brand}}-{{model}}-{{year}}"`;
-  `identifier_field: model`; add `priceOnRequest`, `bodyType`, `registrationYear`. The unused
+  `identifier_field: model`; add `priceOnRequest`, `bodyType`. `registrationYear`, `slug`, `lang`, `seo` are dropped (nothing reads them). The unused
   `colorHex` field is dropped; colors are handled by the `colors` list in Phase 2c.
 - `output.omit_empty_optional_fields: true`.
 - Fix drift elsewhere: gallery `href`; site settings `lat`, `lng`, `tiktok`, `foundingYear`,

@@ -13,7 +13,7 @@ internal vehicle identifiers in public pages. OAuth is deferred.
 ## Architecture Decisions
 
 - **Zod is the single source of truth.** The vehicle shape moves to a plain TS module
-  (`src/content/vehicle-schema.ts`) imported by `content.config.ts` and by the check scripts, so
+  (`src/lib/content-schemas.ts`) imported by `content.config.ts` and by the check scripts, so
   the drift check and content lint can never disagree with the build.
 - **Additive data model.** `colors` is a new optional list. The legacy `color` string stays valid
   and renders as one swatch, so the 22 existing vehicles never break between tasks.

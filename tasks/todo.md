@@ -30,8 +30,8 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
 
 ## Phase 1 — CMS ⇄ schema parity
 
-- [ ] **T4: Strip dead keys from vehicle files** (S)
-  - Description: 11 vehicle files carry a `title:` key; 5 also carry `slug:`. Zod ignores `title`;
+- [x] **T4: Strip dead keys from vehicle files** (S)
+  - Description: 7 vehicle files carried a `title:` and/or `slug:` key (11 lines in total). Zod ignores `title`;
     `slug` is overridden by the file name. Remove them with a one-off script.
   - Acceptance: no `title:` or `slug:` line in any `src/content/vehicles/*.md`; rendered
     `<title>` of every vehicle page is byte-identical to before.
@@ -40,19 +40,19 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Files: `scripts/one-off/strip-vehicle-dead-keys.mjs` (deleted after run), 11 content files
   - Depends on: none
 
-- [ ] **T5: Vehicle CMS ⇄ Zod parity + shared schema** (M)
+- [x] **T5: Vehicle CMS ⇄ Zod parity + shared schema** (M)
   - Description: Spike first (does `astro/zod` import in plain Node?). Move the vehicle shape to
-    `src/content/vehicle-schema.ts`, make it `.strict()`, import it in `content.config.ts`.
+    `src/lib/content-schemas.ts`, make it `.strict()`, import it in `content.config.ts`.
     In `config.yml` remove `Title`/hidden `Slug`, set `slug: "{{brand}}-{{model}}-{{year}}"`,
-    `identifier_field: model`, add `priceOnRequest`, `bodyType`, `registrationYear`, drop unused
-    `colorHex`. Add global `output.omit_empty_optional_fields: true`.
+    `identifier_field: model`, add `priceOnRequest`, `bodyType`; drop the unused `colorHex`, `registrationYear`,
+    `slug`, `lang`, `seo` (nothing reads them). Also fixed `mazda-2.md` (`model: '2021'`). Add global `output.omit_empty_optional_fields: true`.
   - Acceptance: every vehicle field in `config.yml` has a same-named Zod key and vice versa;
     unknown keys fail the build; new entry would be written to `brand-model-year.md`.
   - Verify: `npm run build`; temporarily add `foo: 1` to one vehicle → build fails; remove it.
-  - Files: `src/content/vehicle-schema.ts` (new), `src/content.config.ts`, `public/admin/config.yml`
+  - Files: `src/lib/content-schemas.ts` (new), `src/content.config.ts`, `public/admin/config.yml`
   - Depends on: T4
 
-- [ ] **T6: Fix the other drift** (S)
+- [x] **T6: Fix the other drift** (S)
   - Description: Gallery `href` (unused, remove from CMS); Site Settings gains `lat`, `lng`,
     `tiktok`, `foundingYear`, `priceRange` to match Zod; add "Upcoming" where status is listed.
   - Acceptance: no field exists in only one of `config.yml` / `content.config.ts` for gallery and
@@ -61,7 +61,7 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Files: `public/admin/config.yml`, `src/content/gallery/*.md` (only if they contain `href`)
   - Depends on: T5
 
-- [ ] **T7: Content lint + CMS drift check** (M) — needs your nod (`yaml` devDependency)
+- [x] **T7: Content lint + CMS drift check** (M) — needs your nod (`yaml` devDependency)
   - Description: `scripts/check-content.mjs` — vehicle keys valid, `model` is not a year, no two
     vehicles share a rendered title (`brand model year`), at least one photo. `scripts/check-cms-drift.mjs`
     — compares `config.yml` field names to Zod keys per collection. npm scripts `check:content`,
@@ -72,9 +72,10 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Files: `scripts/check-content.mjs`, `scripts/check-cms-drift.mjs`, `package.json`,
     `.github/workflows/deploy.yml`
   - Depends on: T5, T6
+  - Done: warns (does not fail) on duplicate titles involving a Sold car; see `suzuki-swift-2022.md`.
 
 ### Checkpoint 1
-- [ ] check + build + both scripts green; CMS config validates against the official JSON schema
+- [x] check + build + both scripts green; CMS config validates against the official JSON schema
       (`npx --yes ajv-cli validate`). Review with you.
 
 ## Phase 2 — Fast add/update
@@ -117,7 +118,7 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Acceptance: tests cover color with photos, without photos, unknown color, legacy `color`, no
     colors; `npm test` passes; existing vehicles unaffected.
   - Verify: `npm test`, `npm run build`, `npm run check:content`.
-  - Files: `src/content/vehicle-schema.ts`, `src/lib/vehicle-colors.ts`,
+  - Files: `src/lib/content-schemas.ts`, `src/lib/vehicle-colors.ts`,
     `src/lib/vehicle-colors.test.ts`, `scripts/check-content.mjs`, `package.json`
   - Depends on: T5, T7
 
