@@ -95,8 +95,10 @@ collections:
     # `| date('YYYY')` prints the raw number; a plain {{year}} shows "2,021" (locale formatting)
     summary: "{{brand}} {{model}} ({{year | date('YYYY')}}) · {{status}}"
     preview_path: "vehicles/{{slug}}/"
-    media_folder: "{{media_folder}}/Cars/{{year}}"
-    public_folder: "{{public_folder}}/Cars/{{year}}"
+    # One folder per car. Folder templates cannot use field values, and {{year}} there is the date the
+    # photo was uploaded, not the car's year, so the slug (brand-model-year) is used instead.
+    media_folder: "{{media_folder}}/Cars/{{slug}}"
+    public_folder: "{{public_folder}}/Cars/{{slug}}"
     editor:
       preview: false
     sortable_fields:
@@ -133,7 +135,18 @@ collections:
         default: "Available"
         hint: "Sold cars stay on the site but are removed from the sitemap."
       - { label: "Mileage", name: "mileage", widget: "number", value_type: "int", min: 0, step: -1, after_input: "km" }
-      - { label: "Gallery Images", name: "images", widget: "image", multiple: true, required: false, hint: "Select multiple images at once. First image is used as the card thumbnail." }
+      - label: "Gallery Images"
+        name: "images"
+        widget: "image"
+        multiple: true
+        min: 1
+        max: 20
+        hint: "Add 1 to 20 photos at once, or drag them in. The first photo is the cover on cards. JPEG, PNG and iPhone HEIC photos are converted to WebP, resized and stripped of GPS data automatically."
+        media_libraries:
+          default:
+            config:
+              # Photos are renamed on save, e.g. toyota-roomy-2021-a1b2c3d4.webp, instead of img_6618.webp
+              filename_template: "{{slug}}-{{uuid_shorter}}"
       - { label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Show on the home page." }
       - { label: "Color", name: "color", widget: "string", required: false }
       - label: "Transmission"
