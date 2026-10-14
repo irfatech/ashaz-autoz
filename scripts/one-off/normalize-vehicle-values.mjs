@@ -3,12 +3,15 @@
 // everything else in each file keeps its exact formatting. Files that already match are left alone, so
 // it is safe to run twice.
 //
-// Run: node scripts/one-off/normalize-vehicle-values.mjs --dry-run   (print every change, write nothing)
-//      node scripts/one-off/normalize-vehicle-values.mjs             (write the changes)
+// Run: node scripts/one-off/normalize-vehicle-values.mjs --dry-run              (print every change, write nothing)
+//      node scripts/one-off/normalize-vehicle-values.mjs --only=engine           (one group: color | engine | features | brand)
+//      node scripts/one-off/normalize-vehicle-values.mjs                         (all groups, write the changes)
 import fs from "node:fs";
 import path from "node:path";
 
 const dryRun = process.argv.includes("--dry-run");
+const onlyArg = process.argv.find((a) => a.startsWith("--only="))?.slice(7);
+const wants = (group) => !onlyArg || onlyArg === group;
 const dir = path.resolve(import.meta.dirname, "../../src/content/vehicles");
 
 // ---- the new pick-lists (these become the options in public/admin/config.yml) ----
@@ -38,7 +41,7 @@ for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) 
   const note = (field, before, after) => changes.push({ file, field, before, after });
 
   // engine
-  const ei = lines.findIndex((l) => /^engine:/.test(l));
+  const ei = wants("engine") ? lines.findIndex((l) => /^engine:/.test(l)) : -1;
   if (ei !== -1) {
     const before = unquote(lines[ei].replace(/^engine:/, ""));
     if (!ENGINES.includes(before)) {
@@ -52,7 +55,7 @@ for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) 
   }
 
   // features (a block list, or `features: []`)
-  const fi = lines.findIndex((l) => /^features:/.test(l));
+  const fi = wants("features") ? lines.findIndex((l) => /^features:/.test(l)) : -1;
   if (fi !== -1) {
     let end = fi + 1;
     while (end < lines.length && /^  - /.test(lines[end])) end++;
@@ -73,7 +76,7 @@ for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) 
   // color names
   lines = lines.map((l) => {
     const m = l.match(/^(\s+- name: )(.+)$/);
-    if (m && unquote(m[2]) in COLOR_MAP) {
+    if (wants("color") && m && unquote(m[2]) in COLOR_MAP) {
       note("color", unquote(m[2]), COLOR_MAP[unquote(m[2])]);
       return `${m[1]}${COLOR_MAP[unquote(m[2])]}`;
     }
@@ -81,7 +84,7 @@ for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) 
   });
 
   // the one brand typo: "Land Crusier" is Toyota's Land Cruiser Prado
-  const bi = lines.findIndex((l) => /^brand: Land Crusier$/.test(l));
+  const bi = wants("brand") ? lines.findIndex((l) => /^brand: Land Crusier$/.test(l)) : -1;
   if (bi !== -1) {
     const mi = lines.findIndex((l) => /^model: Prado$/.test(l));
     if (mi === -1) unmapped.push(`${file}: brand "Land Crusier" but model is not "Prado"`);

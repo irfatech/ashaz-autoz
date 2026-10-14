@@ -81,7 +81,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
 > cars; nothing written). **Waiting on your OK** before the lists are added to the form and the data is
 > normalized.
 
-- [ ] **V5: Color name list (+ "Gray" to "Grey")** (S) (data change: 1 car, needs your OK)
+- [x] **V5: Color name list (+ "Gray" to "Grey")** (S) (data change: 1 car, needs your OK)
   - Description: Select with the 17 color names; hex stays automatic. Fix the one `Gray`.
   - Acceptance: every existing color is in the list; the color filter and swatches are unchanged.
   - Verify: `check:content` (V1 guard); build; page output unchanged except that car.

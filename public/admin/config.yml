@@ -102,7 +102,7 @@ collections:
         allow_reorder: true
         hint: "Add every color this car comes in. The first one is shown first on the site."
         fields:
-          - { label: "Color name", name: "name", widget: "string" }
+          - { label: "Color name", name: "name", widget: "select", options: ["White", "Pearl White", "Black", "Silver", "Grey", "Red", "Blue", "Dark Blue", "Green", "Beige", "Brown", "Gold", "Orange", "Yellow", "Maroon", "Purple", "Pink"] }
           - { label: "Stock", name: "units", widget: "number", value_type: "int", min: 0, required: false, hint: "Blank = in stock. 0 = sold out. 3 = '3 available'." }
           - { label: "Photos of this color", name: "images", widget: "image", multiple: true, required: false, hint: "Shown before the gallery images.", media_libraries: { default: { config: { filename_template: "{{slug}}-{{uuid_shorter}}" } } } }
       - label: "Transmission"
