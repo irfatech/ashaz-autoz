@@ -1,6 +1,6 @@
 # Spec: A Faster, Shorter Vehicle Form
 
-Status: DRAFT for review. Nothing has been changed yet.
+Status: APPROVED by the owner (brand list confirmed; all other open questions accepted with the defaults). Updated with the "recently added" requirement and findings verified in the real CMS. Not yet built.
 Related: [SPEC.md](SPEC.md) (earlier CMS work). This spec only changes the **Vehicles** form in the CMS.
 
 ## Objective
@@ -16,6 +16,8 @@ Let the owner add or update a car with as little typing and as few steps as poss
 - The form has **24 fields and is about 2,800 px tall** on a phone-width screen.
 - A typical new car needs about **75 typed characters**, mostly the Features list (each feature typed by hand).
 - Typing is already hurting the data: **engine has 14 different spellings across 23 cars** (`'660'`, `660cc`, `1.5L`, `1240 cc`, `2.4L Turbo`…); **features has 33 distinct values for 19 cars** (four spellings of "Japanese vehicles", plus stray entries like "Black" and "Nissan Xtrail"); the Prado is saved with brand **"Land Crusier"** (a typo, and the brand should be Toyota), which puts "Land Crusier Prado" in its page title.
+
+**Also required (added after review):** a car you just saved must not get lost in the list. Today the list is grouped by status and sorted by year, so a new 2021 car sits among sixteen other 2021 cars. The list must open with the **most recently added car first**, and offer "Recently added" as a sort option.
 
 **Principle:** pick from a list wherever the answer comes from a short, known set; type only where the answer is genuinely free (model, price, mileage, the four internal numbers). A pick-list also fixes the inconsistent data.
 
@@ -40,7 +42,7 @@ Let the owner add or update a car with as little typing and as few steps as poss
 
 | # | Field | Today | Proposed | Why | Data change |
 |---|---|---|---|---|---|
-| 1 | Brand | typed | **Pick-list of ~40 brands** (Toyota, Nissan, Suzuki, Honda, Mitsubishi, Mazda, Daihatsu, Isuzu, Subaru, Lexus, Hyundai, Kia, Ford, BMW, Mercedes-Benz, Land Rover, …) | Removes typos ("Land Crusier"); keeps URLs and titles consistent. Trade-off: a brand not in the list needs a one-line addition | none |
+| 1 | Brand | typed | **Pick-list of ~40 brands, ordered by how often you sell them** (Toyota, Nissan, Suzuki, Mitsubishi, Honda, Mazda, Daihatsu first, then the rest). **Searchable: typing 2–3 letters narrows the list** | Removes typos ("Land Crusier"); keeps URLs and titles consistent. A brand not in the list needs a one-line addition | none |
 | 2 | Model | typed, guarded against a year | Typed (unchanged). One-line hint | Too many models for a list | none |
 | 3 | Year | typed number | **Pick-list, newest first, from next year back to 2000** | 4 characters → 2 taps. Built at deploy time so it never goes out of date | none (still a number) |
 | 4 | Status | radios, 4th | Radios, **moved up to 4th, directly under Year** | The most-edited field; visible without scrolling | none |
@@ -63,9 +65,19 @@ Let the owner add or update a car with as little typing and as few steps as poss
 | 21 | Description | full Markdown editor | Shorter editor (`minimal`, fewer buttons), at the bottom | Existing descriptions just repeat the specs | none |
 | 22–25 | VIN, Chassis, Engine No., Registration | typed, each with the same hint | Typed (unchanged), one shared hint on the first, unique check kept | The four hints cost about 85 px | none |
 
+| 26 | Added on (hidden) | does not exist | **New hidden field**, filled automatically with the date and time when a car is **created** and never changed by edits. Becomes the list's default sort (newest first) and a "Recently added" sort option | Fixes "my new car got lost" | new optional key `addedOn`; **existing cars get their real added date from git history** (see clean-up) |
+
 **New field order:** Brand, Model, Year, **Status**, Price, Price on request, Mileage, Gallery Images, Colors, Transmission, Fuel Type, Drive Type, Engine, Doors, Seats, Features, Show on home page, Description, VIN, Chassis, Engine No., Registration.
 
 **Considered and not changed:** typing Brand (kept as a list, but see Open Question 1); a pre-filled "same as last car" template (the CMS has none; **Duplicate** already does this and stays the fastest way to add a similar car); hiding Drive Type behind a default (silent wrong data); collapsing the internal numbers into a group (would change the data shape).
+
+### Brand list and "Recently added": what I verified in the real CMS
+
+- **The brand dropdown is searchable.** A "Filter Options" box sits at the top of every pick-list; typing "mer" reduced 40 brands to one ("Mercedes-Benz"). With your common brands first, they are visible the moment the list opens, so scrolling a long list is not needed.
+- **"Added on" behaves correctly:** a new car gets a timestamp; **Duplicate gives the copy a new timestamp** (so a duplicated car lands at the top); **editing a car does not change it**; two cars saved in the same minute tie (harmless, they sort alphabetically).
+- **One trap, and the fix:** a car that has no "added on" value gets stamped with the current time the first time it is saved. So before this goes live, all 23 existing cars must be given their real added date (taken from the date each file was first committed to git). Otherwise every old car would jump to the top the first time you flip its status.
+- **Also offered, not verifiable here:** the CMS can sort by the Git "last updated" time on the live GitHub connection. I will list it as an extra sort option; its label and behavior can only be confirmed once this is live.
+- **Sort menu wording:** the CMS labels a hidden field's sort as "A to Z / Z to A". The default direction (newest first) is what matters; the option is named "Recently added".
 
 ### Year list: how it stays current
 
@@ -82,6 +94,7 @@ The list is generated, not hand-edited.
 - **Features:** the four "Japanese vehicles" spellings → one `Japanese Import`; `Leather Interior` → `Leather Seats`; stray entries that repeat other fields (`Black`, `Blue`, `Nissan Xtrail`, `7 Seats`, `Automatic Transmission`) are dropped; the two Jimny highlights (`AllGrip Pro 4WD`, `Brand New (0 km)`) are kept as list options. I will show the complete before/after for every car before running anything.
 - **Brand/model:** the Prado becomes brand `Toyota`, model `Land Cruiser Prado` (the file name and URL do not change).
 - **Colors:** `Gray` → `Grey` (1 car).
+- **Added on:** each existing car gets the date its file was first committed to git (the oldest known date; honest and automatic).
 
 ## Tech stack
 
@@ -105,6 +118,7 @@ Validate CMS config against Sveltia's schema:
 ```
 public/admin/config.yml          → the form (source of truth for every pick-list)
 scripts/generate-cms-config.cjs  → build step: writes the current year list into dist/admin/config.yml
+scripts/one-off/…                → data clean-ups (dry run first, deleted after use)
 scripts/check-content.mjs        → gains: every car's value must exist in its CMS pick-list
 scripts/check-cms-drift.mjs      → gains: allowlist entries for the fields removed from the form
 src/lib/content-schemas.ts       → year max becomes "next year"
@@ -152,13 +166,15 @@ Pick-lists in `config.yml` keep the existing compact style; numbers are saved as
 3. **Height:** the form on a phone-width screen is **at most about 2,300 px**, down from about 2,800 (roughly 18% shorter). I will report the measured number, whatever it is; the larger gains are in typing and data quality, not height.
 4. **Consistency:** after the clean-up, every car passes the new content check; engine has no more than ~20 distinct values (down from 14 spellings of the same few sizes), and features come only from the pick-list.
 5. **Nothing breaks:** `astro check`, `check:content`, `check:cms`, tests and the build all pass; vehicle pages, the sitemap and `/app` data are unchanged except for the corrected values.
+7. **New car is never lost:** after saving a new car (or duplicating one), the list opens with it **first within its status group, without scrolling**; the Sort menu offers "Recently added"; editing a car does not move it; an existing car edited for the first time keeps its original added date.
+8. **Brand pick:** your seven most-sold brands are visible without scrolling when the brand list opens, and typing 3 letters leaves at most 3 matches.
 6. **Year list:** the generated list always runs from next year to 2000, newest first, and is the same list the schema accepts.
 
-## Open questions
+## Decisions (all open questions answered)
 
-1. **Brand as a pick-list (my recommendation) or typed?** The list prevents typos like "Land Crusier", but a brand not in the list means someone adds one line to the config before it can be saved. My default: pick-list with ~40 brands.
-2. **Seats options:** I propose 2 · 4 · 5 · 7 · 8 · 12 (one row). Do you sell 15-seater Hiace vans? If so I add 15 (and raise the schema limit, now 12).
-3. **Remove Body Type and Currency from the form?** My default: yes, both.
-4. **Features list:** I will propose ~25 entries; tell me anything you always list that I should add (for example "Reverse Camera", "Japanese Import").
-5. **Run the data clean-up above?** My default: show you the full before/after, then run it only after your OK.
-6. **Monthly automatic rebuild** (keeps the year list fresh even if nobody saves for a long time): include or skip? My default: include.
+1. **Brand:** pick-list, ordered by frequency, searchable. Confirmed.
+2. **Seats:** 2 · 4 · 5 · 7 · 8 · 12 as proposed (accepted).
+3. **Body Type and Currency:** removed from the form (accepted).
+4. **Features list:** I propose about 25 entries from your own data plus common ones; you review it in the plan (accepted).
+5. **Data clean-up:** I show the complete before/after for each change, and run it only after your OK (accepted).
+6. **Monthly automatic rebuild:** included (accepted); this edits the deploy workflow, so it is its own small task.
