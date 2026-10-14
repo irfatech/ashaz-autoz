@@ -1,6 +1,6 @@
 ---
 brand: Mazda
-model: '2021'
+model: '2'
 year: 2021
 mileage: 28000
 transmission: Automatic
