@@ -1,6 +1,4 @@
 ---
-title: Honda
-slug: honda-crv-2021
 brand: Honda
 model: CR-V
 year: 2021

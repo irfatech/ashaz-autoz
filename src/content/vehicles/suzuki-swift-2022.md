@@ -1,6 +1,4 @@
 ---
-title: Swift
-slug: suzuki-swift-2022
 brand: Suzuki
 model: Swift
 year: 2021

@@ -1,5 +1,4 @@
 ---
-title: Mazda 2
 brand: Mazda
 model: '2021'
 year: 2021

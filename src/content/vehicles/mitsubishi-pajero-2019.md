@@ -1,6 +1,4 @@
 ---
-title: Mitsubishi
-slug: mitsubishi-pajero-2019
 brand: Mitsubishi
 model: Pajero Sport
 year: 2019

@@ -25,7 +25,6 @@ features:
 doors: 4
 seats: 5
 color: Black
-slug: honda-city-2021
 ---
 
 Premium Honda City 2021 with low mileage. Perfect family SUV with all the modern amenities.

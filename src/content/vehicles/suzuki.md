@@ -1,5 +1,4 @@
 ---
-title: Maruti Suzuki Jimny Alpha
 brand: Maruti Suzuki
 model: Jimny Alpha
 year: 2026

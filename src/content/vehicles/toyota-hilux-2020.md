@@ -1,6 +1,4 @@
 ---
-title: Toyota
-slug: toyota-hilux-2020
 brand: Toyota
 model: Hilux
 year: 2020
