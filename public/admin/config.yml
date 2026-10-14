@@ -24,6 +24,9 @@ media_libraries:
           quality: 82
           width: 2048
 
+output:
+  omit_empty_optional_fields: true
+
 collections:
   - name: "pages"
     label: "Pages"
@@ -80,7 +83,9 @@ collections:
     label: "Vehicles"
     folder: "src/content/vehicles"
     create: true
-    slug: "{{title}}"
+    # `year` is also a predefined date tag in slug templates, so the field needs the `fields.` prefix
+    slug: "{{brand}}-{{model}}-{{fields.year}}"
+    identifier_field: model
     summary: "{{brand}} {{model}} ({{year}})"
     preview_path: "vehicles/{{slug}}/"
     media_folder: "{{media_folder}}/Cars/{{year}}"
@@ -102,10 +107,12 @@ collections:
       - label: "Status"
         field: status
     fields:
-      - { label: "Title", name: "title", widget: "string", hint: "Used to generate the filename (e.g. 'Toyota Hilux 2020' → toyota-hilux-2020.md)" }
-      - { label: "Slug", name: "slug", widget: "hidden", required: false }
-      - { label: "Brand", name: "brand", widget: "string" }
-      - { label: "Model", name: "model", widget: "string" }
+      - { label: "Brand", name: "brand", widget: "string", hint: "e.g. Toyota. The file name and URL are built from brand, model and year." }
+      - label: "Model"
+        name: "model"
+        widget: "string"
+        hint: "The model name only, e.g. Hilux or Alto. Not the year."
+        pattern: ['^(?!\d{4}$).+', "Enter the model name (e.g. Alto), not the year."]
       - { label: "Year", name: "year", widget: "number", value_type: "int", min: 2000, max: 2030 }
       - { label: "Mileage", name: "mileage", widget: "number", value_type: "int", min: 0 }
       - label: "Transmission"
@@ -121,8 +128,14 @@ collections:
         name: "driveType"
         widget: "select"
         options: ["FWD", "RWD", "AWD", "4WD"]
+      - label: "Body Type"
+        name: "bodyType"
+        widget: "select"
+        required: false
+        options: ["Hatchback", "Sedan", "SUV", "Compact SUV", "Pickup", "Van", "Minibus", "Wagon", "Coupe"]
       - { label: "Price", name: "price", widget: "number", value_type: "int", min: 0 }
       - { label: "Currency", name: "currency", widget: "string", default: "USD" }
+      - { label: "Price on request", name: "priceOnRequest", widget: "boolean", default: false, required: false, hint: "Hides the price and shows a Reserve button instead (new launches)." }
       - label: "Status"
         name: "status"
         widget: "select"
