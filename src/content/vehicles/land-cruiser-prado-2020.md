@@ -1,6 +1,6 @@
 ---
-brand: Land Crusier
-model: Prado
+brand: Toyota
+model: Land Cruiser Prado
 year: 2020
 mileage: 48000
 transmission: Automatic

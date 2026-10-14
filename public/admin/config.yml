@@ -71,7 +71,7 @@ collections:
         - { name: status, label: "Status", field: status }
         - { name: brand, label: "Brand", field: brand }
     fields:
-      - { label: "Brand", name: "brand", widget: "string" }
+      - { label: "Brand", name: "brand", widget: "select", options: ["Toyota", "Nissan", "Suzuki", "Honda", "Mitsubishi", "Mazda", "Daihatsu", "Maruti Suzuki", "Isuzu", "Subaru", "Lexus", "Hyundai", "Kia", "Ford", "Chevrolet", "BMW", "Mercedes-Benz", "Audi", "Volkswagen", "Land Rover", "Jeep", "Peugeot", "Renault", "Volvo", "Mini", "Tata", "Mahindra", "MG", "Chery", "Great Wall", "BYD", "Foton", "Hino", "Fuso", "JAC", "Porsche", "Tesla", "Fiat", "Citroen", "Skoda"] }
       - label: "Model"
         name: "model"
         widget: "string"

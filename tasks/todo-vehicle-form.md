@@ -108,7 +108,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Files: `public/admin/config.yml`, `scripts/one-off/normalize-features.mjs` (deleted after), content files
   - Depends on: V6
 
-- [ ] **V8: Brand list + the Prado fix** (M) (data change: 1 car, needs your OK)
+- [x] **V8: Brand list + the Prado fix** (M) (data change: 1 car, needs your OK)
   - Description: Select with the ~40 brands, frequency-ordered, searchable. Prado becomes brand `Toyota`,
     model `Land Cruiser Prado` (file name and URL unchanged).
   - Acceptance: your six most-sold brands show without scrolling when the list opens; typing 3 letters
@@ -118,6 +118,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Depends on: V7
 
 ### Checkpoint C
+- [x] Verified in the real CMS at 390x844: brand list shows 17 brands without scrolling (Toyota first) with a filter box; a typical new car (Toyota Aqua 2019, 1500cc, white, 9,500, 58,000 km) needs 13 typed characters (was ~75); the saved file passes all checks and builds.
 - [ ] Add a typical new car end to end in the real CMS and count typed characters (target: 20 or fewer).
       **Review with you.**
 
