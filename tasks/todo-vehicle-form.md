@@ -16,7 +16,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Files: `scripts/check-content.mjs`, `src/lib/cms-options.ts`, `src/lib/cms-options.test.ts`
   - Depends on: none
 
-- [ ] **V2: "Recently added": hidden timestamp and default sort** (M) (adds one optional schema key)
+- [x] **V2: "Recently added": hidden timestamp and default sort** (M) (adds one optional schema key)
   - Description: Add optional `addedOn` to the vehicle schema; add a hidden field `addedOn` with
     `default: "{{datetime}}"`; make it the default sort (newest first, labelled "Recently added") and add
     `commit_date` as an extra "last updated" sort; keep year, price, mileage, status and brand as other sorts.

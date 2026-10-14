@@ -51,10 +51,12 @@ collections:
     public_folder: "{{public_folder}}/Cars/{{slug}}"
     editor:
       preview: false
+    # Opens newest-first so a car you just saved (or duplicated) is at the top of its status group.
+    # commit_date is the Git "last updated" time; it is only available on the GitHub connection.
     sortable_fields:
-      fields: [year, price, mileage, status, brand]
+      fields: [addedOn, commit_date, year, price, mileage, status, brand]
       default:
-        field: year
+        field: addedOn
         direction: descending
     # Filters in Sveltia are checkboxes combined with AND, so only non-exclusive toggles are filters.
     # Status (mutually exclusive) is the default grouping instead, so every status is visible at once.
@@ -151,6 +153,8 @@ collections:
       - { label: "Chassis Number", name: "chassisNumber", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
       - { label: "Engine Number", name: "engineNumber", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
       - { label: "Registration No.", name: "registrationNo", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
+      # Set once, when the car is created (a duplicate gets a fresh one); editing never changes it.
+      - { label: "Recently added", name: "addedOn", widget: "hidden", default: "{{datetime}}" }
 
   - name: "blog"
     label: "Blog Posts"

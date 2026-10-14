@@ -95,6 +95,9 @@ export const vehiclesSchema = z
     chassisNumber: z.string().optional(),
     engineNumber: z.string().optional(),
     registrationNo: z.string().optional(),
+    // When the car was first added. Filled in by the CMS on creation (never changed by edits) and used
+    // to sort the CMS list newest first, so a car that was just saved is not lost among the others.
+    addedOn: z.coerce.date().optional(),
   })
   .strict();
 
