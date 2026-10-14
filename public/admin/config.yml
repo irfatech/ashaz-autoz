@@ -81,31 +81,41 @@ collections:
 
   - name: "vehicles"
     label: "Vehicles"
+    label_singular: "Vehicle"
+    description: "One entry per car model. The most-edited fields come first; VIN and other internal numbers are at the bottom."
     folder: "src/content/vehicles"
     create: true
     # `year` is also a predefined date tag in slug templates, so the field needs the `fields.` prefix
-    slug: "{{brand}}-{{model}}-{{fields.year}}"
+    slug:
+      template: "{{brand}}-{{model}}-{{fields.year}}"
+      editable: [create]
+      hint: "Becomes the file name and the page URL. It cannot be changed after the vehicle is saved."
+      pattern: ['^[a-z0-9-]+$', "Use lowercase letters, numbers and hyphens only."]
     identifier_field: model
-    summary: "{{brand}} {{model}} ({{year}})"
+    # `| date('YYYY')` prints the raw number; a plain {{year}} shows "2,021" (locale formatting)
+    summary: "{{brand}} {{model}} ({{year | date('YYYY')}}) · {{status}}"
     preview_path: "vehicles/{{slug}}/"
     media_folder: "{{media_folder}}/Cars/{{year}}"
     public_folder: "{{public_folder}}/Cars/{{year}}"
+    editor:
+      preview: false
+    sortable_fields:
+      fields: [year, price, mileage, status, brand]
+      default:
+        field: year
+        direction: descending
+    # Filters in Sveltia are checkboxes combined with AND, so only non-exclusive toggles are filters.
+    # Status (mutually exclusive) is the default grouping instead, so every status is visible at once.
     view_filters:
-      - label: "All"
-        field: status
-        pattern: all
-      - label: "Available"
-        field: status
-        pattern: Available
-      - label: "Reserved"
-        field: status
-        pattern: Reserved
-      - label: "Sold"
-        field: status
-        pattern: Sold
+      - { label: "Hide sold", field: status, ne: "Sold" }
+      - { label: "Featured", field: featured, eq: true }
+      - { label: "Price on request", field: priceOnRequest, eq: true }
+      - { label: "Missing photos", field: images, empty: true }
     view_groups:
-      - label: "Status"
-        field: status
+      default: status
+      groups:
+        - { name: status, label: "Status", field: status }
+        - { name: brand, label: "Brand", field: brand }
     fields:
       - { label: "Brand", name: "brand", widget: "string", hint: "e.g. Toyota. The file name and URL are built from brand, model and year." }
       - label: "Model"
@@ -114,16 +124,28 @@ collections:
         hint: "The model name only, e.g. Hilux or Alto. Not the year."
         pattern: ['^(?!\d{4}$).+', "Enter the model name (e.g. Alto), not the year."]
       - { label: "Year", name: "year", widget: "number", value_type: "int", min: 2000, max: 2030 }
-      - { label: "Mileage", name: "mileage", widget: "number", value_type: "int", min: 0 }
+      - { label: "Price", name: "price", widget: "number", value_type: "int", min: 0, step: -1, before_input: "$", hint: "Leave 0 when Price on request is on." }
+      - { label: "Price on request", name: "priceOnRequest", widget: "boolean", default: false, required: false, hint: "Hides the price and shows a Reserve button instead (new launches)." }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["Available", "Reserved", "Sold", "Upcoming"]
+        default: "Available"
+        hint: "Sold cars stay on the site but are removed from the sitemap."
+      - { label: "Mileage", name: "mileage", widget: "number", value_type: "int", min: 0, step: -1, after_input: "km" }
+      - { label: "Gallery Images", name: "images", widget: "image", multiple: true, required: false, hint: "Select multiple images at once. First image is used as the card thumbnail." }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Show on the home page." }
+      - { label: "Color", name: "color", widget: "string", required: false }
       - label: "Transmission"
         name: "transmission"
         widget: "select"
         options: ["Automatic", "Manual", "CVT", "DCT"]
+        default: "Automatic"
       - label: "Fuel Type"
         name: "fuelType"
         widget: "select"
         options: ["Petrol", "Diesel", "Hybrid", "Electric", "LPG"]
-      - { label: "Engine", name: "engine", widget: "string", required: false }
+        default: "Petrol"
       - label: "Drive Type"
         name: "driveType"
         widget: "select"
@@ -133,25 +155,16 @@ collections:
         widget: "select"
         required: false
         options: ["Hatchback", "Sedan", "SUV", "Compact SUV", "Pickup", "Van", "Minibus", "Wagon", "Coupe"]
-      - { label: "Price", name: "price", widget: "number", value_type: "int", min: 0 }
-      - { label: "Currency", name: "currency", widget: "string", default: "USD" }
-      - { label: "Price on request", name: "priceOnRequest", widget: "boolean", default: false, required: false, hint: "Hides the price and shows a Reserve button instead (new launches)." }
-      - label: "Status"
-        name: "status"
-        widget: "select"
-        options: ["Available", "Reserved", "Sold", "Upcoming"]
-        default: "Available"
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Gallery Images", name: "images", widget: "image", multiple: true, required: false, hint: "Select multiple images at once. First image is used as the card thumbnail." }
-      - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
+      - { label: "Engine", name: "engine", widget: "string", required: false, hint: "e.g. 1500cc or 2.4L Turbo" }
       - { label: "Doors", name: "doors", widget: "number", required: false, value_type: "int" }
       - { label: "Seats", name: "seats", widget: "number", required: false, value_type: "int" }
-      - { label: "Color", name: "color", widget: "string", required: false }
-      - { label: "VIN", name: "vin", widget: "string", required: false }
-      - { label: "Chassis Number", name: "chassisNumber", widget: "string", required: false }
-      - { label: "Engine Number", name: "engineNumber", widget: "string", required: false }
-      - { label: "Registration No.", name: "registrationNo", widget: "string", required: false }
+      - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
       - { label: "Description", name: "body", widget: "markdown", required: false }
+      - { label: "Currency", name: "currency", widget: "string", default: "USD" }
+      - { label: "VIN", name: "vin", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
+      - { label: "Chassis Number", name: "chassisNumber", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
+      - { label: "Engine Number", name: "engineNumber", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
+      - { label: "Registration No.", name: "registrationNo", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
 
   - name: "services"
     label: "Services"
