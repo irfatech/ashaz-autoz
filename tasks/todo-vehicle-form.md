@@ -53,7 +53,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
     `package.json`, `public/admin/config.yml` (+ `src/lib/content-schemas.ts`)
   - Depends on: V1
 
-- [ ] **V4: Compact pass: radios, fewer fields, better order, shorter hints** (M)
+- [x] **V4: Compact pass: radios, fewer fields, better order, shorter hints** (M)
   - Description: Doors radios 2/3/4/5 (default 5) and Seats radios 2/4/5/7/8/12 (default 5); remove
     Currency, Body Type and the color swatch picker from the form (they stay in the schema; add them to the
     drift check's "intentionally not in the form" list); new field order with Status directly after Year;
@@ -66,7 +66,12 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Depends on: V2
 
 ### Checkpoint B
-- [ ] Measured form height vs. the 2,800 px baseline; **review with you** (touch targets, order, hints).
+- [x] Measured in the real CMS, like for like: at 390 px wide the form went from **3,262 px to 2,732 px
+      (-16%)** and from 24 fields to 22; at 433 px wide from about 2,834 px to about 2,394 px (-15%).
+      Status and Price are on the first screen of a 390 x 844 phone. Doors (2 3 4 5) and Seats
+      (2 4 5 7 8 12) are single rows with 5 preselected. "Upcoming" wraps to a second line in the
+      Status radios at 390 px.
+- [ ] **Review with you** (touch targets, order, hints).
 
 ## Phase C: Pick-lists for the typed fields (each ends with a data gate)
 

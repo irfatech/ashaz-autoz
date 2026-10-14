@@ -71,39 +71,26 @@ collections:
         - { name: status, label: "Status", field: status }
         - { name: brand, label: "Brand", field: brand }
     fields:
-      - { label: "Brand", name: "brand", widget: "string", hint: "e.g. Toyota. The file name and URL are built from brand, model and year." }
+      - { label: "Brand", name: "brand", widget: "string" }
       - label: "Model"
         name: "model"
         widget: "string"
-        hint: "The model name only, e.g. Hilux or Alto. Not the year."
+        hint: "Model name only, e.g. Alto. Not the year."
         pattern: ['^(?!\d{4}$).+', "Enter the model name (e.g. Alto), not the year."]
       - label: "Year"
         name: "year"
         widget: "select"
         # year-options: rebuilt from today's date at every build (scripts/generate-cms-config.mjs); this list only serves local development
         options: [2027, 2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000]
-      - { label: "Price", name: "price", widget: "number", value_type: "int", min: 0, step: -1, before_input: "$", hint: "Leave 0 when Price on request is on." }
-      - { label: "Price on request", name: "priceOnRequest", widget: "boolean", default: false, required: false, hint: "Hides the price and shows a Reserve button instead (new launches)." }
       - label: "Status"
         name: "status"
         widget: "select"
         options: ["Available", "Reserved", "Sold", "Upcoming"]
         default: "Available"
-        hint: "Sold cars stay on the site but are removed from the sitemap."
+      - { label: "Price", name: "price", widget: "number", value_type: "int", min: 0, step: -1, before_input: "$", hint: "Enter 0 if the price is on request." }
+      - { label: "Price on request", name: "priceOnRequest", widget: "boolean", default: false, required: false }
       - { label: "Mileage", name: "mileage", widget: "number", value_type: "int", min: 0, step: -1, after_input: "km" }
-      - label: "Gallery Images"
-        name: "images"
-        widget: "image"
-        multiple: true
-        min: 1
-        max: 20
-        hint: "Photos shown for every color (interior, engine, general views). Add 1 to 20 at once, or drag them in. For a single-color car this is the whole gallery. JPEG, PNG and iPhone HEIC photos are converted to WebP, resized and stripped of GPS data automatically."
-        media_libraries:
-          default:
-            config:
-              # Photos are renamed on save, e.g. toyota-roomy-2021-a1b2c3d4.webp, instead of img_6618.webp
-              filename_template: "{{slug}}-{{uuid_shorter}}"
-      - { label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Show on the home page." }
+      - { label: "Gallery Images", name: "images", widget: "image", multiple: true, min: 1, max: 20, hint: "Photos shown for every color. The first is the cover. Converted to WebP automatically.", media_libraries: { default: { config: { filename_template: "{{slug}}-{{uuid_shorter}}" } } } }
       - label: "Colors"
         name: "colors"
         widget: "list"
@@ -113,21 +100,11 @@ collections:
         thumbnail: "images"
         collapsed: true
         allow_reorder: true
-        hint: "Add every color this car comes in, in one entry. The first color is the one shown first on the site (a sold-out color is skipped). Add that color's own photos here; photos that look the same in every color go under Gallery Images."
+        hint: "Add every color this car comes in. The first one is shown first on the site."
         fields:
-          - { label: "Color name", name: "name", widget: "string", hint: "e.g. Black, Pearl White" }
-          - { label: "Swatch color", name: "hex", widget: "color", required: false, hint: "Optional. Common color names get a swatch automatically." }
-          - { label: "Stock", name: "units", widget: "number", value_type: "int", min: 0, required: false, hint: "Leave blank = in stock. 0 = sold out. 3 = shows '3 available'." }
-          - label: "Photos of this color"
-            name: "images"
-            widget: "image"
-            multiple: true
-            required: false
-            hint: "The car in this color. They are shown before the Gallery Images."
-            media_libraries:
-              default:
-                config:
-                  filename_template: "{{slug}}-{{uuid_shorter}}"
+          - { label: "Color name", name: "name", widget: "string" }
+          - { label: "Stock", name: "units", widget: "number", value_type: "int", min: 0, required: false, hint: "Blank = in stock. 0 = sold out. 3 = '3 available'." }
+          - { label: "Photos of this color", name: "images", widget: "image", multiple: true, required: false, hint: "Shown before the gallery images.", media_libraries: { default: { config: { filename_template: "{{slug}}-{{uuid_shorter}}" } } } }
       - label: "Transmission"
         name: "transmission"
         widget: "select"
@@ -142,21 +119,25 @@ collections:
         name: "driveType"
         widget: "select"
         options: ["FWD", "RWD", "AWD", "4WD"]
-      - label: "Body Type"
-        name: "bodyType"
+      - { label: "Engine", name: "engine", widget: "string", required: false, hint: "e.g. 1500cc" }
+      - label: "Doors"
+        name: "doors"
         widget: "select"
-        required: false
-        options: ["Hatchback", "Sedan", "SUV", "Compact SUV", "Pickup", "Van", "Minibus", "Wagon", "Coupe"]
-      - { label: "Engine", name: "engine", widget: "string", required: false, hint: "e.g. 1500cc or 2.4L Turbo" }
-      - { label: "Doors", name: "doors", widget: "number", required: false, value_type: "int" }
-      - { label: "Seats", name: "seats", widget: "number", required: false, value_type: "int" }
+        options: [2, 3, 4, 5]
+        default: 5
+      - label: "Seats"
+        name: "seats"
+        widget: "select"
+        options: [2, 4, 5, 7, 8, 12]
+        dropdown_threshold: 6
+        default: 5
       - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
-      - { label: "Description", name: "body", widget: "markdown", required: false }
-      - { label: "Currency", name: "currency", widget: "string", default: "USD" }
-      - { label: "VIN", name: "vin", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
-      - { label: "Chassis Number", name: "chassisNumber", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
-      - { label: "Engine Number", name: "engineNumber", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
-      - { label: "Registration No.", name: "registrationNo", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
+      - { label: "Show on home page", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Description", name: "body", widget: "markdown", required: false, minimal: true, buttons: ["bold", "italic", "bulleted-list", "link"], editor_components: [] }
+      - { label: "VIN", name: "vin", widget: "string", required: false, unique: true, hint: "Internal: these four numbers only prefill quotations and invoices." }
+      - { label: "Chassis Number", name: "chassisNumber", widget: "string", required: false, unique: true }
+      - { label: "Engine Number", name: "engineNumber", widget: "string", required: false, unique: true }
+      - { label: "Registration No.", name: "registrationNo", widget: "string", required: false, unique: true }
       # Set once, when the car is created (a duplicate gets a fresh one); editing never changes it.
       - { label: "Recently added", name: "addedOn", widget: "hidden", default: "{{datetime}}" }
 

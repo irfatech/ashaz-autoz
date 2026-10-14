@@ -33,7 +33,9 @@ const schemas = {
 const schemaOnly = {
   "*": ["lang", "seo", "slug", "canonical"],
   // `title` and `color` are legacy keys: still valid in old files, no longer in the CMS form.
-  vehicles: ["title", "color"],
+  // `currency` (always USD), `bodyType` and a color's `hex` (looked up from its name) are
+  // deliberately left out of the form to keep it short; the schema keeps them with sensible defaults.
+  vehicles: ["title", "color", "currency", "bodyType", "hex"],
   services: ["icon"],
   team: ["email", "phone"],
   "site-settings": ["logoDark", "currency", "language", "languages"],
@@ -109,7 +111,8 @@ for (const [collection, field, expected] of enumPairs) {
   const cmsField = config.collections
     .find((c) => c.name === collection)
     ?.fields?.find((f) => f.name === field);
-  const options = (cmsField?.options ?? []).map((o) => (typeof o === "object" ? o.value : o));
+  if (!cmsField) continue; // not in the form on purpose; the schema-only list above covers that
+  const options = (cmsField.options ?? []).map((o) => (typeof o === "object" ? o.value : o));
   if (JSON.stringify(options) !== JSON.stringify([...expected])) {
     problems.push(
       `${collection}.${field}: CMS options [${options.join(", ")}] differ from schema [${expected.join(", ")}]`,
