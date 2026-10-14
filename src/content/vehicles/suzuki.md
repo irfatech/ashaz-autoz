@@ -5,7 +5,7 @@ year: 2026
 mileage: 0
 transmission: Automatic
 fuelType: Petrol
-engine: 1.5L
+engine: 1500cc
 driveType: 4WD
 price: 30000
 currency: USD

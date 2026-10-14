@@ -5,7 +5,7 @@ year: 2021
 mileage: 26500
 transmission: Automatic
 fuelType: Petrol
-engine: '1000'
+engine: 1000cc
 driveType: RWD
 price: 13000
 currency: USD

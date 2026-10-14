@@ -5,7 +5,7 @@ year: 2019
 mileage: 55000
 transmission: Automatic
 fuelType: Diesel
-engine: 2.4L Turbo
+engine: 2400cc Turbo
 driveType: 4WD
 price: 38000
 currency: USD

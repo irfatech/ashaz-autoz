@@ -119,7 +119,7 @@ collections:
         name: "driveType"
         widget: "select"
         options: ["FWD", "RWD", "AWD", "4WD"]
-      - { label: "Engine", name: "engine", widget: "string", required: false, hint: "e.g. 1500cc" }
+      - { label: "Engine", name: "engine", widget: "select", required: false, options: ["660cc", "660cc Turbo", "800cc", "1000cc", "1200cc", "1300cc", "1500cc", "1500cc Turbo", "1800cc", "2000cc", "2000cc Turbo", "2400cc", "2400cc Turbo", "2500cc", "2700cc", "2800cc Turbo", "3000cc", "3500cc", "4000cc", "Electric"] }
       - label: "Doors"
         name: "doors"
         widget: "select"

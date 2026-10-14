@@ -5,7 +5,7 @@ year: 2021
 mileage: 32000
 transmission: Automatic
 fuelType: Petrol
-engine: 1.5L Turbo
+engine: 1500cc Turbo
 driveType: AWD
 price: 20000
 currency: USD

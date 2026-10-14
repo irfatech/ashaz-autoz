@@ -5,7 +5,7 @@ year: 2022
 mileage: 35000
 transmission: Automatic
 fuelType: Petrol
-engine: '2000'
+engine: 2000cc
 driveType: RWD
 price: 12500
 currency: USD

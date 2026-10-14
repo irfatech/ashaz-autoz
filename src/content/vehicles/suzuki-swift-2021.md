@@ -5,7 +5,7 @@ year: 2021
 mileage: 26000
 transmission: Automatic
 fuelType: Petrol
-engine: 1240 cc
+engine: 1200cc
 driveType: RWD
 price: 8600
 currency: USD

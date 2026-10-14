@@ -5,7 +5,7 @@ year: 2019
 mileage: 28000
 transmission: Automatic
 fuelType: Petrol
-engine: '660'
+engine: 660cc
 driveType: RWD
 price: 5800
 currency: USD

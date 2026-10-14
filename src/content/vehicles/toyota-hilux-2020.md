@@ -5,7 +5,7 @@ year: 2020
 mileage: 35000
 transmission: Manual
 fuelType: Diesel
-engine: 2.4L Turbo
+engine: 2400cc Turbo
 driveType: 4WD
 price: 35000
 currency: USD

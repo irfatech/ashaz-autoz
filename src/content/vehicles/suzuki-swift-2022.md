@@ -5,7 +5,7 @@ year: 2021
 mileage: 15000
 transmission: Automatic
 fuelType: Petrol
-engine: 1.2L
+engine: 1200cc
 driveType: FWD
 price: 11000
 currency: USD

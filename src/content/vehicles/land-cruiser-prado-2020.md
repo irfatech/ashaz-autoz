@@ -5,7 +5,6 @@ year: 2020
 mileage: 48000
 transmission: Automatic
 fuelType: Petrol
-engine: ''
 driveType: 4WD
 price: 42000
 currency: USD

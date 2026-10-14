@@ -5,7 +5,7 @@ year: 2021
 mileage: 25000
 transmission: Automatic
 fuelType: Petrol
-engine: '660'
+engine: 660cc
 driveType: RWD
 price: 5500
 currency: USD

@@ -5,7 +5,7 @@ year: 2021
 mileage: 29000
 transmission: Automatic
 fuelType: Petrol
-engine: '1800'
+engine: 1800cc
 driveType: RWD
 price: 14800
 currency: USD

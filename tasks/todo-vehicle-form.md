@@ -88,7 +88,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Files: `public/admin/config.yml`, 1 content file
   - Depends on: V1, V4
 
-- [ ] **V6: Engine list + normalization** (M) (data change: needs your OK)
+- [x] **V6: Engine list + normalization** (M) (data change: needs your OK)
   - Description: Select with the 20 engine sizes, optional. One-off script maps the 14 spellings
     (`'660'`, `660cc`, `1.5L`, `1240 cc`, `2.4L Turbo`, empty …) to list values. **STOP: show the before/after for
     every car.**
