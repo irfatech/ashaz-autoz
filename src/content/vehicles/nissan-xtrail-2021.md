@@ -1,5 +1,4 @@
 ---
-title: Nissan X-Trail
 brand: Nissan
 model: Xtrail
 year: 2021

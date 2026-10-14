@@ -1,5 +1,4 @@
 ---
-title: Rav4
 brand: Toyota
 model: Rav4
 year: 2021

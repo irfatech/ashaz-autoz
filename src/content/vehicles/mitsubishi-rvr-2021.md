@@ -1,5 +1,4 @@
 ---
-title: Mitsubishi
 brand: Mitsubishi
 model: RVR
 year: 2021

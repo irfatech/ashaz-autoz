@@ -1,5 +1,4 @@
 ---
-title: Daihatsu Mira ES 2021
 brand: Daihatsu
 model: Mira
 year: 2021

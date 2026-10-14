@@ -1,5 +1,4 @@
 ---
-title: Toyota
 brand: Toyota
 model: Raize
 year: 2021

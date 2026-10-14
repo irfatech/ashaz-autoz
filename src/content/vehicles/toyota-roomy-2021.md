@@ -1,5 +1,4 @@
 ---
-title: Roomy
 brand: Toyota
 model: Roomy
 year: 2021

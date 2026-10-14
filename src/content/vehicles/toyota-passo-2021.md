@@ -1,5 +1,4 @@
 ---
-title: Toyota Passo
 brand: Toyota
 model: Passo
 year: 2021
