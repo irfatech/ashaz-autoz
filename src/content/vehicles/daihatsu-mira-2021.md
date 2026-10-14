@@ -15,7 +15,7 @@ images:
   - /images/92681-04.webp
   - /images/92681-05.webp
 features:
-  - Japanese vehicles
+  - Japanese Import
 doors: 5
 seats: 5
 colors:

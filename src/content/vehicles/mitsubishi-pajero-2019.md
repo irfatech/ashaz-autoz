@@ -14,8 +14,7 @@ featured: true
 images:
   - /images/rental-hero.webp
 features:
-  - 7 Seats
-  - Leather Interior
+  - Leather Seats
   - Reverse Camera
   - Parking Sensors
   - Cruise Control

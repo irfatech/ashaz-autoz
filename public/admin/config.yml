@@ -131,7 +131,7 @@ collections:
         options: [2, 4, 5, 7, 8, 12]
         dropdown_threshold: 6
         default: 5
-      - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
+      - { label: "Features", name: "features", widget: "select", multiple: true, required: false, options: ["Air Conditioning", "Power Steering", "Power Windows", "Central Locking", "ABS Brakes", "Dual Airbags", "7 Airbags", "Bluetooth", "Apple CarPlay", "Android Auto", "Navigation", "Reverse Camera", "Parking Sensors", "Blind Spot Monitor", "Cruise Control", "Keyless Entry", "Push Start", "Leather Seats", "Sunroof", "Alloy Wheels", "Fog Lights", "Roof Rails", "Tow Bar", "AllGrip Pro 4WD", "Brand New (0 km)", "Japanese Import"] }
       - { label: "Show on home page", name: "featured", widget: "boolean", default: false, required: false }
       - { label: "Description", name: "body", widget: "markdown", required: false, minimal: true, buttons: ["bold", "italic", "bulleted-list", "link"], editor_components: [] }
       - { label: "VIN", name: "vin", widget: "string", required: false, unique: true, hint: "Internal: these four numbers only prefill quotations and invoices." }

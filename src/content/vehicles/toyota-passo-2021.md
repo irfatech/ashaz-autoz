@@ -15,7 +15,7 @@ images:
   - /images/1e982940-a732-4b3c-80bb-91c0a69e923d.webp
   - /images/1e982940-a732-4b3c-80bb-91c0a69e923d.webp
 features:
-  - Japenese Vehicles
+  - Japanese Import
 doors: 5
 seats: 5
 colors:

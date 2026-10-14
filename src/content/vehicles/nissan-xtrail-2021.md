@@ -15,8 +15,7 @@ images:
   - /images/862e9965-28de-4f79-9d6e-dcefe8a992ea.webp
   - /images/9d69a484-45ef-4d21-b38d-373fcc3c9e6e.webp
   - /images/3f36cbe9-390d-471c-959a-9251df1e872d.webp
-features:
-  - Nissan Xtrail
+features: []
 doors: 5
 seats: 5
 colors:

@@ -20,9 +20,6 @@ images:
 features:
   - AllGrip Pro 4WD
   - Brand New (0 km)
-  - Automatic Transmission
-  - Black
-  - Blue
 doors: 5
 seats: 5
 colors:

@@ -14,7 +14,7 @@ featured: true
 images:
   - /images/img_6616.webp
 features:
-  - Japanese Vehicles
+  - Japanese Import
 doors: 5
 seats: 5
 colors:

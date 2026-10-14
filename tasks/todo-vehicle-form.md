@@ -97,7 +97,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Files: `public/admin/config.yml`, `scripts/one-off/normalize-engine.mjs` (deleted after), content files
   - Depends on: V5
 
-- [ ] **V7: Features multi-select + normalization** (M) (data change: needs your OK)
+- [x] **V7: Features multi-select + normalization** (M) (data change: needs your OK)
   - Description: **First a real-CMS spike:** does a multi-select keep a stored value that is not in its list?
     Then a multi-select with the 26 features (dropdown, not a wall of checkboxes). One-off script maps
     "Japanese vehicles" (4 spellings) to "Japanese Import", "Leather Interior" to "Leather Seats", and

@@ -15,7 +15,7 @@ images:
   - /images/img_5199.webp
   - /images/img_5200.webp
 features:
-  - Japense Vehicles
+  - Japanese Import
 doors: 5
 seats: 5
 colors:
