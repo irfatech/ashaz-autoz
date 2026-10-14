@@ -5,20 +5,20 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
 
 ## Phase 0 — Guard rails
 
-- [ ] **T1: Pin the CMS script** (XS)
+- [x] **T1: Pin the CMS script** (XS)
   - Acceptance: `public/admin/index.html` loads `@sveltia/cms@0.237.0`; no unversioned URL left.
   - Verify: `grep sveltia-cms public/admin/index.html`; open `/admin/index.html` in `npm run dev`;
     login screen renders, console has no errors.
   - Files: `public/admin/index.html`
   - Depends on: none
 
-- [ ] **T2: CI gate** (XS) — needs your nod (edits `deploy.yml`)
+- [x] **T2: CI gate** (XS) — needs your nod (edits `deploy.yml`)
   - Acceptance: the build job runs `npm run check` before `npm run build`; a type error blocks deploy.
   - Verify: push a branch with a deliberate type error → job fails; revert it.
   - Files: `.github/workflows/deploy.yml`
   - Depends on: none
 
-- [ ] **T3: Make Prettier work** (XS) — needs your nod (devDependency)
+- [x] **T3: Make Prettier work** (XS) — needs your nod (devDependency)
   - Acceptance: `prettier-plugin-astro` installed; `npx prettier --check` runs without a
     "plugin not found" error. The whole of `src/` is NOT reformatted.
   - Verify: `npx prettier --check src/lib/seo.ts`
@@ -26,7 +26,7 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Depends on: none
 
 ### Checkpoint 0
-- [ ] `npm run check`, `npm run build` green; admin page loads pinned CMS. Review with you.
+- [x] `npm run check`, `npm run build` green; admin page loads pinned CMS. Review with you.
 
 ## Phase 1 — CMS ⇄ schema parity
 
