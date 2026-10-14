@@ -2,10 +2,36 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>Sveltia CMS</title>
+    <style>
+      /*
+       * iPhone fix for the photo lists (Gallery Images, Photos of this color).
+       *
+       * Sveltia sizes the narrow up/down-arrow column beside each photo with
+       * `height: -webkit-fill-available`. Chrome and Firefox fill the photo row, but iOS WebKit
+       * resolves it against the whole screen, so every photo row becomes a screen tall with a huge
+       * empty gap. `align-self: stretch` means "fill the row" and works in every browser.
+       * Safe to delete once Sveltia fixes this upstream (the rule then simply stops doing anything).
+       */
+      .reorder-controls {
+        height: auto !important;
+        align-self: stretch !important;
+      }
+
+      /* Smaller photo thumbnails on phones, so a car with 10+ photos is not a very long list. */
+      @media (width < 768px) {
+        /* Extra selectors only to out-rank Sveltia's own (more specific) 120px rule. */
+        :root .filled.filled .preview {
+          width: 88px !important;
+          height: 88px !important;
+        }
+      }
+    </style>
   </head>
   <body>
-    <script src="https://unpkg.com/@sveltia/cms@0.237.0/dist/sveltia-cms.js"></script>
+    <!-- Always the newest Sveltia CMS on purpose: its fixes arrive without a code change. -->
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
   </body>
 </html>

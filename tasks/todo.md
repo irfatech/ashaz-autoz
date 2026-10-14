@@ -274,3 +274,8 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
 - **Data questions for the owner** (reported as lint warnings, not guessed): `suzuki-swift-2022.md`
   (year 2021) and `toyota-raize-2022.md` (year 2021, no photos) duplicate their 2021 twins; both
   are Sold.
+
+## Changed later at the owner's request
+
+- **T1 reversed:** the CMS script is no longer pinned to 0.237.0; `public/admin/index.html` loads the newest release so upstream fixes arrive automatically.
+- **iPhone photo-list fix:** Sveltia's up/down-arrow column uses `height: -webkit-fill-available`, which iOS WebKit resolves against the whole screen (each photo row became ~640 px tall). A small stylesheet in `admin/index.html` overrides it (and shrinks the phone thumbnail to 88 px). Safe to delete once Sveltia fixes it upstream (still present in 0.238.0).

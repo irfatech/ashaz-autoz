@@ -26,7 +26,7 @@ cannot save a vehicle that would produce a broken page.
 4. Fields editors change weekly: price, status, mileage, photos, featured.
 5. **Decided:** Pages, FAQ, Navigation and Footer are hidden from the CMS, not deleted.
 6. **Decided:** `/app` stays in this repo as a convenience tool, not a security boundary.
-7. Sveltia CMS version to pin: `0.237.0` (latest on npm, 13 Oct 2026).
+7. Sveltia CMS version: always the newest (the script is deliberately not pinned); the checks validate the config against the 0.237.0 schema.
 8. **Decided:** sign-in stays on the built-in access token. OAuth is deferred until the Cloudflare
    infrastructure decision is made.
 9. **Decided:** VIN, chassis, engine and registration numbers stay in the vehicle form so invoices
@@ -86,7 +86,7 @@ There are no tests today. Keep it light and cheap:
 ## Boundaries
 
 - **Always:** run `npm run check && npm run build` before committing; keep CMS field names identical
-  to Zod keys; keep the CMS script pinned to an exact version.
+  to Zod keys; the CMS script follows the newest Sveltia release on purpose (the owner's decision, so upstream fixes arrive without a code change); `admin/index.html` carries a small, removable stylesheet for the iPhone photo-list bug.
 - **Ask first:** adding npm dependencies; changing `deploy.yml`; renaming any vehicle file that is
   linked from a page (e.g. `suzuki.md` is hardcoded at `index.astro:134`); changing hosting or auth.
 - **Never:** commit tokens or client secrets (an access token was pasted into chat earlier —
@@ -243,7 +243,7 @@ Cloudflare decision.
   opens on White, the enquiry message names the color, and `/vehicles/alto-…/` is still the only
   URL in the sitemap. The 22 existing single-`color` vehicles render exactly as before.
 - Choosing a color causes no layout shift (fixed 4:3 container) and is operable by keyboard.
-- `admin/index.html` references `@sveltia/cms@0.237.0`, not the unversioned URL.
+- `admin/index.html` loads the newest Sveltia release (unversioned URL, by the owner's choice).
 
 ## Open Questions
 
