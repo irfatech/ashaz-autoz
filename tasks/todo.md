@@ -80,32 +80,38 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
 
 ## Phase 2 — Fast add/update
 
-- [ ] **T8: Vehicle form ergonomics** (M)
+- [x] **T8: Vehicle form ergonomics** (M)
   - Description: Field order by edit frequency; `summary`; thumbnail from first photo;
-    `sortable_fields` (default year ↓; price, mileage, status); `view_filters` extended form
-    (default "Available", plus Upcoming, Reserved, Sold, Featured, "Missing photos" via `empty`);
-    `view_groups` (status, brand); `slug` object with `editable: [create]`; radio buttons for
+    `sortable_fields` (default year ↓; price, mileage, status); `view_filters` (Hide sold,
+    Featured, Price on request, Missing photos via `empty`); `view_groups` (default Status, then
+    Brand; Sveltia filters are AND-combined checkboxes, so exclusive statuses are a grouping); `slug` object with `editable: [create]`; radio buttons for
     status/transmission; `unique: true` on VIN, chassis number, registration number; `step: -1`
     and `$` label on price; "Internal — used for quotations/invoices" group by order + hint;
     `editor.preview: false`; keep `duplicate`.
-  - Acceptance: config validates; in the CMS the list opens filtered to Available, sorted newest,
+  - Acceptance: config validates; in the CMS the list opens grouped by status, sorted newest year first,
     shows thumbnails; a new entry needs only brand, model, year, price, status, mileage, photos.
   - Verify: ajv validation; manual smoke test in Chrome with the **local repository** mode.
   - Files: `public/admin/config.yml`
   - Depends on: T5
 
-- [ ] **T9: Photo handling** (S)
+- [x] **T9: Photo handling** (S)
   - Description: Image field `filename_template: "{{slug}}-{{uuid_shorter}}"`, `min: 1`, `max: 20`;
-    `heic` transformation (WebP, width 1600); keep WebP/82/2048 for the rest;
-    `asset_collections` entry exposing `public/images/Cars`.
+    folder `Cars/{{slug}}` (the old `Cars/{{year}}` was the upload year, not the car's year).
+    Dropped after testing: a separate `heic` rule (covered by `raster_image`) and an
+    `asset_collections` entry (showed 0 for per-car subfolders; the "Vehicles" group works).
   - Acceptance: an iPhone HEIC upload ends as `brand-model-year-xxxxxxxx.webp` under
-    `public/images/Cars/<year>/`, no GPS, ≤ 5 MB; entry cannot be saved with zero photos.
+    `public/images/Cars/<slug>/`, no GPS, ≤ 5 MB; entry cannot be saved with zero photos.
   - Verify: ajv validation; smoke test with one HEIC and one JPEG in local mode, then delete the test entry.
   - Files: `public/admin/config.yml`
   - Depends on: T8 (same file; sequence, do not parallelize)
 
 ### Checkpoint 2
-- [ ] Smoke test passed by you in Chrome; nothing from testing left in the repo. Review.
+- [x] Verified by me in the real CMS via its test backend: config loads with no validation errors;
+      field order, radios, defaults; Model-is-a-year guard; slug `toyota-roomy-2021`; summary
+      "(2021)"; default grouping and sort; "Hide sold"; Duplicate; a 4032x3024 JPEG saved as
+      `/images/Cars/toyota-alto-2021/toyota-alto-2021-e8a4f23d.webp`; HEIC/HEIF accepted.
+- [ ] Still needs you, in real GitHub or local-repository mode: one real iPhone HEIC photo upload,
+      then delete the test entry. Review with you.
 
 ## Phase 2c — Multi-color vehicles
 
@@ -248,3 +254,15 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
       cars; Sveltia pinned at 0.237.0.
 - [ ] Remind: revoke the access token pasted into chat earlier.
 - [ ] Phase 5 (OAuth via Cloudflare Worker) stays deferred.
+
+## Found while implementing (not in the original plan)
+
+- **The owner edits through the live CMS** (10 commits on `origin/main` from 31 Aug and 24 Sep:
+  status flips, price/mileage changes, a copied car). Merged into local `main` without conflicts.
+  Typical weekly edits: status, price, mileage, add a car by copying another.
+- **Stale-save hazard fixed:** the old live form writes `title:`; the strict schema would have
+  failed the production build on the owner's next save. `title`/`slug` are now tolerated
+  (ignored) and `check:content` warns; every other unknown key still fails.
+- **Data questions for the owner** (reported as lint warnings, not guessed): `suzuki-swift-2022.md`
+  (year 2021) and `toyota-raize-2022.md` (year 2021, no photos) duplicate their 2021 twins; both
+  are Sold.
