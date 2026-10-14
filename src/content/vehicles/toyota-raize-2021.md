@@ -1,4 +1,5 @@
 ---
+title: Toyota
 brand: Toyota
 model: Raize
 year: 2021
@@ -9,7 +10,7 @@ engine: '1000'
 driveType: RWD
 price: 13000
 currency: USD
-status: Upcoming
+status: Sold
 featured: true
 images:
   - /images/img_6618.webp
@@ -18,6 +19,10 @@ features: []
 doors: 5
 seats: 5
 color: Beige
+vin: ''
+chassisNumber: ''
+engineNumber: ''
+registrationNo: ''
 ---
 
 24th July Arrival 2026

@@ -1,4 +1,5 @@
 ---
+title: Nissan X-Trail
 brand: Nissan
 model: Xtrail
 year: 2021
@@ -9,7 +10,7 @@ engine: 2000cc
 driveType: AWD
 price: 14800
 currency: USD
-status: Available
+status: Sold
 featured: true
 images:
   - /images/862e9965-28de-4f79-9d6e-dcefe8a992ea.webp
@@ -20,6 +21,10 @@ features:
 doors: 5
 seats: 5
 color: Grey
+vin: ''
+chassisNumber: ''
+engineNumber: ''
+registrationNo: ''
 ---
 
 Nissan Xtrail 2021 4WD
