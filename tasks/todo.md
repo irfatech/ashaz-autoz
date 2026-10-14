@@ -186,11 +186,9 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
       exact file passes lint, type-check and build); a temporary 4-color car (default, sold-out,
       no-photo and unknown-name colors) exercised on the page: click, keyboard, thumbnails,
       `?color=` deep links, light/dark; card dots and the Color filter match independent counts.
-- [ ] Still needs you: open a real car in your CMS, add two colors with photos, and check the page.
-- [x] (original wording kept below)
-- [ ] Create a real multi-color test vehicle in local-repo CMS mode (3 colors, own photos), verify
-      picker, deep link, filter, JSON-LD, then delete it. check + build + tests + lint green.
-      Review with you.
+- [x] check, check:content, check:cms, tests (29) and build all green.
+- [ ] Still needs you (real CMS, local-repo or GitHub mode): add two colors with their own photos to
+      a real car, check the page, then delete or keep it. Review with you.
 
 ## Phase 3 — Trim the backend
 
