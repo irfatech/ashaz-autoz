@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 import { legacyVehicleKeys, vehiclesSchema } from "../src/lib/content-schemas.ts";
+import { allImages, colorSlug } from "../src/lib/vehicle-colors.ts";
 
 const dir = path.resolve(import.meta.dirname, "../src/content/vehicles");
 const errors = [];
@@ -63,7 +64,15 @@ for (const { file, data } of vehicles) {
   seen(vins, data.vin, file, "VIN", data.status);
   seen(chassis, data.chassisNumber, file, "chassis number", data.status);
   seen(registrations, data.registrationNo, file, "registration number", data.status);
-  if (data.images.length === 0) {
+  const colorSlugs = new Set();
+  for (const color of data.colors) {
+    const slug = colorSlug(color.name);
+    if (!slug) errors.push(`${file}: color "${color.name}" has no usable letters or digits`);
+    else if (colorSlugs.has(slug)) errors.push(`${file}: color "${color.name}" is listed twice`);
+    colorSlugs.add(slug);
+  }
+  // A photo can be shared by all colors or belong to one color; either counts.
+  if (allImages(data).length === 0) {
     const message = `${file}: needs at least one photo`;
     if (data.status === "Sold") warnings.push(message);
     else errors.push(message);

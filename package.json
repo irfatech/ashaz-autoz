@@ -12,6 +12,7 @@
     "lint": "astro check",
     "check:content": "node scripts/check-content.mjs",
     "check:cms": "node scripts/check-cms-drift.mjs",
+    "test": "node --test \"src/**/*.test.ts\"",
     "format": "prettier --write src/",
     "astro": "astro"
   },

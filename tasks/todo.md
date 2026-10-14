@@ -115,11 +115,12 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
 
 ## Phase 2c — Multi-color vehicles
 
-- [ ] **T10: Colors data model + resolver + tests** (M)
+- [x] **T10: Colors data model + resolver + tests** (M)
   - Description: Add `colors` to the shared vehicle schema (name, optional `hex`, optional `units`,
     `images`). `src/lib/vehicle-colors.ts`: `colorSlug`, `hexFor(name)` (built-in lookup for common
     names), `resolveColors(vehicle)` (legacy `color` fallback), `resolveGallery(vehicle, colorName)`
-    (color photos then shared photos; unknown color → default). `node:test` tests. Extend the
+    (color photos then shared photos; unknown color → default). The default color is the first one
+    that is not sold out (falls back to the first), so a sold-out color is never the opening view. `node:test` tests. Extend the
     content lint: unique color names, valid hex, ≥1 photo (own or shared).
   - Acceptance: tests cover color with photos, without photos, unknown color, legacy `color`, no
     colors; `npm test` passes; existing vehicles unaffected.

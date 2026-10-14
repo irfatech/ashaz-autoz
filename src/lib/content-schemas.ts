@@ -49,6 +49,20 @@ export const bodyTypes = [
 // them so they get cleaned up.
 export const legacyVehicleKeys = ["title", "slug"] as const;
 
+// One color a vehicle comes in. `units`: blank = in stock, 0 = sold out, n = "n available".
+// `hex` is optional because common color names are looked up in src/lib/vehicle-colors.ts.
+export const vehicleColorSchema = z
+  .object({
+    name: z.string().trim().min(1),
+    hex: z
+      .string()
+      .regex(/^#[0-9a-f]{6}$/i, "Use a 6-digit hex color like #1a1a1a")
+      .optional(),
+    units: z.coerce.number().int().min(0).optional(),
+    images: z.array(z.string()).default([]),
+  })
+  .strict();
+
 // Strict: any other key the schema does not declare fails the build instead of being silently
 // dropped (a dropped `title` key once produced duplicate page titles).
 export const vehiclesSchema = z
@@ -73,7 +87,10 @@ export const vehiclesSchema = z
     doors: z.coerce.number().int().min(1).max(7).optional(),
     seats: z.coerce.number().int().min(1).max(12).optional(),
     bodyType: z.enum(bodyTypes).optional(),
+    // `colors` is the current model: several colors, each with its own photos. `color` is the older
+    // single-text field; entries that only have it keep working (one swatch, shared photos).
     color: z.string().optional(),
+    colors: z.array(vehicleColorSchema).default([]),
     vin: z.string().optional(),
     chassisNumber: z.string().optional(),
     engineNumber: z.string().optional(),
