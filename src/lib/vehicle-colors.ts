@@ -112,6 +112,13 @@ export function resolveColors(vehicle: VehicleColorSource): ResolvedColor[] {
   }));
 }
 
+/** All color names as one text, e.g. "Black, Blue". Empty when the vehicle has no color. */
+export function colorNames(vehicle: VehicleColorSource): string {
+  return resolveColors(vehicle)
+    .map((c) => c.name)
+    .join(", ");
+}
+
 /** The color shown first: the first one that is not sold out, otherwise the first one. */
 export function defaultColor(colors: ResolvedColor[]): ResolvedColor | undefined {
   return colors.find((c) => !c.soldOut) ?? colors[0];

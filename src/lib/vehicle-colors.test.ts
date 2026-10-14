@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   allImages,
+  colorNames,
   colorSlug,
   coverImage,
   defaultColor,
@@ -141,4 +142,12 @@ test("allImages lists every photo across colors and shared, once", () => {
 test("findColor returns undefined for empty input", () => {
   assert.equal(findColor(resolveColors(alto), ""), undefined);
   assert.equal(findColor(resolveColors(alto), undefined), undefined);
+});
+
+test("colorNames joins all color names, and matches the old text for legacy entries", () => {
+  assert.equal(colorNames(alto), "Black, Pearl White, Silver");
+  assert.equal(colorNames({ color: "Silver" }), "Silver");
+  assert.equal(colorNames({ color: "Black, Blue" }), "Black, Blue");
+  assert.equal(colorNames({ colors: [{ name: "Black" }, { name: "Blue" }] }), "Black, Blue");
+  assert.equal(colorNames({}), "");
 });

@@ -1,5 +1,6 @@
 import { getCollection } from "astro:content";
 import { getSiteSettings } from "../lib/site";
+import { colorNames } from "../lib/vehicle-colors";
 
 export const prerender = true;
 
@@ -100,7 +101,7 @@ export async function GET() {
         `- **Fuel Type**: ${v.data.fuelType}`,
         `- **Drive**: ${v.data.driveType}`,
         ...(v.data.engine ? [`- **Engine**: ${v.data.engine}`] : []),
-        ...(v.data.color ? [`- **Color**: ${v.data.color}`] : []),
+        ...(colorNames(v.data) ? [`- **Color**: ${colorNames(v.data)}`] : []),
         ...(v.data.doors ? [`- **Doors**: ${v.data.doors}`] : []),
         ...(v.data.seats ? [`- **Seats**: ${v.data.seats}`] : []),
         ...(v.data.vin ? [`- **VIN**: ${v.data.vin}`] : []),
