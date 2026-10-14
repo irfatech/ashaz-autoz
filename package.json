@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/generate-sitemaps.cjs",
+    "build": "astro build && node scripts/generate-sitemaps.cjs && node scripts/generate-cms-config.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "astro check",

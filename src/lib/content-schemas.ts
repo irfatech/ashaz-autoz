@@ -1,4 +1,5 @@
 import { z } from "astro/zod";
+import { FIRST_VEHICLE_YEAR, maxVehicleYear } from "./year-options.ts";
 
 // Single source of truth for content shapes. Imported by `src/content.config.ts` (loaders)
 // and by the check scripts, so the CMS config, the build and the lint cannot disagree.
@@ -71,7 +72,8 @@ export const vehiclesSchema = z
     slug: z.string().optional(),
     brand: z.string(),
     model: z.string(),
-    year: z.coerce.number().int().min(2000).max(2030),
+    // Next year at the latest, the same rule that builds the form's Year list.
+    year: z.coerce.number().int().min(FIRST_VEHICLE_YEAR).max(maxVehicleYear()),
     mileage: z.coerce.number().int().min(0),
     transmission: z.enum(transmissions),
     fuelType: z.enum(fuelTypes),

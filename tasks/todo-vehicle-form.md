@@ -41,7 +41,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
 
 ## Phase B: Year list and the compact pass
 
-- [ ] **V3: Year pick-list, always current** (M)
+- [x] **V3: Year pick-list, always current** (M)
   - Description: Pure `yearOptions(date)` (next year down to 2000, newest first) with tests;
     `scripts/generate-cms-config.cjs` rewrites the year options in `dist/admin/config.yml` after the build
     (fails if its markers are missing); `build` script runs it; the schema's year maximum becomes next year;

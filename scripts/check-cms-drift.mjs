@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
 import * as S from "../src/lib/content-schemas.ts";
+import { FIRST_VEHICLE_YEAR } from "../src/lib/year-options.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const config = YAML.parse(fs.readFileSync(path.join(root, "public/admin/config.yml"), "utf8"));
@@ -113,6 +114,18 @@ for (const [collection, field, expected] of enumPairs) {
     problems.push(
       `${collection}.${field}: CMS options [${options.join(", ")}] differ from schema [${expected.join(", ")}]`,
     );
+  }
+}
+
+// The Year list in the source config is only used for local development (the build rewrites the deployed
+// copy), so only its shape is checked: newest first, ending at the earliest accepted year. It is
+// deliberately not checked against today's date, which would fail the build every January.
+const yearField = config.collections.find((c) => c.name === "vehicles")?.fields?.find((f) => f.name === "year");
+const yearList = (yearField?.options ?? []).map(Number);
+if (yearField?.widget === "select") {
+  const descending = yearList.every((y, i) => i === 0 || y === yearList[i - 1] - 1);
+  if (!descending || yearList.at(-1) !== FIRST_VEHICLE_YEAR) {
+    problems.push(`vehicles.year: the development list must count down by one and end at ${FIRST_VEHICLE_YEAR}`);
   }
 }
 
