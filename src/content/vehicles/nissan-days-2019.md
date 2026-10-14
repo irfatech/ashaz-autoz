@@ -20,6 +20,7 @@ doors: 5
 seats: 5
 colors:
   - name: White
+addedOn: 2026-07-08T03:51:00.000Z
 ---
 
 Stock Ready

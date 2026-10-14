@@ -25,6 +25,7 @@ vin: ''
 chassisNumber: ''
 engineNumber: ''
 registrationNo: ''
+addedOn: 2026-07-08T03:12:00.000Z
 ---
 
 Nissan Xtrail 2021 4WD

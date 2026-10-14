@@ -26,6 +26,7 @@ doors: 4
 seats: 5
 colors:
   - name: White
+addedOn: 2026-06-30T09:00:00.000Z
 ---
 
 This Toyota Hilux 2020 is in excellent condition, well-maintained, and ready for any terrain in Timor-Leste. Features a powerful 2.4L turbo diesel engine with 4WD capability.

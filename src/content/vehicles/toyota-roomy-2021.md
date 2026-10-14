@@ -24,6 +24,7 @@ vin: ''
 chassisNumber: ''
 engineNumber: ''
 registrationNo: ''
+addedOn: 2026-07-09T16:56:00.000Z
 ---
 
 Coming soon

@@ -23,6 +23,7 @@ vin: ''
 chassisNumber: ''
 engineNumber: ''
 registrationNo: ''
+addedOn: 2026-07-11T14:48:00.000Z
 ---
 
 24th July Arrival 2026

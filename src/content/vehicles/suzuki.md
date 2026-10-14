@@ -28,6 +28,7 @@ seats: 5
 colors:
   - name: Black
   - name: Blue
+addedOn: 2026-07-23T02:43:00.000Z
 ---
 
 Coming soon

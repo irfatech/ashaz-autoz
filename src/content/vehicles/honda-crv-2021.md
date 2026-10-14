@@ -26,6 +26,7 @@ doors: 4
 seats: 5
 colors:
   - name: Black
+addedOn: 2026-06-30T09:00:00.000Z
 ---
 
 Premium Honda CR-V 2021 with low mileage. Perfect family SUV with all the modern amenities.

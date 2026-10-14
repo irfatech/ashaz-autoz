@@ -19,6 +19,7 @@ doors: 5
 seats: 7
 colors:
   - name: Blue
+addedOn: 2026-07-09T16:43:00.000Z
 ---
 
 Coming soon

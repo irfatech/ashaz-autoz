@@ -20,6 +20,7 @@ doors: 5
 seats: 5
 colors:
   - name: Grey
+addedOn: 2026-07-08T04:13:00.000Z
 ---
 
 Sold

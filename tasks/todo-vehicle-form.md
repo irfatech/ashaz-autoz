@@ -26,7 +26,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Files: `public/admin/config.yml`, `src/lib/content-schemas.ts`
   - Depends on: none
 
-- [ ] **V2b: Backfill "added on" for the 23 existing cars** (S) (data change: needs your OK)
+- [x] **V2b: Backfill "added on" for the 23 existing cars** (S) (data change: needs your OK)
   - Description: One-off script that reads each car file's first git commit date and writes `addedOn`.
     Dry run prints a table (car, date). **STOP and show it to you before writing.**
   - Acceptance: all 23 cars have `addedOn`; first-time edits no longer move a car; build identical apart
@@ -37,7 +37,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
 
 ### Checkpoint A
 - [x] V2 verified in the real CMS (a new or duplicated car is first in its group; status edits keep its date).
-- [ ] **Waiting on you: OK to run V2b** (dry-run table shown: 23 cars, dates from git history).
+- [x] V2b run with your OK: 23 cars now have their real added date; a second run changes nothing; built pages unchanged.
 - [ ] All checks green. In the real CMS: the new car is first in its group; "Recently added" appears in
       the Sort menu. **Review with you.**
 

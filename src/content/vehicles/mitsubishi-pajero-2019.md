@@ -26,6 +26,7 @@ doors: 4
 seats: 7
 colors:
   - name: Gray
+addedOn: 2026-06-30T09:00:00.000Z
 ---
 
 Mitsubishi Pajero Sport 2019 — the ultimate 7-seater SUV for families and off-road adventures.

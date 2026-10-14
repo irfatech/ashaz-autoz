@@ -19,6 +19,7 @@ doors: 5
 seats: 5
 colors:
   - name: Silver
+addedOn: 2026-07-08T02:59:00.000Z
 ---
 
 Arrival 24th july

@@ -21,6 +21,7 @@ doors: 5
 seats: 5
 colors:
   - name: Silver
+addedOn: 2026-07-08T03:41:00.000Z
 ---
 
 Stock Ready

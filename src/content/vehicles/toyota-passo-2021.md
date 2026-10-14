@@ -24,6 +24,7 @@ vin: ''
 chassisNumber: ''
 engineNumber: ''
 registrationNo: ''
+addedOn: 2026-07-08T03:47:00.000Z
 ---
 
 Stock Ready

@@ -24,6 +24,7 @@ doors: 5
 seats: 5
 colors:
   - name: Red
+addedOn: 2026-06-30T09:00:00.000Z
 ---
 
 The Suzuki Swift 2022 is a fuel-efficient, reliable, and fun-to-drive compact car perfect for city driving.
