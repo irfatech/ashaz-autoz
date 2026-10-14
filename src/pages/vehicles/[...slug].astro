@@ -4,7 +4,7 @@ import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection } from "astro:content";
 import { formatPrice, formatMileage, getWhatsAppUrl, statusColors, phoneClean, getSiteSettings, generateBreadcrumbs } from "../../lib/site";
 import { vehicleSchema, getOrganizationId } from "../../lib/schema";
-import { buildGalleryModel, colorNames } from "../../lib/vehicle-colors";
+import { allImages, buildGalleryModel, colorNames, resolveColors } from "../../lib/vehicle-colors";
 import VehicleGallery from "../../components/VehicleGallery.astro";
 import ColorPicker from "../../components/ColorPicker.astro";
 
@@ -35,7 +35,9 @@ const waLinks = Object.fromEntries(
 const carSchema = vehicleSchema(
   {
     ...data,
-    color: colorNames(data) || undefined,
+    color: resolveColors(data).map((c) => c.name),
+    // Every photo across all colors, as absolute URLs.
+    images: allImages(data).map((src) => new URL(src, settings.url).href),
     slug: vehicle.id,
     description: vehicle.body?.trim() || data.features?.join(", "),
   },

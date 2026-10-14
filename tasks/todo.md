@@ -173,7 +173,7 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Files: `src/components/VehicleCard.astro`, `src/pages/vehicles.astro`
   - Depends on: T12 (parallel with T13, T15)
 
-- [ ] **T15: Structured data for colors** (S)
+- [x] **T15: Structured data for colors** (S)
   - Description: `schema.ts` `vehicleSchema`: `color` as an array of names, `image` as the union
     of all colors' and shared photos (absolute URLs); keep one `Offer`.
   - Acceptance: JSON-LD of a 3-color car lists 3 colors and all photos; single-color car unchanged.
@@ -182,6 +182,12 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
   - Depends on: T12 (parallel with T13, T14)
 
 ### Checkpoint 3
+- [x] Verified by me: the CMS writes a valid `colors` entry with a per-color photo (test backend; the
+      exact file passes lint, type-check and build); a temporary 4-color car (default, sold-out,
+      no-photo and unknown-name colors) exercised on the page: click, keyboard, thumbnails,
+      `?color=` deep links, light/dark; card dots and the Color filter match independent counts.
+- [ ] Still needs you: open a real car in your CMS, add two colors with photos, and check the page.
+- [x] (original wording kept below)
 - [ ] Create a real multi-color test vehicle in local-repo CMS mode (3 colors, own photos), verify
       picker, deep link, filter, JSON-LD, then delete it. check + build + tests + lint green.
       Review with you.

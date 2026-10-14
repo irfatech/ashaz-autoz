@@ -145,6 +145,13 @@ export function webSiteSchema(settings: SiteSettings) {
   };
 }
 
+// schema.org accepts one color or a list; use the plain text for a single color.
+function colorValue(color: string | string[] | undefined) {
+  const names = (Array.isArray(color) ? color : [color]).filter((c): c is string => !!c?.trim());
+  if (names.length === 0) return undefined;
+  return names.length === 1 ? names[0] : names;
+}
+
 export function vehicleSchema(
   vehicle: {
     brand: string;
@@ -157,7 +164,8 @@ export function vehicleSchema(
     fuelType: string;
     driveType: string;
     engine?: string;
-    color?: string;
+    /** One color name, or all of them: a list is written as a list in the structured data. */
+    color?: string | string[];
     images?: string[];
     description?: string;
     status: string;
@@ -216,7 +224,7 @@ export function vehicleSchema(
     fuelType: vehicle.fuelType,
     driveWheelConfiguration: vehicle.driveType,
     ...(vehicle.engine ? { engineType: vehicle.engine } : {}),
-    ...(vehicle.color ? { color: vehicle.color } : {}),
+    ...(colorValue(vehicle.color) ? { color: colorValue(vehicle.color) } : {}),
     ...(vehicle.images?.length ? { image: vehicle.images } : {}),
     ...(vehicle.doors ? { numberOfDoors: vehicle.doors } : {}),
     ...(vehicle.seats ? { vehicleSeatingCapacity: vehicle.seats } : {}),
