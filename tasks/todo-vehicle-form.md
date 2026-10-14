@@ -36,6 +36,8 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
   - Depends on: V2
 
 ### Checkpoint A
+- [x] V2 verified in the real CMS (a new or duplicated car is first in its group; status edits keep its date).
+- [ ] **Waiting on you: OK to run V2b** (dry-run table shown: 23 cars, dates from git history).
 - [ ] All checks green. In the real CMS: the new car is first in its group; "Recently added" appears in
       the Sort menu. **Review with you.**
 
@@ -74,6 +76,10 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
 - [ ] **Review with you** (touch targets, order, hints).
 
 ## Phase C: Pick-lists for the typed fields (each ends with a data gate)
+
+> Dry run prepared for V5-V8 in `scripts/one-off/normalize-vehicle-values.mjs` (31 changes in 22 of 23
+> cars; nothing written). **Waiting on your OK** before the lists are added to the form and the data is
+> normalized.
 
 - [ ] **V5: Color name list (+ "Gray" to "Grey")** (S) (data change: 1 car, needs your OK)
   - Description: Select with the 17 color names; hex stays automatic. Fix the one `Gray`.
