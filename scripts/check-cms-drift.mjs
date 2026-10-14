@@ -31,8 +31,8 @@ const schemas = {
 // maintained in the files. Anything NOT listed here must exist in the CMS form, and vice versa.
 const schemaOnly = {
   "*": ["lang", "seo", "slug", "canonical"],
-  // `title` is a legacy key tolerated by the schema. `colors` gets its CMS list in the next task.
-  vehicles: ["title", "colors"],
+  // `title` and `color` are legacy keys: still valid in old files, no longer in the CMS form.
+  vehicles: ["title", "color"],
   services: ["icon"],
   team: ["email", "phone"],
   "site-settings": ["logoDark", "currency", "language", "languages"],
@@ -80,6 +80,11 @@ function compare(label, cmsFields, zodObject, collection) {
     const inner = unwrap(type);
     if (inner.def.type === "object" && Array.isArray(field.fields)) {
       compare(`${label}.${name}`, field.fields, inner, collection);
+    }
+    // A list of objects (e.g. vehicle colors): compare each item's fields with the element schema.
+    if (inner.def.type === "array" && Array.isArray(field.fields)) {
+      const element = unwrap(inner.def.element);
+      if (element.def.type === "object") compare(`${label}.${name}[]`, field.fields, element, collection);
     }
   }
 }

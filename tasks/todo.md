@@ -129,7 +129,7 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
     `src/lib/vehicle-colors.test.ts`, `scripts/check-content.mjs`, `package.json`
   - Depends on: T5, T7
 
-- [ ] **T11: CMS colors list + migration script** (S)
+- [x] **T11: CMS colors list + migration script** (S)
   - Description: `colors` list in the vehicle form (`summary: "{{name}}"`, `thumbnail: images`,
     `collapsed: true`, `label_singular: "Color"`, `allow_reorder: true`, hex via color widget,
     `units` number min 0, `images` multiple). Old `color` text field removed from the form after

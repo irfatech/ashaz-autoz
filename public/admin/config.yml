@@ -141,14 +141,37 @@ collections:
         multiple: true
         min: 1
         max: 20
-        hint: "Add 1 to 20 photos at once, or drag them in. The first photo is the cover on cards. JPEG, PNG and iPhone HEIC photos are converted to WebP, resized and stripped of GPS data automatically."
+        hint: "Photos shown for every color (interior, engine, general views). Add 1 to 20 at once, or drag them in. For a single-color car this is the whole gallery. JPEG, PNG and iPhone HEIC photos are converted to WebP, resized and stripped of GPS data automatically."
         media_libraries:
           default:
             config:
               # Photos are renamed on save, e.g. toyota-roomy-2021-a1b2c3d4.webp, instead of img_6618.webp
               filename_template: "{{slug}}-{{uuid_shorter}}"
       - { label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Show on the home page." }
-      - { label: "Color", name: "color", widget: "string", required: false }
+      - label: "Colors"
+        name: "colors"
+        widget: "list"
+        required: false
+        label_singular: "Color"
+        summary: "{{name}}"
+        thumbnail: "images"
+        collapsed: true
+        allow_reorder: true
+        hint: "Add every color this car comes in, in one entry. The first color is the one shown first on the site (a sold-out color is skipped). Add that color's own photos here; photos that look the same in every color go under Gallery Images."
+        fields:
+          - { label: "Color name", name: "name", widget: "string", hint: "e.g. Black, Pearl White" }
+          - { label: "Swatch color", name: "hex", widget: "color", required: false, hint: "Optional. Common color names get a swatch automatically." }
+          - { label: "Stock", name: "units", widget: "number", value_type: "int", min: 0, required: false, hint: "Leave blank = in stock. 0 = sold out. 3 = shows '3 available'." }
+          - label: "Photos of this color"
+            name: "images"
+            widget: "image"
+            multiple: true
+            required: false
+            hint: "The car in this color. They are shown before the Gallery Images."
+            media_libraries:
+              default:
+                config:
+                  filename_template: "{{slug}}-{{uuid_shorter}}"
       - label: "Transmission"
         name: "transmission"
         widget: "select"
