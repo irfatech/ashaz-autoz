@@ -43,10 +43,18 @@ export const bodyTypes = [
   "Coupe",
 ] as const;
 
-// Strict: a key the schema does not declare fails the build instead of being silently dropped
-// (a dropped `title` key once produced duplicate page titles).
+// Keys the old CMS vehicle form wrote into every file. Nothing reads them (the URL slug is the file
+// name, and the page title is built from brand/model/year). They are tolerated, not required, so a
+// save from a stale CMS tab cannot break the production build; `npm run check:content` warns about
+// them so they get cleaned up.
+export const legacyVehicleKeys = ["title", "slug"] as const;
+
+// Strict: any other key the schema does not declare fails the build instead of being silently
+// dropped (a dropped `title` key once produced duplicate page titles).
 export const vehiclesSchema = z
   .object({
+    title: z.string().optional(),
+    slug: z.string().optional(),
     brand: z.string(),
     model: z.string(),
     year: z.coerce.number().int().min(2000).max(2030),

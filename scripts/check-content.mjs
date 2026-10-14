@@ -6,10 +6,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import YAML from "yaml";
-import { vehiclesSchema } from "../src/lib/content-schemas.ts";
+import { legacyVehicleKeys, vehiclesSchema } from "../src/lib/content-schemas.ts";
 
 const dir = path.resolve(import.meta.dirname, "../src/content/vehicles");
 const errors = [];
+const legacyWarnings = [];
 const vehicles = [];
 
 for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) {
@@ -28,6 +29,8 @@ for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) 
     continue;
   }
   vehicles.push({ file, data: parsed.data });
+  const legacy = legacyVehicleKeys.filter((k) => k in data);
+  if (legacy.length) legacyWarnings.push(`${file}: legacy key(s) ${legacy.join(", ")} (written by the old CMS form; safe to delete)`);
 }
 
 const warnings = [];
@@ -60,10 +63,14 @@ for (const { file, data } of vehicles) {
   seen(vins, data.vin, file, "VIN", data.status);
   seen(chassis, data.chassisNumber, file, "chassis number", data.status);
   seen(registrations, data.registrationNo, file, "registration number", data.status);
-  if (data.images.length === 0) errors.push(`${file}: needs at least one photo`);
+  if (data.images.length === 0) {
+    const message = `${file}: needs at least one photo`;
+    if (data.status === "Sold") warnings.push(message);
+    else errors.push(message);
+  }
 }
 
-for (const w of warnings) console.warn(`  ! warning: ${w}`);
+for (const w of [...warnings, ...legacyWarnings]) console.warn(`  ! warning: ${w}`);
 
 if (errors.length) {
   console.error(`check:content — ${errors.length} problem(s):`);

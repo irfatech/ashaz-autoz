@@ -31,6 +31,7 @@ const schemas = {
 // maintained in the files. Anything NOT listed here must exist in the CMS form, and vice versa.
 const schemaOnly = {
   "*": ["lang", "seo", "slug", "canonical"],
+  vehicles: ["title"], // legacy key, tolerated by the schema; the CMS form no longer has it
   services: ["icon"],
   team: ["email", "phone"],
   "site-settings": ["logoDark", "currency", "language", "languages"],
