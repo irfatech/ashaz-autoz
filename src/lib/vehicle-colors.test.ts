@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   allImages,
+  buildGalleryModel,
   colorNames,
   colorSlug,
   coverImage,
@@ -150,4 +151,27 @@ test("colorNames joins all color names, and matches the old text for legacy entr
   assert.equal(colorNames({ color: "Black, Blue" }), "Black, Blue");
   assert.equal(colorNames({ colors: [{ name: "Black" }, { name: "Blue" }] }), "Black, Blue");
   assert.equal(colorNames({}), "");
+});
+
+test("buildGalleryModel gives one group per color with the merged photos and the default slug", () => {
+  const m = buildGalleryModel(alto);
+  assert.equal(m.defaultSlug, "black");
+  assert.deepEqual(m.groups.map((g) => g.slug), ["black", "pearl-white", "silver"]);
+  assert.deepEqual(m.groups[1].images, ["/white-1.webp", "/shared-interior.webp", "/shared-engine.webp"]);
+  assert.deepEqual(m.groups[2].images, ["/shared-interior.webp", "/shared-engine.webp"]);
+});
+
+test("buildGalleryModel for a vehicle without colors is one unnamed group of shared photos", () => {
+  const m = buildGalleryModel({ images: ["/a.webp", "/a.webp", "/b.webp"] });
+  assert.equal(m.defaultSlug, "");
+  assert.equal(m.groups.length, 1);
+  assert.equal(m.groups[0].name, "");
+  assert.deepEqual(m.groups[0].images, ["/a.webp", "/b.webp"]);
+  assert.deepEqual(buildGalleryModel({}).groups[0].images, []);
+});
+
+test("buildGalleryModel starts on the first color that is not sold out", () => {
+  const m = buildGalleryModel({ colors: [{ name: "Black", units: 0 }, { name: "Blue", units: 1 }] });
+  assert.equal(m.defaultSlug, "blue");
+  assert.equal(m.groups[0].soldOut, true);
 });

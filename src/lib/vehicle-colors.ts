@@ -152,3 +152,33 @@ export function coverImage(vehicle: VehicleColorSource): string | undefined {
 export function allImages(vehicle: VehicleColorSource): string[] {
   return unique([...resolveColors(vehicle).flatMap((c) => c.images), ...(vehicle.images ?? [])]);
 }
+
+export interface GalleryGroup extends ResolvedColor {
+  /** Photos to show when this color is selected (its own first, then the shared ones). */
+  images: string[];
+}
+
+export interface GalleryModel {
+  /** Slug of the color shown first. Empty when the vehicle has no color information. */
+  defaultSlug: string;
+  /** One group per color. A vehicle with no colors gets a single unnamed group of shared photos. */
+  groups: GalleryGroup[];
+}
+
+/**
+ * Everything the vehicle page needs to render the gallery and color picker, resolved on the server so
+ * the page is complete without JavaScript.
+ */
+export function buildGalleryModel(vehicle: VehicleColorSource): GalleryModel {
+  const colors = resolveColors(vehicle);
+  if (colors.length === 0) {
+    return {
+      defaultSlug: "",
+      groups: [{ name: "", slug: "", soldOut: false, images: unique(vehicle.images ?? []) }],
+    };
+  }
+  return {
+    defaultSlug: defaultColor(colors)!.slug,
+    groups: colors.map((c) => ({ ...c, images: resolveGallery(vehicle, c.name).images })),
+  };
+}

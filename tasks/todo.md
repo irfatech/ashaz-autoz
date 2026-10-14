@@ -149,7 +149,7 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
     `color` through `colorNames()`; built output was identical before and after both commits.
   - Depends on: T11
 
-- [ ] **T13: Vehicle page color picker + gallery** (M)
+- [x] **T13: Vehicle page color picker + gallery** (M)
   - Description: `VehicleGallery.astro` + `ColorPicker.astro`. Server-renders the default color's
     gallery; `role="radiogroup"` swatches with visible names, arrow-key support, 44px targets;
     sold-out (`units: 0`) colors struck through; clickable thumbnails; swap script with

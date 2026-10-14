@@ -1,0 +1,88 @@
+---
+import type { GalleryGroup } from "../lib/vehicle-colors";
+
+interface Props {
+  groups: GalleryGroup[];
+  defaultSlug: string;
+  /** "Toyota Alto 2021", used to build alt text. */
+  label: string;
+  /** WhatsApp enquiry link per color slug, switched in by the script. */
+  waLinks?: Record<string, string>;
+}
+
+const { groups, defaultSlug, label, waLinks = {} } = Astro.props;
+
+const current = groups.find((g) => g.slug === defaultSlug) ?? groups[0];
+const altFor = (g: GalleryGroup, index: number) =>
+  `${label}${g.name ? ` in ${g.name}` : ""}${index > 0 ? ` – photo ${index + 1}` : ""}`;
+
+// "<" is escaped so a color name can never close the script tag.
+const data = JSON.stringify({
+  label,
+  default: current.slug,
+  groups: groups.map((g) => ({
+    slug: g.slug,
+    name: g.name,
+    soldOut: g.soldOut,
+    units: g.units,
+    images: g.images,
+    wa: waLinks[g.slug],
+  })),
+}).replace(/</g, "\\u003c");
+---
+
+<div data-vehicle-gallery>
+  <div class="aspect-[4/3] rounded-2xl overflow-hidden bg-muted/10 mb-4">
+    <img
+      data-gallery-main
+      src={current.images[0] || "/images/vehicle-placeholder.svg"}
+      alt={altFor(current, 0)}
+      class="h-full w-full object-cover"
+    />
+  </div>
+
+  {
+    groups.map(
+      (g) =>
+        g.images.length > 1 && (
+          <ul
+            data-gallery-group={g.slug}
+            hidden={g.slug !== current.slug}
+            class="grid grid-cols-4 gap-2 list-none m-0 p-0"
+          >
+            {g.images.map((img, i) => (
+              <li>
+                <a
+                  href={img}
+                  data-thumb
+                  aria-label={`Show photo ${i + 1}`}
+                  aria-current={i === 0 && g.slug === current.slug ? "true" : undefined}
+                  class="thumb block aspect-[4/3] rounded-lg overflow-hidden bg-muted/10"
+                >
+                  <img src={img} alt={altFor(g, i)} class="h-full w-full object-cover" loading="lazy" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        ),
+    )
+  }
+
+  <script is:inline type="application/json" data-gallery-data set:html={data} />
+</div>
+
+<style>
+  .thumb {
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+  }
+
+  .thumb[aria-current="true"] {
+    outline-color: var(--color-accent);
+  }
+
+  .thumb:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+</style>

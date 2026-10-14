@@ -1,0 +1,139 @@
+---
+import type { GalleryGroup } from "../lib/vehicle-colors";
+
+interface Props {
+  groups: GalleryGroup[];
+  defaultSlug: string;
+}
+
+const { groups, defaultSlug } = Astro.props;
+
+const named = groups.filter((g) => g.name);
+const current = named.find((g) => g.slug === defaultSlug) ?? named[0];
+const stockText = (g: GalleryGroup) => (g.soldOut ? "· sold out" : g.units ? `· ${g.units} available` : "");
+const swatchStyle = (g: GalleryGroup) => (g.hex ? `background-color:${g.hex}` : undefined);
+---
+
+{
+  named.length === 1 && (
+    <div class="flex items-center gap-2 mb-8 text-sm">
+      <span class="text-xs uppercase tracking-wider text-muted">Color</span>
+      <span class="swatch swatch-static" style={swatchStyle(named[0])} aria-hidden="true">
+        {!named[0].hex && named[0].name.charAt(0)}
+      </span>
+      <span class="font-semibold">{named[0].name}</span>
+    </div>
+  )
+}
+
+{
+  named.length > 1 && (
+    <div class="mb-8" data-color-picker>
+      <p class="mb-1 text-sm" aria-live="polite">
+        <span class="text-xs uppercase tracking-wider text-muted">Color</span>
+        <span class="ml-2 font-semibold" data-color-label>
+          {current.name}
+        </span>
+        <span class="ml-1 text-muted" data-color-stock>
+          {stockText(current)}
+        </span>
+      </p>
+      <div role="radiogroup" aria-label="Color" class="flex flex-wrap -ml-2">
+        {named.map((g) => (
+          <button
+            type="button"
+            role="radio"
+            class="swatch-btn"
+            data-color={g.slug}
+            aria-checked={g.slug === current.slug ? "true" : "false"}
+            aria-disabled={g.soldOut ? "true" : undefined}
+            aria-label={g.soldOut ? `${g.name} (sold out)` : g.name}
+            title={g.soldOut ? `${g.name} (sold out)` : g.name}
+            tabindex={g.slug === current.slug ? 0 : -1}
+          >
+            <span class="swatch" style={swatchStyle(g)}>
+              {!g.hex && g.name.charAt(0)}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  /* 44px touch target around a 28px swatch. */
+  .swatch-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .swatch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 9999px;
+    background-color: var(--color-card);
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .swatch-static {
+    width: 20px;
+    height: 20px;
+    font-size: 0.625rem;
+  }
+
+  /* Selected: a ring that does not depend on the swatch color, so it is visible on any color. */
+  .swatch-btn[aria-checked="true"] .swatch {
+    box-shadow:
+      0 0 0 2px var(--color-page),
+      0 0 0 4px var(--color-accent);
+  }
+
+  .swatch-btn:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 1px;
+  }
+
+  /* Sold out: dimmed with a diagonal strike, and not selectable. */
+  .swatch-btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .swatch-btn[aria-disabled="true"]::after {
+    content: "";
+    position: absolute;
+    width: 34px;
+    height: 2px;
+    background: var(--color-muted);
+    transform: rotate(-45deg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .swatch-btn .swatch {
+      transition:
+        box-shadow 150ms,
+        transform 150ms;
+    }
+
+    .swatch-btn:not([aria-disabled="true"]):hover .swatch {
+      transform: scale(1.08);
+    }
+  }
+</style>
