@@ -168,7 +168,7 @@ Pick-lists in `config.yml` keep the existing compact style; numbers are saved as
 5. **Nothing breaks:** `astro check`, `check:content`, `check:cms`, tests and the build all pass; vehicle pages, the sitemap and `/app` data are unchanged except for the corrected values.
 6. **Year list:** the generated list always runs from next year to 2000, newest first, and is the same list the schema accepts.
 7. **New car is never lost:** after saving a new car (or duplicating one), the list opens with it **first within its status group, without scrolling**; the Sort menu offers "Recently added"; editing a car does not move it; an existing car edited for the first time keeps its original added date.
-8. **Brand pick:** your seven most-sold brands are visible without scrolling when the brand list opens, and typing 3 letters leaves at most 3 matches.
+8. **Brand pick:** your six most-sold brands are visible without scrolling when the brand list opens (the open list shows about six rows on a phone-height screen), and typing 3 letters leaves at most 3 matches.
 
 ## Decisions (all open questions answered)
 
