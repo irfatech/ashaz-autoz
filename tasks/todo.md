@@ -163,7 +163,7 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
     `src/pages/vehicles/[...slug].astro`, `src/styles/utilities.css`
   - Depends on: T12
 
-- [ ] **T14: Listing cards + color filter** (M)
+- [x] **T14: Listing cards + color filter** (M)
   - Description: `VehicleCard.astro` shows color dots and uses the default color's cover image;
     `vehicles.astro` adds a Color filter group (names from data), `data-colors` on cards, URL-
     parameter aware like the existing filters.

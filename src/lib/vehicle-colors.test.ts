@@ -6,6 +6,7 @@ import {
   colorNames,
   colorSlug,
   coverImage,
+  filterKey,
   defaultColor,
   findColor,
   hexFor,
@@ -174,4 +175,12 @@ test("buildGalleryModel starts on the first color that is not sold out", () => {
   const m = buildGalleryModel({ colors: [{ name: "Black", units: 0 }, { name: "Blue", units: 1 }] });
   assert.equal(m.defaultSlug, "blue");
   assert.equal(m.groups[0].soldOut, true);
+});
+
+test("filterKey merges spelling variants and ignores case and spacing", () => {
+  assert.equal(filterKey("Gray"), "grey");
+  assert.equal(filterKey("Grey"), "grey");
+  assert.equal(filterKey("Dark Gray"), "dark-grey");
+  assert.equal(filterKey("  Pearl  White "), "pearl-white");
+  assert.equal(filterKey("Graystone"), "graystone"); // only the whole word is merged
 });

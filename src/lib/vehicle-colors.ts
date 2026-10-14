@@ -69,6 +69,14 @@ export function colorSlug(name: string): string {
 }
 
 /**
+ * Key used to group colors in filters: the slug, with spelling variants merged ("Gray" and "Grey" are
+ * one color). Sold-out colors should be left out by the caller.
+ */
+export function filterKey(name: string): string {
+  return colorSlug(name).replace(/\bgray\b/g, "grey");
+}
+
+/**
  * Best-effort swatch color for a color name, so editors do not have to pick a hex value.
  * "Pearl White" and "Dark Blue" resolve through their last word. Unknown names return undefined.
  */
