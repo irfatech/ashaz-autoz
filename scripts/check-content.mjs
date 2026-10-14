@@ -8,8 +8,15 @@ import path from "node:path";
 import YAML from "yaml";
 import { legacyVehicleKeys, vehiclesSchema } from "../src/lib/content-schemas.ts";
 import { allImages, colorSlug } from "../src/lib/vehicle-colors.ts";
+import { findViolations } from "../src/lib/cms-options.ts";
 
 const dir = path.resolve(import.meta.dirname, "../src/content/vehicles");
+
+// The CMS form's fields. Anything the form shows as a pick-list must offer every value a car already has.
+const cmsConfig = YAML.parse(
+  fs.readFileSync(path.resolve(import.meta.dirname, "../public/admin/config.yml"), "utf8"),
+);
+const vehicleFields = cmsConfig.collections.find((c) => c.name === "vehicles")?.fields ?? [];
 const errors = [];
 const legacyWarnings = [];
 const vehicles = [];
@@ -30,6 +37,10 @@ for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) 
     continue;
   }
   vehicles.push({ file, data: parsed.data });
+  for (const v of findViolations(vehicleFields, data)) {
+    const shown = v.allowed.slice(0, 8).join(", ") + (v.allowed.length > 8 ? ", …" : "");
+    errors.push(`${file}: ${v.path} "${v.value}" is not offered by the CMS form (choices: ${shown})`);
+  }
   const legacy = legacyVehicleKeys.filter((k) => k in data);
   if (legacy.length) legacyWarnings.push(`${file}: legacy key(s) ${legacy.join(", ")} (written by the old CMS form; safe to delete)`);
 }

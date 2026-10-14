@@ -6,7 +6,7 @@ mode), then one commit. Commit messages end with the `Co-Authored-By` line from 
 
 ## Phase A: Guard and "recently added"
 
-- [ ] **V1: Guard check: stored values must exist in the CMS pick-list** (S)
+- [x] **V1: Guard check: stored values must exist in the CMS pick-list** (S)
   - Description: Extend `scripts/check-content.mjs` so that for every vehicle field that the CMS renders as
     a `select` (including `colors[].name`, and multi-select `features`), each value in each car file must
     be one of that field's options in `public/admin/config.yml`. Pure helper in `src/lib/` with unit tests.
