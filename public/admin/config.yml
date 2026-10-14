@@ -28,57 +28,7 @@ output:
   omit_empty_optional_fields: true
 
 collections:
-  - name: "pages"
-    label: "Pages"
-    folder: "src/content/pages"
-    create: true
-    slug: "{{slug}}"
-    preview_path: "{{slug}}/"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Description", name: "description", widget: "text", required: false }
-      - { label: "Image", name: "image", widget: "image", required: false, hint: "Hero/featured image for the page" }
-      - { label: "Published", name: "published", widget: "boolean", default: true, required: false }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, required: false, hint: "Sort order (lower = first)" }
-      - label: "Template"
-        name: "template"
-        widget: "select"
-        required: false
-        default: "default"
-        options: ["default", "full-width"]
-      - { label: "Hero Title", name: "heroTitle", widget: "string", required: false }
-      - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text", required: false }
-      - { label: "Body", name: "body", widget: "markdown", required: false }
-      - label: "SEO"
-        name: "seo"
-        widget: "object"
-        required: false
-        fields:
-          - { label: "Title", name: "title", widget: "string", required: false }
-          - { label: "Description", name: "description", widget: "text", required: false }
-          - { label: "Image", name: "image", widget: "image", required: false }
-          - { label: "No Index", name: "noIndex", widget: "boolean", required: false, default: false }
-
-  - name: "blog"
-    label: "Blog Posts"
-    folder: "src/content/blog"
-    create: true
-    slug: "{{title}}"
-    preview_path: "blog/{{slug}}/"
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - { label: "Author", name: "author", widget: "string", default: "Ashaz Autoz" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Category", name: "category", widget: "string", default: "General" }
-      - { label: "Tags", name: "tags", widget: "list", required: false, field: { label: "Tag", name: "tag", widget: "string" } }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Published", name: "published", widget: "boolean", default: true }
-      - { label: "Body", name: "body", widget: "markdown" }
-
+  # --- Shown to the car owner: the content that actually changes ---
   - name: "vehicles"
     label: "Vehicles"
     label_singular: "Vehicle"
@@ -202,72 +152,24 @@ collections:
       - { label: "Engine Number", name: "engineNumber", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
       - { label: "Registration No.", name: "registrationNo", widget: "string", required: false, unique: true, hint: "Internal. Used only to prefill quotations and invoices." }
 
-  - name: "services"
-    label: "Services"
-    folder: "src/content/services"
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/content/blog"
     create: true
     slug: "{{title}}"
-    preview_path: "services/{{slug}}/"
+    preview_path: "blog/{{slug}}/"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Excerpt", name: "excerpt", widget: "string", required: false }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Author", name: "author", widget: "string", default: "Ashaz Autoz" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
       - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
-      - { label: "CTA Text", name: "ctaText", widget: "string", default: "Learn More" }
-      - { label: "CTA Link", name: "ctaLink", widget: "string", required: false }
-      - { label: "Body", name: "body", widget: "markdown", required: false }
-
-  - name: "testimonials"
-    label: "Testimonials"
-    folder: "src/content/testimonials"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Role", name: "role", widget: "string", required: false }
-      - { label: "Company", name: "company", widget: "string", required: false }
-      - { label: "Avatar", name: "avatar", widget: "image", required: false }
-      - { label: "Rating", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
-      - { label: "Content", name: "content", widget: "text" }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
-
-  - name: "team"
-    label: "Team Members"
-    folder: "src/content/team"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Role", name: "role", widget: "string" }
-      - { label: "Bio", name: "bio", widget: "text", required: false }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
-
-  - name: "faq"
-    label: "FAQs"
-    folder: "src/content/faq"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Question", name: "question", widget: "string" }
-      - { label: "Answer", name: "answer", widget: "text" }
       - { label: "Category", name: "category", widget: "string", default: "General" }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
-
-  - name: "gallery"
-    label: "Gallery"
-    folder: "src/content/gallery"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Title", name: "title", widget: "string", required: false }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Tags", name: "tags", widget: "list", required: false, field: { label: "Tag", name: "tag", widget: "string" } }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Date", name: "date", widget: "datetime", required: false }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "site-settings"
     label: "Site Settings"
@@ -305,8 +207,115 @@ collections:
               - { label: "YouTube", name: "youtube", widget: "string", required: false }
               - { label: "WhatsApp", name: "whatsapp", widget: "string", required: false }
 
+  # --- Hidden from the menu (kept, so they can be switched back on by removing `hide: true`) ---
+  - name: "pages"
+    label: "Pages"
+    hide: true
+    folder: "src/content/pages"
+    create: true
+    slug: "{{slug}}"
+    preview_path: "{{slug}}/"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false, hint: "Hero/featured image for the page" }
+      - { label: "Published", name: "published", widget: "boolean", default: true, required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0, required: false, hint: "Sort order (lower = first)" }
+      - label: "Template"
+        name: "template"
+        widget: "select"
+        required: false
+        default: "default"
+        options: ["default", "full-width"]
+      - { label: "Hero Title", name: "heroTitle", widget: "string", required: false }
+      - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+      - label: "SEO"
+        name: "seo"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Title", name: "title", widget: "string", required: false }
+          - { label: "Description", name: "description", widget: "text", required: false }
+          - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "No Index", name: "noIndex", widget: "boolean", required: false, default: false }
+
+  - name: "services"
+    label: "Services"
+    hide: true
+    folder: "src/content/services"
+    create: true
+    slug: "{{title}}"
+    preview_path: "services/{{slug}}/"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Excerpt", name: "excerpt", widget: "string", required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Features", name: "features", widget: "list", required: false, field: { label: "Feature", name: "feature", widget: "string" } }
+      - { label: "CTA Text", name: "ctaText", widget: "string", default: "Learn More" }
+      - { label: "CTA Link", name: "ctaLink", widget: "string", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    hide: true
+    folder: "src/content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Company", name: "company", widget: "string", required: false }
+      - { label: "Avatar", name: "avatar", widget: "image", required: false }
+      - { label: "Rating", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+      - { label: "Content", name: "content", widget: "text" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+
+  - name: "team"
+    label: "Team Members"
+    hide: true
+    folder: "src/content/team"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+
+  - name: "faq"
+    label: "FAQs"
+    hide: true
+    folder: "src/content/faq"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text" }
+      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+
+  - name: "gallery"
+    label: "Gallery"
+    hide: true
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string", required: false }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Date", name: "date", widget: "datetime", required: false }
+
   - name: "navigation"
     label: "Navigation"
+    hide: true
     files:
       - label: "Main Navigation"
         name: "nav"
@@ -328,6 +337,7 @@ collections:
 
   - name: "tiktok"
     label: "TikTok Videos"
+    hide: true
     folder: "src/content/tiktok"
     create: true
     slug: "{{slug}}"
@@ -345,6 +355,7 @@ collections:
 
   - name: "instagram"
     label: "Instagram Posts"
+    hide: true
     folder: "src/content/instagram"
     create: true
     slug: "{{slug}}"
@@ -362,6 +373,7 @@ collections:
 
   - name: "footer"
     label: "Footer"
+    hide: true
     files:
       - label: "Footer Content"
         name: "footer"

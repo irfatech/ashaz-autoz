@@ -192,9 +192,11 @@ commit. Commit messages end with the `Co-Authored-By` line from the session.
 
 ## Phase 3 — Trim the backend
 
-- [ ] **T16: Hide and lock collections** (S)
-  - Description: `hide: true` on Pages, FAQ, Navigation, Footer; `create: false, delete: false` on
-    Services and Team; Site Settings becomes a singleton. Spike: confirm `hide` is valid on file
+- [x] **T16: Hide and lock collections** (S)
+  - Description (changed at the owner's request): only Vehicles, Blog and Site Settings are shown
+    (in that order); every other collection is `hide: true` (Pages, Services, Testimonials, Team, FAQ,
+    Gallery, Navigation, TikTok, Instagram, Footer). Nothing is deleted; remove `hide: true` to bring
+    one back. Spike: confirm `hide` is valid on file
     collections in the 0.237.0 schema; if not, use the supported equivalent.
   - Acceptance: CMS sidebar shows Vehicles, Gallery, Testimonials, TikTok, Instagram, Blog, Site
     Settings (+ Services/Team without Add/Delete); all content files untouched.
