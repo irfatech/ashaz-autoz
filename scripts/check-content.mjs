@@ -48,8 +48,9 @@ for (const file of fs.readdirSync(dir).filter((f) => /\.mdx?$/.test(f)).sort()) 
 const warnings = [];
 
 // A duplicate that involves a Sold vehicle is only a warning: sold pages are left out of the
-// sitemap, so they cannot compete with a live listing. Two live vehicles are a hard error.
-const seen = (map, key, file, label, status) => {
+// sitemap, so they cannot compete with a live listing. Two live vehicles are a hard error,
+// except for `soft` keys (page title): two real cars can share brand, model and year.
+const seen = (map, key, file, label, status, soft = false) => {
   if (!key) return;
   const k = String(key).trim().toLowerCase();
   const other = map.get(k);
@@ -58,7 +59,7 @@ const seen = (map, key, file, label, status) => {
     return;
   }
   const message = `${file}: ${label} "${key}" is already used by ${other.file}`;
-  if (status === "Sold" || other.status === "Sold") warnings.push(message);
+  if (soft || status === "Sold" || other.status === "Sold") warnings.push(message);
   else errors.push(message);
 };
 
@@ -71,7 +72,7 @@ for (const { file, data } of vehicles) {
   if (/^\d{4}$/.test(String(data.model).trim())) {
     errors.push(`${file}: model "${data.model}" looks like a year; model is the car model, e.g. Alto`);
   }
-  seen(titles, `${data.brand} ${data.model} ${data.year}`, file, "page title", data.status);
+  seen(titles, `${data.brand} ${data.model} ${data.year}`, file, "page title", data.status, true);
   seen(vins, data.vin, file, "VIN", data.status);
   seen(chassis, data.chassisNumber, file, "chassis number", data.status);
   seen(registrations, data.registrationNo, file, "registration number", data.status);
